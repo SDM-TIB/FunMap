@@ -9,6 +9,6 @@
 4) Run:
 ```bash
 mvn assembly:assembly -DdescriptorId=jar-with-dependencies
- cp target/carml-cli-1.0.0-jar-with-dependencies.jar ./carml-cli-1.0.0.jar
+cp target/carml-cli-1.0.0-jar-with-dependencies.jar ./carml-cli-1.0.0.jar
 java -cp .:carml-cli-1.0.0.jar:rdf4j-rio-ntriples-2.3.2.jar es.upm.fi.dia.oeg.CarmlCli
 ```

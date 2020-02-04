@@ -1,0 +1,58 @@
+@prefix rr: <http://www.w3.org/ns/r2rml#> .
+@prefix rml: <http://semweb.mmlab.be/ns/rml#> .
+@prefix ql: <http://semweb.mmlab.be/ns/ql#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rev: <http://purl.org/stuff/rev#> .
+@prefix schema: <http://schema.org/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix dcterms: <http://purl.org/dc/terms> .
+@prefix dce: <http://purl.org/dc/elements/1.1> .
+@prefix af: <http://purl.org/ontology/af> .
+@prefix ru: <http://purl.org/imbi/ru-meta.owl#> .
+@prefix time: <http://www.w3.org/2006/time#> .
+@prefix base: <http://semanticscience.org/resource> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix sio: <http://semanticscience.org/resource> .
+@prefix fnml: <http://semweb.mmlab.be/ns/fnml#> .
+@prefix varharnom: <https://github.com/SDM-TIB/VariantHarmonizedNomenclature/blob/master/function.ttl#> .
+	
+<#Variation>
+	rml:logicalSource [ rml:source "/data/data/genomic/civic_Predictive.csv";
+						rml:referenceFormulation ql:CSV 
+						];
+	rr:subjectMap [
+		rr:template "http://semanticscience.org/resource/SIO_011137/{variant.clinical}";
+		rr:class sio:SIO_011137 # variation
+	];
+	rr:predicateObjectMap [
+		rr:predicate sio:SIO_001403; # is associated with 
+		rr:objectMap <#FunctionMap_gDNA>
+	].
+
+<#FunctionMap_gDNA>
+	fnml:functionValue [
+        rml:logicalSource [ rml:source "/data/data/genomic/civic_Predictive.csv";
+		rml:referenceFormulation ql:CSV 
+							];
+        rr:predicateObjectMap [
+         	rr:predicate fno:executes ;
+            rr:objectMap [ 
+            	rr:constant varharnom:subStringFunction 
+        	]
+        ];
+        rr:predicateObjectMap [
+            rr:predicate varharnom:stringToLook;
+            rr:objectMap [ 
+            	rml:reference "hgvs_expressions" 
+            ]
+        ].
+
+<#Variation2>
+	rml:logicalSource [ rml:source "/data/data/genomic/civic_Predictive.csv";
+						rml:referenceFormulation ql:CSV 
+						];
+	rr:subjectMap [
+		rr:template "http://semanticscience.org/resource/SIO_011137/{subStringFunction(hgvs_expressions)}";
+		rr:class sio:SIO_011137 # variation
+	].

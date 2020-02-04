@@ -48,7 +48,7 @@
             ]
         ].
 
-<#TripleMap1>
+<#TripleMap2>
 	rml:logicalSource [ rml:source "/data/data/genomic/civic_Predictive.csv";
 						rml:referenceFormulation ql:CSV 
 						];

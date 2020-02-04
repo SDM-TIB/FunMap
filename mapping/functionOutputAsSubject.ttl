@@ -17,7 +17,7 @@
 @prefix fnml: <http://semweb.mmlab.be/ns/fnml#> .
 @prefix varharnom: <https://github.com/SDM-TIB/VariantHarmonizedNomenclature/blob/master/function.ttl#> .
 	
-<#Variation>
+<#TripleMap1>
 	rml:logicalSource [ rml:source "/data/data/genomic/civic_Predictive.csv";
 						rml:referenceFormulation ql:CSV 
 						];
@@ -27,10 +27,10 @@
 	];
 	rr:predicateObjectMap [
 		rr:predicate sio:SIO_001403; # is associated with 
-		rr:objectMap <#FunctionMap_gDNA>
+		rr:objectMap <#FunctionMap>
 	].
 
-<#FunctionMap_gDNA>
+<#FunctionMap>
 	fnml:functionValue [
         rml:logicalSource [ rml:source "/data/data/genomic/civic_Predictive.csv";
 		rml:referenceFormulation ql:CSV 
@@ -48,7 +48,7 @@
             ]
         ].
 
-<#Variation2>
+<#TripleMap1>
 	rml:logicalSource [ rml:source "/data/data/genomic/civic_Predictive.csv";
 						rml:referenceFormulation ql:CSV 
 						];

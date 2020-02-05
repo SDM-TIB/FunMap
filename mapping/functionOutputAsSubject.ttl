@@ -17,42 +17,37 @@
 @prefix fnml: <http://semweb.mmlab.be/ns/fnml#> .
 @prefix varharnom: <https://github.com/SDM-TIB/VariantHarmonizedNomenclature/blob/master/function.ttl#> .
 	
-<#TripleMap1>
-	rml:logicalSource [ rml:source "/data/data/genomic/civic_Predictive.csv";
+<#TriplesMap>
+	a rr:TriplesMap;
+
+	rml:logicalSource [ rml:source "source1.csv";
 						rml:referenceFormulation ql:CSV 
 						];
-	rr:subjectMap [
-		rr:template "http://semanticscience.org/resource/SIO_011137/{variant.clinical}";
-		rr:class sio:SIO_011137 # variation
-	];
+
+	rr:subjectMap <#FunctionMap>;
 	rr:predicateObjectMap [
-		rr:predicate sio:SIO_001403; # is associated with 
-		rr:objectMap <#FunctionMap>
+		rr:predicate sio:bla;  
+		rr:template "http://bala/bla/{whatever}"
 	].
 
 <#FunctionMap>
+	a fnml:FunctionTermMap;
+
 	fnml:functionValue [
         rml:logicalSource [ rml:source "/data/data/genomic/civic_Predictive.csv";
 		rml:referenceFormulation ql:CSV 
 							];
+
         rr:predicateObjectMap [
          	rr:predicate fno:executes ;
             rr:objectMap [ 
             	rr:constant varharnom:subStringFunction 
         	]
         ];
+        
         rr:predicateObjectMap [
             rr:predicate varharnom:stringToLook;
             rr:objectMap [ 
             	rml:reference "hgvs_expressions" 
             ]
         ].
-
-<#TripleMap2>
-	rml:logicalSource [ rml:source "/data/data/genomic/civic_Predictive.csv";
-						rml:referenceFormulation ql:CSV 
-						];
-	rr:subjectMap [
-		rr:template "http://semanticscience.org/resource/SIO_011137/{subStringFunction(hgvs_expressions)}";
-		rr:class sio:SIO_011137 # variation
-	].

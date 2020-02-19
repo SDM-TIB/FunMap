@@ -15,41 +15,50 @@
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix sio: <http://semanticscience.org/resource> .
 @prefix fnml: <http://semweb.mmlab.be/ns/fnml#> .
-@prefix varharnom: <https://github.com/SDM-TIB/VariantHarmonizedNomenclature/blob/master/function.ttl#> .
-	
-<#TriplesMap>
+@prefix ex: <http://www.example.com> .
+
+
+<#Variation>
 	a rr:TriplesMap;
 
 	rml:logicalSource [ rml:source "source1.csv";
 						rml:referenceFormulation ql:CSV 
 						];
-
-	rr:subjectMap <#FunctionMap>;
+	rr:subjectMap [
+		rr:template "http://semanticscience.org/resource/SIO_011137/{variant.clinical}";
+		rr:class sio:SIO_011137 # variation
+	];
 	rr:predicateObjectMap [
-		rr:predicate rdf:type;  
-		rr:objectMap [
-			rr:template "http://whatever/{}"
-		]
+		rr:predicate sio:SIO_000255; # has annotation 
+		rr:objectMap <#FunctionMap_peptide>
+	];	
+	rr:predicateObjectMap [
+		rr:predicate owl:sameAs; 
+		rr:objectMap <#FunctionMap_peptide>
 	].
 
-<#FunctionMap>
+<#FunctionMap_peptide>
 	a fnml:FunctionTermMap;
 
 	fnml:functionValue [
         rml:logicalSource [ rml:source "/data/data/genomic/civic_Predictive.csv";
 		rml:referenceFormulation ql:CSV 
 							];
-
         rr:predicateObjectMap [
          	rr:predicate fno:executes ;
             rr:objectMap [ 
-            	rr:constant varharnom:subStringFunction 
+            	rr:constant ex:subStringFunction 
         	]
         ];
-        
         rr:predicateObjectMap [
-            rr:predicate varharnom:stringToLook;
+            rr:predicate ex:queryString;
             rr:objectMap [ 
             	rml:reference "hgvs_expressions" 
+            ]
+        ];	
+    	rr:predicateObjectMap [
+            rr:predicate ex:subString;
+            rr:objectMap [ 
+            	rr:constant "NP_"; 
             ]
         ].

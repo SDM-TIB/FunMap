@@ -48,8 +48,8 @@
     					rml:referenceFormulation ql:CSV
   						];
   	rr:subjectMap [
-    	rr:template "http://project-iasis.eu/Chromosome/{chr}";
-    	rr:class iasis:chr
+    	rr:template "http://semanticscience.org/resource/SIO_000899/{H}";
+    	rr:class sio:SIO_000899
   	]. 
 
 <#FunctionMap1>

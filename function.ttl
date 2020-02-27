@@ -2,40 +2,40 @@
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@prefix varharnom: <https://github.com/SDM-TIB/VariantHarmonizedNomenclature/blob/master/function.ttl#> .
+@prefix ex: <http://www.example.com> .
 
-varharnom:subStringProblem a fno:Problem;
-varharnom:subStringAlgorithm a fno:Algorithm;
+ex:subStringProblem a fno:Problem;
+ex:subStringAlgorithm a fno:Algorithm;
 
-varharnom:subStringFunction a fno:Function;
+ex:subStringFunction a fno:Function;
     fno:name "The string extraction function"^^xsd:string;
     dcterms:description "This function can extract part of a string base on requirement."^^xsd:string;
-    fno:solves varharnom:subStringProblem;
-    fno:implements varharnom:subStringAlgorithm;
+    fno:solves ex:subStringProblem;
+    fno:implements ex:subStringAlgorithm;
     fno:expects ( 
         [
-            fno:predicate varharnom:stringToLook; 
+            fno:predicate ex:stringToLook; 
             fno:required "true"^^xsd:boolean 
         ]
         [
-            fno:predicate varharnom:subStringIdentifier; 
+            fno:predicate ex:subStringIdentifier; 
             fno:required "true"^^xsd:boolean 
         ]
     ).
     fno:returns (
         [
-            fno:predicate varharnom:extractedSubString; 
+            fno:predicate ex:extractedSubString; 
             fno:required "true"^^xsd:boolean 
         ]  
     ).
-varharnom:stringToLook fno:type xsd:string.
-varharnom:subStringIdentifier fno:type xsd:string.
-varharnom:extractedSubString fno:type xsd:string.
+ex:stringToLook fno:type xsd:string.
+ex:subStringIdentifier fno:type xsd:string.
+ex:extractedSubString fno:type xsd:string.
 
-varharnom:subStringExecution a fno:Execution;
-    fno:executes varharnom:subStringFunction;
-    varharnom:stringToLook "???"^^xsd:string;
-    varharnom:subStringIdentifier "NC"^^xsd:string.
+ex:subStringExecution a fno:Execution;
+    fno:executes ex:subStringFunction;
+    ex:stringToLook ""^^xsd:string;
+    ex:subStringIdentifier ""^^xsd:string.
 
 
 # http://semanticscience.org/resource/SIO_011133/{extractedSubString} # gDNA variation notation

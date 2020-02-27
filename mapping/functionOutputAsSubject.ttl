@@ -16,7 +16,7 @@
 @prefix sio: <http://semanticscience.org/resource> .
 @prefix fnml: <http://semweb.mmlab.be/ns/fnml#> .
 @prefix fno: <http://semweb.datasciencelab.be/ns/function#> .
-@prefix varharnom: <https://github.com/SDM-TIB/VariantHarmonizedNomenclature/blob/master/function.ttl#> .
+@prefix ex: <http://www.example.com> .
 	
 <#TriplesMap>
 	a rr:TriplesMap;
@@ -37,19 +37,19 @@
 	a fnml:FunctionTermMap;
 
 	fnml:functionValue [
-        rml:logicalSource [ rml:source "/data/data/genomic/civic_Predictive.csv";
+        rml:logicalSource [ rml:source "source1.csv";
 		rml:referenceFormulation ql:CSV 
 							];
 
         rr:predicateObjectMap [
          	rr:predicate fno:executes ;
             rr:objectMap [ 
-            	rr:constant varharnom:subStringFunction 
+            	rr:constant ex:subStringFunction 
         	]
         ];
         
         rr:predicateObjectMap [
-            rr:predicate varharnom:stringToLook;
+            rr:predicate ex:stringToLook;
             rr:objectMap [ 
             	rml:reference "hgvs_expressions" 
             ]

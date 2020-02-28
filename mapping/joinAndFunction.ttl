@@ -96,6 +96,7 @@
             rr:objectMap [ 
             	rml:reference "G" 
             ]
+        ];
         ].
 
 

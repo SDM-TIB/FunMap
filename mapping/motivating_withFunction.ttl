@@ -42,7 +42,7 @@
 	a fnml:FunctionTermMap;
 
 	fnml:functionValue [
-        rml:logicalSource [ rml:source "/data/data/genomic/civic_Predictive.csv";
+        rml:logicalSource [ rml:source "source1.csv";
 		rml:referenceFormulation ql:CSV 
 							];
         rr:predicateObjectMap [
@@ -62,4 +62,5 @@
             rr:objectMap [ 
             	rr:constant "NP_"; 
             ]
+        ];   
         ].

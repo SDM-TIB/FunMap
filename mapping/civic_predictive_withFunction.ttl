@@ -63,4 +63,5 @@
             rr:objectMap [ 
             	rml:reference "hgvs_expressions" 
             ]
+        ];
         ].	

@@ -1,0 +1,73 @@
+@prefix rr: <http://www.w3.org/ns/r2rml#> .
+@prefix rml: <http://semweb.mmlab.be/ns/rml#> .
+@prefix ql: <http://semweb.mmlab.be/ns/ql#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rev: <http://purl.org/stuff/rev#> .
+@prefix schema: <http://schema.org/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix dcterms: <http://purl.org/dc/terms> .
+@prefix dce: <http://purl.org/dc/elements/1.1> .
+@prefix af: <http://purl.org/ontology/af> .
+@prefix ru: <http://purl.org/imbi/ru-meta.owl#> .
+@prefix time: <http://www.w3.org/2006/time#> .
+@prefix base: <http://semanticscience.org/resource> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix sio: <http://semanticscience.org/resource> .
+@prefix fnml: <http://semweb.mmlab.be/ns/fnml#> .
+@prefix fno: <http://semweb.datasciencelab.be/ns/function#> .
+@prefix ex: <http://www.example.com> .
+
+
+<#TriplesMap1>
+	a rr:TriplesMap;
+
+	rml:logicalSource [ rml:source "Source1.csv";
+						rml:referenceFormulation ql:CSV 
+						];
+  rr:subjectMap <#FunctionMap1>;                  ####### modified:   rr:subjectMap [
+                                                  #######             rr:template "http://whatever/{OUTPUT1}";
+                                                  #######             rr:class "http://whatever/""
+  rr:predicateObjectMap [
+    rr:predicate rdf:type;  
+    rr:objectMap [
+      rr:template "http://whatever/{}"
+    ]
+  ].          
+	rr:predicateObjectMap [ 
+    	rr:predicate sio:SIO_001403; 
+    	rr:objectMap [
+      		rr:parentTriplesMap <TripleMap2>; 
+      		rr:joinCondition [
+        		rr:child <#FunctionMap2>;             ###### modified:    rr:child "OUTPUT2"  
+        		rr:parent <#FunctionMap3>;            ###### modified:    rr:parent "OUTPUT3" 
+      		];
+    	];
+  	].
+
+<#TriplesMap2>
+	a rr:TriplesMap;
+    
+  	rml:logicalSource [ rml:source "Source2.csv";
+    					rml:referenceFormulation ql:CSV
+  						];
+  rr:subjectMap <#FunctionMap4>;                  ####### modified:   rr:subjectMap [
+                                                  #######             rr:template "http://whatever/{OUTPUT4}";
+                                                  #######             rr:class "http://whatever/""
+  rr:predicateObjectMap [
+    rr:predicate rdf:type;  
+    rr:objectMap [
+      rr:template "http://whatever/{}"
+    ]
+  ].         
+
+<#FunctionMap1>
+
+<#FunctionMap2>
+
+<#FunctionMap3>
+
+<#FunctionMap4>
+
+
+

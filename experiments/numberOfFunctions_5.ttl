@@ -9,6 +9,10 @@
 @prefix base: <http://tib.de/ontario/mapping#> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix iasis: <http://project-iasis.eu/vocab/> .
+@prefix fnml: <http://semweb.mmlab.be/ns/fnml#> .
+@prefix fno: <http://semweb.datasciencelab.be/ns/function#> .
+@prefix ex: <http://www.example.com> .
+
 
 <#TriplesMap1>
     rml:logicalSource [ rml:source "data.csv";

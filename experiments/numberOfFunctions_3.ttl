@@ -11,52 +11,44 @@
 @prefix iasis: <http://project-iasis.eu/vocab/> .
 
 <#TriplesMap1>
-	rml:logicalSource [ rml:source "data.csv";
-						rml:referenceFormulation ql:CSV ];
-	rr:subjectMap [
-		rr:template "http://project-iasis.eu/Mutation/{GENOMIC_MUTATION_ID}";
-		rr:class iasis:Mutation;
-	];
-	rr:predicateObjectMap [
-		rr:predicate iasis:geneName;
-		rr:objectMap [ 
-			rml:reference "Gene name"
-		]
-	];
-	rr:predicateObjectMap [
-		rr:predicate iasis:mutation_somatic_status;
-		rr:objectMap [ 
-			rml:reference "Mutation somatic status" 
-		]
-	];
-	rr:predicateObjectMap [
-		rr:predicate iasis:tissue;
-		rr:objectMap [ 
-			rml:reference "Primary site" 
-		]
-	].
+    rml:logicalSource [ rml:source "data.csv";
+                        rml:referenceFormulation ql:CSV ];
+    rr:subjectMap [
+        rr:template "http://project-iasis.eu/Mutation/{GENOMIC_MUTATION_ID}";
+        rr:class iasis:Mutation;
+    ];
+    rr:predicateObjectMap [
+        rr:predicate iasis:geneName;
+        rr:objectMap [ 
+            rml:reference "Gene name"
+        ]
+    ];
+    rr:predicateObjectMap [
+        rr:predicate iasis:mutation_somatic_status;
+        rr:objectMap <#FunctionMap1>
+    ];
+    rr:predicateObjectMap [
+        rr:predicate iasis:tissue;
+        rr:objectMap <#FunctionMap4>
+    ].
 
 
 <#TriplesMap2>
-	rml:logicalSource [ rml:source "data.csv";
-						rml:referenceFormulation ql:CSV ];
-	rr:subjectMap [
-		rr:template "http://project-iasis.eu/GenomicPosition/{cFormat}";
-		rr:class iasis:GenomicPosition;
-	];	
+    rml:logicalSource [ rml:source "data.csv";
+                        rml:referenceFormulation ql:CSV ];
+    rr:subjectMap [
+        rr:template "http://project-iasis.eu/GenomicPosition/{cFormat}";
+        rr:class iasis:GenomicPosition;
+    ];  
 
-	rr:predicateObjectMap [
-		rr:predicate iasis:mutation_cds;
-		rr:objectMap [ 
-			rml:reference "Mutation CDS" 
-		]
-	];
-	rr:predicateObjectMap [
-		rr:predicate iasis:chromosome_start_end;
-		rr:objectMap [ 
-			rml:reference "Mutation genome position" 
-		]
-	].	
+    rr:predicateObjectMap [
+        rr:predicate iasis:mutation_cds;
+        rr:objectMap <#FunctionMap2>
+    ];
+    rr:predicateObjectMap [
+        rr:predicate iasis:chromosome_start_end;
+        rr:objectMap <#FunctionMap3>
+    ].  
 
 <#FunctionMap1>
     a fnml:FunctionTermMap;
@@ -177,24 +169,3 @@
             ]
         ];    
         ].                
-
-<#FunctionMap5>
-    a fnml:FunctionTermMap;
-
-    fnml:functionValue [
-        rml:logicalSource [ rml:source "data.csv";
-        rml:referenceFormulation ql:CSV 
-                            ];
-        rr:predicateObjectMap [
-            rr:predicate fno:executes ;
-            rr:objectMap [ 
-                rr:constant ex:toupper 
-            ]
-        ];
-        rr:predicateObjectMap [
-            rr:predicate ex:value;
-            rr:objectMap [ 
-                rml:reference "Gene name" 
-            ]
-        ];    
-        ]. 

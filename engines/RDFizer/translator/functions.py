@@ -160,7 +160,7 @@ def update_mapping(triple_maps, dic):
                     mapping += "        ]\n"
                 elif "reference" == predicate_object.object_map.mapping_type:
                     mapping += "[\n"
-                    mapping += "        rml:reference " + predicate_object.object_map.value + "\n"
+                    mapping += "        rml:reference \"" + predicate_object.object_map.value + "\"\n"
                     mapping += "        ]\n"
                 elif "parent triples map function" in predicate_object.object_map.mapping_type:
                     mapping += "[\n"
@@ -196,16 +196,17 @@ def update_mapping(triple_maps, dic):
                     mapping += "        ]\n"
                 elif "constant shortcut" in predicate_object.object_map.mapping_type:
                     mapping += "[\n"
-                    mapping += "        rr:constant \"" +  + "\"\n"
+                    mapping += "        rr:constant \"" + predicate_object.object_map.value + "\"\n"
                     mapping += "        ]\n"
                 elif "reference function" in predicate_object.object_map.mapping_type:
                     mapping += "[\n"
                     mapping += "        rr:parentTriplesMap <#" + dic[predicate_object.object_map.value]["output_name"] + ">;\n"
                     for attr in dic[predicate_object.object_map.value]["inputs"]:
-                        mapping += "        rr:joinCondition [\n"
-                        mapping += "            rr:child \"" + dic[predicate_object.object_map.value]["output_name"] + "\";\n"
-                        mapping += "            rr:parent \"" + attr +"\";\n"
-                        mapping += "            ];\n"
+                        if attr[1] is not "constant":
+                            mapping += "        rr:joinCondition [\n"
+                            mapping += "            rr:child \"" + dic[predicate_object.object_map.value]["output_name"] + "\";\n"
+                            mapping += "            rr:parent \"" + attr[0] +"\";\n"
+                            mapping += "            ];\n"
                     mapping += "        ];\n"
                 mapping += "    ];\n"
             if triples_map.function:
@@ -254,7 +255,7 @@ def execute_function(row,dic):
         else:
             return substring(row[dic["func_par"]["value"]],row[dic["func_par"]["index1"]],None)
     elif "replaceValue" in dic["function"]:
-        return replaceValue(row[dic["func_par"]["value"]],row[dic["func_par"]["value2"]],row[dic["func_par"]["value3"]])
+        return replaceValue(row[dic["func_par"]["value"]],dic["func_par"]["value2"],dic["func_par"]["value3"])
     elif "match" in dic["function"]:
         return match(row[dic["func_par"]["regex"]],row[dic["func_par"]["value"]])
     else:
@@ -270,14 +271,16 @@ def update_csv(source, dic):
 
             keys = []
             for attr in dic["inputs"]:
-                keys.append(attr)
+                if attr[1] is not "constant":
+                    keys.append(attr[0])
             keys.append(dic["output_name"])
             writer.writerow(keys)
 
             for row in reader:
                 line = []
                 for attr in dic["inputs"]:
-                    line.append(row[attr])
+                    if attr[1] is not "constant":
+                        line.append(row[attr[0]])
                 line.append(execute_function(row,dic))
                 writer.writerow(line)
 
@@ -286,20 +289,24 @@ def create_dictionary(triple_map):
     dic = {}
     inputs = []
     for tp in triple_map.predicate_object_maps_list:
-
         if "#" in tp.predicate_map.value:
             key = tp.predicate_map.value.split("#")[1]
+            tp_type = tp.predicate_map.mapping_type
         elif "/" in tp.predicate_map.value:
             key = tp.predicate_map.value.split("/")[len(tp.predicate_map.value.split("/"))-1]
+            tp_type = tp.predicate_map.mapping_type
         if "#" in tp.object_map.value:
             value = tp.object_map.value.split("#")[1]
+            tp_type = tp.object_map.mapping_type
         elif "/" in tp.object_map.value:
             value = tp.object_map.value.split("/")[len(tp.object_map.value.split("/"))-1]
+            tp_type = tp.object_map.mapping_type
         else:
             value = tp.object_map.value
+            tp_type = tp.object_map.mapping_type
 
         dic.update({key : value})
-        if key != "executes":
-            inputs.append(value)
+        if (key != "executes") and ([value,tp_type] not in inputs):
+            inputs.append([value,tp_type])
     dic["inputs"] = inputs
     return dic

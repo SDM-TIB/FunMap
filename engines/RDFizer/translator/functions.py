@@ -248,16 +248,16 @@ def execute_function(row,dic):
     elif "trim" in dic["function"]:
         return trim(row[dic["func_par"]["value"]])
     elif "chomp" in dic["function"]:
-        return chomp(row[dic["func_par"]["value"]],row[dic["func_par"]["toremove"]])
+        return chomp(row[dic["func_par"]["value"]],dic["func_par"]["toremove"])
     elif "substring" in dic["function"]:
         if "index2" in dic["func_par"].keys():
-            return substring(row[dic["func_par"]["value"]],row[dic["func_par"]["index1"]],row[dic["func_par"]["index2"]])
+            return substring(row[dic["func_par"]["value"]],dic["func_par"]["index1"],dic["func_par"]["index2"])
         else:
-            return substring(row[dic["func_par"]["value"]],row[dic["func_par"]["index1"]],None)
+            return substring(row[dic["func_par"]["value"]],dic["func_par"]["index1"],None)
     elif "replaceValue" in dic["function"]:
         return replaceValue(row[dic["func_par"]["value"]],dic["func_par"]["value2"],dic["func_par"]["value3"])
     elif "match" in dic["function"]:
-        return match(row[dic["func_par"]["regex"]],row[dic["func_par"]["value"]])
+        return match(dic["func_par"]["regex"],row[dic["func_par"]["value"]])
     else:
         print("Invalid function")
         print("Aborting...")

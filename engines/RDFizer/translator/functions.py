@@ -1,5 +1,6 @@
 import re
 import csv
+import sys
 
 
 # returns a string in lower case
@@ -204,7 +205,7 @@ def update_mapping(triple_maps, dic):
                     for attr in dic[predicate_object.object_map.value]["inputs"]:
                         if attr[1] is not "constant":
                             mapping += "        rr:joinCondition [\n"
-                            mapping += "            rr:child \"" + dic[predicate_object.object_map.value]["output_name"] + "\";\n"
+                            mapping += "            rr:child \"" + attr[0] + "\";\n"
                             mapping += "            rr:parent \"" + attr[0] +"\";\n"
                             mapping += "            ];\n"
                     mapping += "        ];\n"

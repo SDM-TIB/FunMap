@@ -11,7 +11,7 @@
 @prefix iasis: <http://project-iasis.eu/vocab/> .
 @prefix fnml: <http://semweb.mmlab.be/ns/fnml#> .
 @prefix fno: <http://semweb.datasciencelab.be/ns/function#> .
-@prefix ex: <http://www.example.com> .
+@prefix ex: <http://www.example.com/> .
 
 <#TriplesMap1>
     rml:logicalSource [ rml:source "data.csv";
@@ -28,9 +28,7 @@
     ];
     rr:predicateObjectMap [
         rr:predicate iasis:mutation_somatic_status;
-        rr:objectMap [ 
-            rr:objectMap <#FunctionMap1> 
-        ]
+        rr:objectMap <#FunctionMap1> 
     ];
     rr:predicateObjectMap [
         rr:predicate iasis:tissue;

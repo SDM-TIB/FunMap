@@ -11,7 +11,7 @@
 @prefix iasis: <http://project-iasis.eu/vocab/> .
 @prefix fnml: <http://semweb.mmlab.be/ns/fnml#> .
 @prefix fno: <http://semweb.datasciencelab.be/ns/function#> .
-@prefix ex: <http://www.example.com> .
+@prefix ex: <http://www.example.com/> .
 
 
 <#TriplesMap1>
@@ -113,7 +113,7 @@
             ]
         ];  
         rr:predicateObjectMap [
-            rr:predicate ex:value2;
+            rr:predicate ex:value3;
             rr:objectMap [ 
                 rr:constant "_"; 
             ]
@@ -146,7 +146,7 @@
             ]
         ];  
         rr:predicateObjectMap [
-            rr:predicate ex:value2;
+            rr:predicate ex:value3;
             rr:objectMap [ 
                 rr:constant ":"; 
             ]

@@ -28,11 +28,13 @@
     ];
     rr:predicateObjectMap [
         rr:predicate iasis:mutation_somatic_status;
-        rr:objectMap <#FunctionMap1>
+        rr:objectMap [ 
+            rml:reference "Mutation somatic status" 
+        ]
     ];
     rr:predicateObjectMap [
         rr:predicate iasis:tissue;
-        rr:objectMap <#FunctionMap4>
+        rr:objectMap <#FunctionMap3>
     ].
 
 
@@ -46,47 +48,14 @@
 
     rr:predicateObjectMap [
         rr:predicate iasis:mutation_cds;
-        rr:objectMap <#FunctionMap2>
+        rr:objectMap <#FunctionMap1>
     ];
     rr:predicateObjectMap [
         rr:predicate iasis:chromosome_start_end;
-        rr:objectMap <#FunctionMap3>
+        rr:objectMap <#FunctionMap2>
     ].  
 
 <#FunctionMap1>
-    a fnml:FunctionTermMap;
-
-    fnml:functionValue [
-        rml:logicalSource [ rml:source "data.csv";
-        rml:referenceFormulation ql:CSV 
-                            ];
-        rr:predicateObjectMap [
-            rr:predicate fno:executes ;
-            rr:objectMap [ 
-                rr:constant ex:replaceValue 
-            ]
-        ];
-        rr:predicateObjectMap [
-            rr:predicate ex:value;
-            rr:objectMap [ 
-                rml:reference "Mutation somatic status" 
-            ]
-        ];  
-        rr:predicateObjectMap [
-            rr:predicate ex:value2;
-            rr:objectMap [ 
-                rr:constant " "; 
-            ]
-        ];  
-        rr:predicateObjectMap [
-            rr:predicate ex:value3;
-            rr:objectMap [ 
-                rr:constant "_"; 
-            ]
-        ]; 
-        ].
-
-<#FunctionMap2>
     a fnml:FunctionTermMap;
 
     fnml:functionValue [
@@ -119,7 +88,7 @@
         ]; 
         ].
 
-<#FunctionMap3>
+<#FunctionMap2>
     a fnml:FunctionTermMap;
 
     fnml:functionValue [
@@ -152,7 +121,7 @@
         ]; 
         ]. 
 
-<#FunctionMap4>
+<#FunctionMap3>
     a fnml:FunctionTermMap;
 
     fnml:functionValue [

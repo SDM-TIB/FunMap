@@ -23,9 +23,7 @@
     ];
     rr:predicateObjectMap [
         rr:predicate iasis:geneName;
-        rr:objectMap [ 
-            rr:objectMap <#FunctionMap5>
-        ]
+        rr:objectMap <#FunctionMap5>
     ];
     rr:predicateObjectMap [
         rr:predicate iasis:mutation_somatic_status;

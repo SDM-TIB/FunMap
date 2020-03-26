@@ -225,9 +225,7 @@ def update_mapping(triple_maps, dic):
         mapping += "            ];\n"
         mapping += "    rr:subjectMap [\n"
         mapping += "        rml:reference \"" + dic[function]["output_name"] + "\"\n"
-        mapping += "    ];\n\n"
-    mapping = mapping[:-3]
-    mapping += ".\n\n" 
+        mapping += "    ].\n\n"
 
     prefix_string = ""
     for prefix in prefixes.keys():

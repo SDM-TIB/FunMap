@@ -12,6 +12,7 @@
 @prefix fnml: <http://semweb.mmlab.be/ns/fnml#> .
 @prefix fno: <http://semweb.datasciencelab.be/ns/function#> .
 @prefix ex: <http://www.example.com/> .
+@base <http://MapFun.KG/> .
 
 
 <#TriplesMap1>

@@ -12,9 +12,10 @@
 @prefix fnml: <http://semweb.mmlab.be/ns/fnml#> .
 @prefix fno: <http://semweb.datasciencelab.be/ns/function#> .
 @prefix ex: <http://www.example.com/> .
-@base <http://MapFun.KG/> .
+@prefix grel: <http://users.ugent.be/~bjdmeest/function/grel.ttl#> .
+@base <http://www.example.com> .
 
-<#TriplesMap1>
+<#TriplesMap1> a rr:TriplesMap;
 	rml:logicalSource [ rml:source "data.csv";
 						rml:referenceFormulation ql:CSV ];
 	rr:subjectMap [
@@ -34,7 +35,7 @@
         ]
     ].    
 
-<#TriplesMap2>
+<#TriplesMap2> a rr:TriplesMap;
     rml:logicalSource [ rml:source "data.csv";
                         rml:referenceFormulation ql:CSV ];
     rr:subjectMap [
@@ -48,7 +49,7 @@
         ]
     ].
 
-<#TriplesMap3>
+<#TriplesMap3> a rr:TriplesMap;
     rml:logicalSource [ rml:source "data.csv";
                         rml:referenceFormulation ql:CSV ];
     rr:subjectMap [
@@ -62,7 +63,7 @@
         ]
     ].
 
-<#FunctionMap1>
+<#FunctionMap1> 
     a fnml:FunctionTermMap;
 
     fnml:functionValue [
@@ -72,25 +73,25 @@
         rr:predicateObjectMap [
             rr:predicate fno:executes ;
             rr:objectMap [ 
-                rr:constant ex:replaceValue 
+                rr:constant grel:string_replace
             ]
         ];
         rr:predicateObjectMap [
-            rr:predicate ex:value;
+            rr:predicate grel:valueParameter;
             rr:objectMap [ 
                 rml:reference "Mutation genome position" 
             ]
         ];  
         rr:predicateObjectMap [
-            rr:predicate ex:value2;
+            rr:predicate grel:p_string_find;
             rr:objectMap [ 
                 rr:constant "-"; 
             ]
         ];  
         rr:predicateObjectMap [
-            rr:predicate ex:value3;
+            rr:predicate grel:p_string_replace;
             rr:objectMap [ 
                 rr:constant ":"; 
             ]
         ]; 
-        ]. 
+        ].

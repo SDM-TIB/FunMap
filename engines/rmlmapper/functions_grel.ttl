@@ -7,6 +7,10 @@
 @prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix void:    <http://rdfs.org/ns/void#> .
 @prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix grelm:   <http://fno.io/grel/rmlmapping#> .
+@prefix fnoi:    <https://w3id.org/function/vocabulary/implementation#> .
+@prefix fnom:    <https://w3id.org/function/vocabulary/mapping#> .
+@prefix doap:    <http://usefulinc.com/ns/doap#> .
 
 grel:void
     a                 void:DatasetDescription ;
@@ -439,13 +443,13 @@ grel:prob_replace
     dcterms:description
              "Replacing each non-overlapping occurrence of a regular expression pattern with a replacement string. Regular expession matching may involve modifier flags."^^xsd:string .
 
-#grel:string_replace
-#    a                   fno:Function ;
-#    fno:name            "replace" ;
-#    dcterms:description "replace" ;
-#    fno:solves          grel:prob_replace ;
-#    fno:expects         ( grel:valueParam grel:param_find grel:param_replace ) ;
-#    fno:returns         ( grel:stringOut ) .
+grel:string_replace
+    a                   fno:Function ;
+    fno:name            "replace" ;
+    dcterms:description "replace" ;
+    fno:solves          grel:prob_replace ;
+    fno:expects         ( grel:valueParam grel:param_find grel:param_replace ) ;
+    fno:returns         ( grel:stringOut ) .
 
 grel:param_find
     a             fno:Parameter ;
@@ -859,6 +863,38 @@ grel:prob_year
     a                   fno:Problem ;
     fno:name            "The year problem"^^xsd:string ;
     dcterms:description "Extracting the year from a date/time literal."^^xsd:string .
+
+
+grelm:javaString
+    a                  fnoi:JavaClass ;
+    doap:download-page "GrelFunctions.jar" ;
+    fnoi:class-name    "io.fno.grel.StringFunctions" .
+
+grelm:complexJavaString
+    a                  fnoi:JavaClass ;
+    doap:download-page "ComplexGrelFunctions.jar" ;
+    fnoi:class-name    "es.upm.fi.dia.oeg.ComplexGrelFunctions" .
+
+grelm:uppercaseMapping
+    a                    fnoi:Mapping ;
+    fno:function         grel:toUpperCase ;
+    fno:implementation   grelm:javaString ;
+    fno:methodMapping    [ a                fnom:StringMethodMapping ;
+                           fnom:method-name "toUppercase" ] .
+
+grelm:lowercaseMapping
+    a                    fnoi:Mapping ;
+    fno:function         grel:toLowerCase ;
+    fno:implementation   grelm:javaString ;
+    fno:methodMapping    [ a                fnom:StringMethodMapping ;
+                           fnom:method-name "toLowercase" ] .
+
+grelm:replaceMapping
+    a                    fnoi:Mapping ;
+    fno:function         grel:string_replace ;
+    fno:implementation   grelm:complexJavaString ;
+    fno:methodMapping    [ a                fnom:StringMethodMapping ;
+                           fnom:method-name "replace" ] .
 
 #grel:date_datePart
 #    a                   fno:Function ;

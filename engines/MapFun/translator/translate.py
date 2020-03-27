@@ -305,14 +305,13 @@ def translate(config_path):
 	
 	"""
 
-	if not os.path.exists(os.getcwd() + "/output"):
-		os.mkdir(os.getcwd() + "/output")
+	
 
 	config = ConfigParser(interpolation=ExtendedInterpolation())
 	config.read(config_path)
 
-	#if not os.path.exists(config["datasets"]["output_folder"]):
-	#	os.mkdir(config["datasets"]["output_folder"])
+	if not os.path.exists(config["datasets"]["output_folder"]):
+		os.mkdir(config["datasets"]["output_folder"])
 
 	with ThreadPoolExecutor(max_workers=10) as executor:
 		for dataset_number in range(int(config["datasets"]["number_of_datasets"])):
@@ -327,18 +326,18 @@ def translate(config_path):
 					if triples_map.function:
 						dic = create_dictionary(triples_map)
 						current_func = {"output_name":"OUTPUT" + str(i),
-										"output_file": os.getcwd() + "/output/OUTPUT" + str(i) + ".csv", 
+										"output_file": config["datasets"]["output_folder"] + "/OUTPUT" + str(i) + ".csv", 
 										"inputs":dic["inputs"], 
 										"function":dic["executes"],
 										"func_par":dic}
 						function_dic[triples_map.triples_map_id] = current_func
-						update_csv(triples_map.data_source, current_func)
+						update_csv(triples_map.data_source, current_func, config["datasets"]["output_folder"])
 						i += 1	
 				else:
 					print("Invalid reference formulation or format")
 					print("Aborting...")
 					sys.exit(1)
-			update_mapping(triples_map_list, function_dic)
+			update_mapping(triples_map_list, function_dic, config["datasets"]["output_folder"], config[dataset_i]["mapping"])
 
 			print("Successfully executed the functions in {}\n".format(config[dataset_i]["name"]))
 

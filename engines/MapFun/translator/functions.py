@@ -91,11 +91,8 @@ def prefix_extraction(uri):
         url = temp
     return prefix, url, value
 
-def update_mapping(triple_maps, dic):
+def update_mapping(triple_maps, dic, output, original):
     mapping = ""
-    prefixes = {"rr":"http://www.w3.org/ns/r2rml#",
-                "rml":"http://semweb.mmlab.be/ns/rml#",
-                "ql":"http://semweb.mmlab.be/ns/ql#"}
     for triples_map in triple_maps:
 
         if triples_map.function:
@@ -127,7 +124,6 @@ def update_mapping(triple_maps, dic):
             if triples_map.subject_map.rdf_class is not None:
                 prefix, url, value = prefix_extraction(triples_map.subject_map.rdf_class)
                 mapping += "        rr:class " + prefix + ":" + value  + "\n"
-                prefixes[prefix] = url
             mapping += "    ];\n"
 
             for predicate_object in triples_map.predicate_object_maps_list:
@@ -136,11 +132,9 @@ def update_mapping(triple_maps, dic):
                 if "constant" in predicate_object.predicate_map.mapping_type :
                     prefix, url, value = prefix_extraction(predicate_object.predicate_map.value)
                     mapping += "        rr:predicate " + prefix + ":" + value + ";\n"
-                    prefixes[prefix] = url
                 elif "constant shortcut" in predicate_object.predicate_map.mapping_type:
                     prefix, url, value = prefix_extraction(predicate_object.predicate_map.value)
                     mapping += "        rr:predicate " + prefix + ":" + value + ";\n"
-                    prefixes[prefix] = url
                 elif "template" in predicate_object.predicate_map.mapping_type:
                     mapping += "        rr:predicateMap[\n"
                     mapping += "            rr:template \"" + predicate_object.predicate_map.value + "\"\n"  
@@ -228,12 +222,20 @@ def update_mapping(triple_maps, dic):
         mapping += "    ].\n\n"
 
     prefix_string = ""
-    for prefix in prefixes.keys():
-        prefix_string += "@prefix " + prefix + ": <" + prefixes[prefix] + "> .\n"
+    
+    f = open(original,"r")
+    original_mapping = f.readlines()
+    for prefix in original_mapping:
+        if "prefix" in prefix:
+           prefix_string += prefix
+        else:
+            break
+    f.close()  
+
     prefix_string += "\n"
     prefix_string += mapping
 
-    mapping_file = open("output/transfered_mapping.ttl","w")
+    mapping_file = open(output + "/transfered_mapping.ttl","w")
     mapping_file.write(prefix_string)
     mapping_file.close()
 
@@ -262,9 +264,9 @@ def execute_function(row,dic):
         print("Aborting...")
         sys.exit(1)
 
-def update_csv(source, dic):
+def update_csv(source, dic, output):
     with open(source, "r") as source_csv:
-        with open("output/" + dic["output_name"] + ".csv", "w") as temp_csv:
+        with open(output + "/" + dic["output_name"] + ".csv", "w") as temp_csv:
             writer = csv.writer(temp_csv, quoting=csv.QUOTE_ALL)
             reader = csv.DictReader(source_csv, delimiter=',')
 

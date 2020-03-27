@@ -24,9 +24,7 @@
 	];
 	rr:predicateObjectMap [
 		rr:predicate iasis:isLocatedIn;
-		rr:objectMap [ 
-			rml:reference "Mutation genome position" 
-		]
+		rr:objectMap <#FunctionMap1> 
 	];
     rr:predicateObjectMap [
         rr:predicate iasis:tissue;
@@ -63,7 +61,7 @@
         ]
     ].
 
-<#FunctionMap1> 
+<#FunctionMap4>
     a fnml:FunctionTermMap;
 
     fnml:functionValue [
@@ -73,7 +71,7 @@
         rr:predicateObjectMap [
             rr:predicate fno:executes ;
             rr:objectMap [ 
-                rr:constant grel:string_replace
+                rr:constant grel:toLowerCase 
             ]
         ];
         rr:predicateObjectMap [
@@ -81,17 +79,6 @@
             rr:objectMap [ 
                 rml:reference "Mutation genome position" 
             ]
-        ];  
-        rr:predicateObjectMap [
-            rr:predicate grel:p_string_find;
-            rr:objectMap [ 
-                rr:constant "-"; 
-            ]
-        ];  
-        rr:predicateObjectMap [
-            rr:predicate grel:p_string_replace;
-            rr:objectMap [ 
-                rr:constant ":"; 
-            ]
-        ]; 
-        ].
+        ];    
+        ]. 
+

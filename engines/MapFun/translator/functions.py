@@ -78,6 +78,8 @@ def prefix_extraction(uri):
             prefix = "dcterms"
         elif "elements" in uri:
             prefix = "dce"
+        elif "iasis" in uri:
+            prefix = "iasis"
         else:
             prefix = uri.split("/")[len(uri.split("/"))-2]
         value = uri.split("/")[len(uri.split("/"))-1]
@@ -226,7 +228,7 @@ def update_mapping(triple_maps, dic, output, original):
     f = open(original,"r")
     original_mapping = f.readlines()
     for prefix in original_mapping:
-        if "prefix" in prefix:
+        if ("prefix" in prefix) or ("base" in prefix):
            prefix_string += prefix
         else:
             break

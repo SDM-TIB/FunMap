@@ -53,10 +53,32 @@
     ];
     rr:predicateObjectMap [
         rr:predicate iasis:isLocatedIn;
-        rr:objectMap [ 
-            rml:reference "Mutation genome position" 
-        ]
+        rr:objectMap <#FunctionMap1> 
     ].
+
+<#TriplesMap4>
+    rml:logicalSource [ rml:source "data.csv";
+                        rml:referenceFormulation ql:CSV ];
+    rr:subjectMap [
+        rr:template "http://project-iasis.eu/Variant/{Mutation CDS}";
+        rr:class iasis:Variant;
+    ];
+    rr:predicateObjectMap [
+        rr:predicate iasis:isObservedIn;
+        rr:objectMap <#FunctionMap1> 
+    ].    
+
+<#TriplesMap5>
+    rml:logicalSource [ rml:source "data.csv";
+                        rml:referenceFormulation ql:CSV ];
+    rr:subjectMap [
+        rr:template "http://project-iasis.eu/TumorTissue/{Primary site}";
+        rr:class iasis:TumorTissue;
+    ];
+    rr:predicateObjectMap [
+        rr:predicate iasis:isRelatedTo;
+        rr:objectMap <#FunctionMap1> 
+    ]. 
 
 <#FunctionMap1>
     a fnml:FunctionTermMap;

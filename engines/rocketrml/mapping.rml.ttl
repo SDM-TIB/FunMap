@@ -71,3 +71,36 @@ grel:stringOut a fno:Output ;
   rdfs:label "output string" ;
   fno:type xsd:string ;
   fno:predicate grel:stringOutput .
+
+grel:string_replace
+    a                   fno:Function ;
+    fno:name            "replace" ;
+    dcterms:description "replace" ;
+    fno:solves          grel:prob_replace ;
+    fno:expects         ( grel:valueParam grel:param_find grel:param_replace ) ;
+    fno:returns         ( grel:stringOut ) .
+
+grel:param_find
+    a             fno:Parameter ;
+    fno:name      "f" ;
+    rdfs:label    "f" ;
+    fno:predicate grel:p_string_find ;
+    fno:type      xsd:string ;
+    fno:required  "true"^^xsd:boolean .
+
+grel:param_replace
+    a             fno:Parameter ;
+    fno:name      "r" ;
+    rdfs:label    "r" ;
+    fno:predicate grel:p_string_replace ;
+    fno:type      xsd:string ;
+    fno:required  "true"^^xsd:boolean .
+
+grel:toLowerCase
+    a                   fno:Function ;
+    fno:name            "to Lowercase" ;
+    rdfs:label          "to Lowercase" ;
+    dcterms:description "Returns the input with all letters in lower case." ;
+    fno:solves          grel:prob_lcase ;
+    fno:expects         ( grel:valueParam ) ;
+    fno:returns         ( grel:stringOut ) .

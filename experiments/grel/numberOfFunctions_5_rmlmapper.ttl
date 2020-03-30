@@ -67,7 +67,7 @@
             ]
         ];
         rr:predicateObjectMap [
-            rr:predicate grel:valueParam;
+            rr:predicate grel:valueParameter;
             rr:objectMap [ 
                 rml:reference "Mutation somatic status" 
             ]
@@ -100,7 +100,7 @@
             ]
         ];
         rr:predicateObjectMap [
-            rr:predicate grel:valueParam;
+            rr:predicate grel:valueParameter;
             rr:objectMap [ 
                 rml:reference "Mutation CDS" 
             ]
@@ -133,7 +133,7 @@
             ]
         ];
         rr:predicateObjectMap [
-            rr:predicate grel:valueParam;
+            rr:predicate grel:valueParameter;
             rr:objectMap [ 
                 rml:reference "Mutation genome position" 
             ]
@@ -166,7 +166,7 @@
             ]
         ];
         rr:predicateObjectMap [
-            rr:predicate grel:valueParam;
+            rr:predicate grel:valueParameter;
             rr:objectMap [ 
                 rml:reference "Primary site" 
             ]
@@ -187,7 +187,7 @@
             ]
         ];
         rr:predicateObjectMap [
-            rr:predicate grel:valueParam;
+            rr:predicate grel:valueParameter;
             rr:objectMap [ 
                 rml:reference "Gene name" 
             ]

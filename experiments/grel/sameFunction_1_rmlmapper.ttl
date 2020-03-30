@@ -75,7 +75,7 @@
             ]
         ];
         rr:predicateObjectMap [
-            rr:predicate grel:valueParam;
+            rr:predicate grel:valueParameter;
             rr:objectMap [ 
                 rml:reference "Mutation genome position" 
             ]

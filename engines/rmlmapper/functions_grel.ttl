@@ -894,7 +894,7 @@ grelm:replaceMapping
     fno:function         grel:string_replace ;
     fno:implementation   grelm:complexJavaString ;
     fno:methodMapping    [ a                fnom:StringMethodMapping ;
-                           fnom:method-name "replace" ] .
+                           fnom:method-name "string_replace" ] .
 
 #grel:date_datePart
 #    a                   fno:Function ;

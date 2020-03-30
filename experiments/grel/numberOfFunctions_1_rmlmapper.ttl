@@ -23,45 +23,45 @@
 		rr:class iasis:Mutation;
 	];
 	rr:predicateObjectMap [
-		rr:predicate iasis:isLocatedIn;
+		rr:predicate iasis:geneName;
+		rr:objectMap [ 
+			rml:reference "Gene name"
+		]
+	];
+	rr:predicateObjectMap [
+		rr:predicate iasis:mutation_somatic_status;
 		rr:objectMap <#FunctionMap1> 
 	];
-    rr:predicateObjectMap [
-        rr:predicate iasis:tissue;
-        rr:objectMap [ 
-            rml:reference "Primary site" 
-        ]
-    ].    
+	rr:predicateObjectMap [
+		rr:predicate iasis:tissue;
+		rr:objectMap [ 
+			rml:reference "Primary site" 
+		]
+	].
+
 
 <#TriplesMap2> a rr:TriplesMap;
-    rml:logicalSource [ rml:source "data.csv";
-                        rml:referenceFormulation ql:CSV ];
-    rr:subjectMap [
-        rr:template "http://project-iasis.eu/GenomicPosition/{cFormat}";
-        rr:class iasis:GenomicPosition;
-    ];  
-    rr:predicateObjectMap [
-        rr:predicate iasis:isOn;
-        rr:objectMap [ 
-            rml:reference "Mutation genome position" 
-        ]
-    ].
+	rml:logicalSource [ rml:source "data.csv";
+						rml:referenceFormulation ql:CSV ];
+	rr:subjectMap [
+		rr:template "http://project-iasis.eu/GenomicPosition/{cFormat}";
+		rr:class iasis:GenomicPosition;
+	];	
 
-<#TriplesMap3> a rr:TriplesMap;
-    rml:logicalSource [ rml:source "data.csv";
-                        rml:referenceFormulation ql:CSV ];
-    rr:subjectMap [
-        rr:template "http://project-iasis.eu/Gene/{Gene name}";
-        rr:class iasis:Gene;
-    ];
-    rr:predicateObjectMap [
-        rr:predicate iasis:isLocatedIn;
-        rr:objectMap [ 
-            rml:reference "Mutation genome position" 
-        ]
-    ].
+	rr:predicateObjectMap [
+		rr:predicate iasis:mutation_cds;
+		rr:objectMap [ 
+			rml:reference "Mutation CDS" 
+		]
+	];
+	rr:predicateObjectMap [
+		rr:predicate iasis:chromosome_start_end;
+		rr:objectMap [ 
+			rml:reference "Mutation genome position" 
+		]
+	].	
 
-<#FunctionMap1> 
+<#FunctionMap1>
     a fnml:FunctionTermMap;
 
     fnml:functionValue [
@@ -77,20 +77,19 @@
         rr:predicateObjectMap [
             rr:predicate grel:valueParameter;
             rr:objectMap [ 
-                rml:reference "Mutation genome position" 
+                rml:reference "Mutation somatic status" 
             ]
         ];  
         rr:predicateObjectMap [
             rr:predicate grel:p_string_find;
             rr:objectMap [ 
-                rr:constant "-"; 
+                rr:constant " "; 
             ]
         ];  
         rr:predicateObjectMap [
             rr:predicate grel:p_string_replace;
             rr:objectMap [ 
-                rr:constant ":"; 
+                rr:constant "_"; 
             ]
         ]; 
-        ].
-
+    ].

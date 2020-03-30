@@ -16,16 +16,16 @@
 @base <http://www.example.com> .
 
 <#TriplesMap1> a rr:TriplesMap;
-	rml:logicalSource [ rml:source "data.csv";
-						rml:referenceFormulation ql:CSV ];
-	rr:subjectMap [
-		rr:template "http://project-iasis.eu/Mutation/{GENOMIC_MUTATION_ID}";
-		rr:class iasis:Mutation;
-	];
-	rr:predicateObjectMap [
-		rr:predicate iasis:isLocatedIn;
-		rr:objectMap <#FunctionMap1> 
-	];
+    rml:logicalSource [ rml:source "data.csv";
+                        rml:referenceFormulation ql:CSV ];
+    rr:subjectMap [
+        rr:template "http://project-iasis.eu/Mutation/{GENOMIC_MUTATION_ID}";
+        rr:class iasis:Mutation;
+    ];
+    rr:predicateObjectMap [
+        rr:predicate iasis:isLocatedIn;
+        rr:objectMap <#FunctionMap1>
+    ];
     rr:predicateObjectMap [
         rr:predicate iasis:tissue;
         rr:objectMap [ 
@@ -42,9 +42,7 @@
     ];  
     rr:predicateObjectMap [
         rr:predicate iasis:isOn;
-        rr:objectMap [ 
-            rml:reference "Mutation genome position" 
-        ]
+        rr:objectMap <#FunctionMap1> 
     ].
 
 <#TriplesMap3> a rr:TriplesMap;
@@ -56,10 +54,32 @@
     ];
     rr:predicateObjectMap [
         rr:predicate iasis:isLocatedIn;
-        rr:objectMap [ 
-            rml:reference "Mutation genome position" 
-        ]
+        rr:objectMap <#FunctionMap1>
     ].
+
+<#TriplesMap4> a rr:TriplesMap;
+    rml:logicalSource [ rml:source "data.csv";
+                        rml:referenceFormulation ql:CSV ];
+    rr:subjectMap [
+        rr:template "http://project-iasis.eu/Variant/{Mutation CDS}";
+        rr:class iasis:Variant;
+    ];
+    rr:predicateObjectMap [
+        rr:predicate iasis:isObservedIn;
+        rr:objectMap <#FunctionMap1>
+    ].
+
+<#TriplesMap5> a rr:TriplesMap;
+    rml:logicalSource [ rml:source "data.csv";
+                        rml:referenceFormulation ql:CSV ];
+    rr:subjectMap [
+        rr:template "http://project-iasis.eu/TumorTissue/{Primary site}";
+        rr:class iasis:TumorTissue;
+    ];
+    rr:predicateObjectMap [
+        rr:predicate iasis:isRelatedTo;
+        rr:objectMap <#FunctionMap1>
+    ].        
 
 <#FunctionMap1> 
     a fnml:FunctionTermMap;
@@ -93,4 +113,3 @@
             ]
         ]; 
         ].
-

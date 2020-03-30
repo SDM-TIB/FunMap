@@ -20,7 +20,15 @@ const doMapping = async () => {
       'http://users.ugent.be/~bjdmeest/function/grel.ttl#toUpperCase': function (data) {
                 let result=data[0].toUpperCase(); 
                 return result;
-         }
+      },
+      'http://users.ugent.be/~bjdmeest/function/grel.ttl#string_replace': function (data) {
+                let result=data[0].replace(data[1],data[2]); 
+                return result;
+      },
+      'http://users.ugent.be/~bjdmeest/function/grel.ttl#toLowerCase': function (data) {
+                let result=data[0].toLowerCase(); 
+                return result;
+      }
     }
   };
   const result = await parser.parseFileLive(mapping, inputFiles, options).catch((err) => { console.log(err); });

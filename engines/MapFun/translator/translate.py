@@ -322,7 +322,6 @@ def translate(config_path):
 			function_dic = {}
 			i = 1
 			for triples_map in triples_map_list:
-				join = False
 				if str(triples_map.file_format).lower() == "csv" and triples_map.query == "None":
 					if triples_map.function:
 						dic = create_dictionary(triples_map)
@@ -332,11 +331,12 @@ def translate(config_path):
 										"function":dic["executes"],
 										"func_par":dic}
 						function_dic[triples_map.triples_map_id] = current_func
-						if str(config[dataset_i]["same_function"]).lower() is "true":
+						if "true" in str(config[dataset_i]["same_function"]).lower():
 							join_csv(triples_map.data_source, current_func, config["datasets"]["output_folder"])
 							join = True
 						else:
-							update_csv(triples_map.data_source, current_func)	
+							update_csv(triples_map.data_source, current_func)
+							join = False	
 						i += 1	
 				else:
 					print("Invalid reference formulation or format")

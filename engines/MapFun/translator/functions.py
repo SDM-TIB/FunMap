@@ -218,16 +218,17 @@ def update_mapping(triple_maps, dic, output, original, join):
                 mapping = mapping[:-2]
                 mapping += ".\n\n"
 
-    for function in dic.keys():
-        mapping += "<#" + dic[function]["output_name"] + ">\n"
-        mapping += "    a rr:TriplesMap;\n"
-        mapping += "    rml:logicalSource [ rml:source \"" + dic[function]["output_file"] +"\";\n"
-        if "csv" in dic[function]["output_file"]:
-            mapping += "                rml:referenceFormulation ql:CSV\n" 
-        mapping += "            ];\n"
-        mapping += "    rr:subjectMap [\n"
-        mapping += "        rml:reference \"" + dic[function]["output_name"] + "\"\n"
-        mapping += "    ].\n\n"
+    if join:
+        for function in dic.keys():
+            mapping += "<#" + dic[function]["output_name"] + ">\n"
+            mapping += "    a rr:TriplesMap;\n"
+            mapping += "    rml:logicalSource [ rml:source \"" + dic[function]["output_file"] +"\";\n"
+            if "csv" in dic[function]["output_file"]:
+                mapping += "                rml:referenceFormulation ql:CSV\n" 
+            mapping += "            ];\n"
+            mapping += "    rr:subjectMap [\n"
+            mapping += "        rml:reference \"" + dic[function]["output_name"] + "\"\n"
+            mapping += "    ].\n\n"
 
     prefix_string = ""
     

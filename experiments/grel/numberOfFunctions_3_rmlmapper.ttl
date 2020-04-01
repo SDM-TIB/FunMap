@@ -24,19 +24,19 @@
 	];
 	rr:predicateObjectMap [
 		rr:predicate iasis:geneName;
-		rr:objectMap [ 
-			rml:reference "Gene name"
-		]
+        rr:objectMap [ 
+            rml:reference "Gene name" 
+        ]        
 	];
 	rr:predicateObjectMap [
 		rr:predicate iasis:mutation_somatic_status;
-		rr:objectMap <#FunctionMap1> 
+        rr:objectMap [ 
+            rml:reference "Mutation somatic status"
+        ]	 
 	];
 	rr:predicateObjectMap [
 		rr:predicate iasis:tissue;
-		rr:objectMap [ 
-			rml:reference "Primary site" 
-		]
+        rr:objectMap <#FunctionMap3>
 	].
 
 
@@ -50,47 +50,14 @@
 
 	rr:predicateObjectMap [
 		rr:predicate iasis:mutation_cds;
-		rr:objectMap <#FunctionMap2>
+		rr:objectMap <#FunctionMap1>
 	];
 	rr:predicateObjectMap [
 		rr:predicate iasis:chromosome_start_end;
-		rr:objectMap <#FunctionMap3>
+		rr:objectMap <#FunctionMap2>
 	].	
 
 <#FunctionMap1>
-    a fnml:FunctionTermMap;
-
-    fnml:functionValue [
-        rml:logicalSource [ rml:source "data.csv";
-        rml:referenceFormulation ql:CSV 
-                            ];
-        rr:predicateObjectMap [
-            rr:predicate fno:executes ;
-            rr:objectMap [ 
-                rr:constant grel:string_replace
-            ]
-        ];
-        rr:predicateObjectMap [
-            rr:predicate grel:valueParameter;
-            rr:objectMap [ 
-                rml:reference "Mutation somatic status" 
-            ]
-        ];  
-        rr:predicateObjectMap [
-            rr:predicate grel:p_string_find;
-            rr:objectMap [ 
-                rr:constant " "; 
-            ]
-        ];  
-        rr:predicateObjectMap [
-            rr:predicate grel:p_string_replace;
-            rr:objectMap [ 
-                rr:constant "_"; 
-            ]
-        ]; 
-    ].
-
-<#FunctionMap2>
     a fnml:FunctionTermMap;
 
     fnml:functionValue [
@@ -112,7 +79,7 @@
         rr:predicateObjectMap [
             rr:predicate grel:p_string_find;
             rr:objectMap [ 
-                rr:constant "+"; 
+                rr:constant ">"; 
             ]
         ];  
         rr:predicateObjectMap [
@@ -123,7 +90,7 @@
         ]; 
         ].
 
-<#FunctionMap3>
+<#FunctionMap2>
     a fnml:FunctionTermMap;
 
     fnml:functionValue [
@@ -154,4 +121,25 @@
                 rr:constant ":"; 
             ]
         ]; 
-        ].     
+        ].   
+
+<#FunctionMap3>
+    a fnml:FunctionTermMap;
+
+    fnml:functionValue [
+        rml:logicalSource [ rml:source "data.csv";
+        rml:referenceFormulation ql:CSV 
+                            ];
+        rr:predicateObjectMap [
+            rr:predicate fno:executes ;
+            rr:objectMap [ 
+                rr:constant grel:tolower  
+            ]
+        ];
+        rr:predicateObjectMap [
+            rr:predicate grel:valueParameter;
+            rr:objectMap [ 
+                rml:reference "Gene name" 
+            ]
+        ];    
+        ].           

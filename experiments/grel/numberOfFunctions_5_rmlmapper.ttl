@@ -108,7 +108,7 @@
         rr:predicateObjectMap [
             rr:predicate grel:p_string_find;
             rr:objectMap [ 
-                rr:constant "+"; 
+                rr:constant ">"; 
             ]
         ];  
         rr:predicateObjectMap [

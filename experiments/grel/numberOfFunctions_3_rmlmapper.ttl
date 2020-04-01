@@ -133,7 +133,7 @@
         rr:predicateObjectMap [
             rr:predicate fno:executes ;
             rr:objectMap [ 
-                rr:constant grel:tolower  
+                rr:constant grel:toLowerCase  
             ]
         ];
         rr:predicateObjectMap [

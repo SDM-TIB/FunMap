@@ -331,13 +331,18 @@ def translate(config_path):
 										"function":dic["executes"],
 										"func_par":dic}
 						function_dic[triples_map.triples_map_id] = current_func
-						update_csv(triples_map.data_source, current_func, config["datasets"]["output_folder"])
+						if "true" in str(config[dataset_i]["same_function"]).lower():
+							join_csv(triples_map.data_source, current_func, config["datasets"]["output_folder"])
+							join = True
+						else:
+							update_csv(triples_map.data_source, current_func)
+							join = False	
 						i += 1	
 				else:
 					print("Invalid reference formulation or format")
 					print("Aborting...")
 					sys.exit(1)
-			update_mapping(triples_map_list, function_dic, config["datasets"]["output_folder"], config[dataset_i]["mapping"])
+			update_mapping(triples_map_list, function_dic, config["datasets"]["output_folder"], config[dataset_i]["mapping"],join)
 
 			print("Successfully executed the functions in {}\n".format(config[dataset_i]["name"]))
 

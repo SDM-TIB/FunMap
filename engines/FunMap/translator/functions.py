@@ -1,6 +1,7 @@
 import re
 import csv
 import sys
+import os
 
 
 # returns a string in lower case
@@ -93,7 +94,7 @@ def prefix_extraction(uri):
         url = temp
     return prefix, url, value
 
-def update_mapping(triple_maps, dic, output, original):
+def update_mapping(triple_maps, dic, output, original, join):
     mapping = ""
     for triples_map in triple_maps:
 
@@ -196,15 +197,20 @@ def update_mapping(triple_maps, dic, output, original):
                     mapping += "        rr:constant \"" + predicate_object.object_map.value + "\"\n"
                     mapping += "        ]\n"
                 elif "reference function" in predicate_object.object_map.mapping_type:
-                    mapping += "[\n"
-                    mapping += "        rr:parentTriplesMap <#" + dic[predicate_object.object_map.value]["output_name"] + ">;\n"
-                    for attr in dic[predicate_object.object_map.value]["inputs"]:
-                        if attr[1] is not "constant":
-                            mapping += "        rr:joinCondition [\n"
-                            mapping += "            rr:child \"" + attr[0] + "\";\n"
-                            mapping += "            rr:parent \"" + attr[0] +"\";\n"
-                            mapping += "            ];\n"
-                    mapping += "        ];\n"
+                    if join:
+                        mapping += "[\n"
+                        mapping += "        rr:parentTriplesMap <#" + dic[predicate_object.object_map.value]["output_name"] + ">;\n"
+                        for attr in dic[predicate_object.object_map.value]["inputs"]:
+                            if attr[1] is not "constant":
+                                mapping += "        rr:joinCondition [\n"
+                                mapping += "            rr:child \"" + attr[0] + "\";\n"
+                                mapping += "            rr:parent \"" + attr[0] +"\";\n"
+                                mapping += "            ];\n"
+                        mapping += "        ];\n"
+                    else:
+                        mapping += "[\n"
+                        mapping += "        rml:reference \"" + dic[predicate_object.object_map.value]["output_name"] + "\";\n"
+                        mapping += "        ];\n"
                 mapping += "    ];\n"
             if triples_map.function:
                 pass
@@ -212,16 +218,17 @@ def update_mapping(triple_maps, dic, output, original):
                 mapping = mapping[:-2]
                 mapping += ".\n\n"
 
-    for function in dic.keys():
-        mapping += "<#" + dic[function]["output_name"] + ">\n"
-        mapping += "    a rr:TriplesMap;\n"
-        mapping += "    rml:logicalSource [ rml:source \"" + dic[function]["output_file"] +"\";\n"
-        if "csv" in dic[function]["output_file"]:
-            mapping += "                rml:referenceFormulation ql:CSV\n" 
-        mapping += "            ];\n"
-        mapping += "    rr:subjectMap [\n"
-        mapping += "        rml:reference \"" + dic[function]["output_name"] + "\"\n"
-        mapping += "    ].\n\n"
+    if join:
+        for function in dic.keys():
+            mapping += "<#" + dic[function]["output_name"] + ">\n"
+            mapping += "    a rr:TriplesMap;\n"
+            mapping += "    rml:logicalSource [ rml:source \"" + dic[function]["output_file"] +"\";\n"
+            if "csv" in dic[function]["output_file"]:
+                mapping += "                rml:referenceFormulation ql:CSV\n" 
+            mapping += "            ];\n"
+            mapping += "    rr:subjectMap [\n"
+            mapping += "        rml:reference \"" + dic[function]["output_name"] + "\"\n"
+            mapping += "    ].\n\n"
 
     prefix_string = ""
     
@@ -266,7 +273,7 @@ def execute_function(row,dic):
         print("Aborting...")
         sys.exit(1)
 
-def update_csv(source, dic, output):
+def join_csv(source, dic, output):
     with open(source, "r") as source_csv:
         with open(output + "/" + dic["output_name"] + ".csv", "w") as temp_csv:
             writer = csv.writer(temp_csv, quoting=csv.QUOTE_ALL)
@@ -279,13 +286,39 @@ def update_csv(source, dic, output):
             keys.append(dic["output_name"])
             writer.writerow(keys)
 
+            values = []
             for row in reader:
+                value = execute_function(row,dic)
+                if value in values:
+                    line = []
+                    for attr in dic["inputs"]:
+                        if attr[1] is not "constant":
+                            line.append(row[attr[0]])
+                    line.append(value)
+                    writer.writerow(line)
+                    values.append(value)
+
+def update_csv(source, dic):
+    with open(source, "r") as source_csv:
+        with open("temp.csv", "w") as temp_csv:
+            writer = csv.writer(temp_csv, quoting=csv.QUOTE_ALL)
+            reader = csv.DictReader(source_csv, delimiter=',')
+
+            keys = reader.fieldnames
+            keys.append(dic["output_name"])
+            writer.writerow(keys)
+
+            for row in reader:
+                row[dic["output_name"]] = execute_function(row,dic)
                 line = []
-                for attr in dic["inputs"]:
-                    if attr[1] is not "constant":
-                        line.append(row[attr[0]])
-                line.append(execute_function(row,dic))
+                for key in row.keys():
+                    line.append(row[key])
                 writer.writerow(line)
+
+    os.system("rm " + source)
+    os.system("mv temp.csv " + source)
+
+
 
 
 def create_dictionary(triple_map):

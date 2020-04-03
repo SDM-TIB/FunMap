@@ -29,9 +29,9 @@
 		]
 	];
 	rr:predicateObjectMap [
-		rr:predicate iasis:mutation_somatic_status;
+		rr:predicate iasis:sample;
 		rr:objectMap [ 
-			rml:reference "Mutation somatic status" 
+			rml:reference "Sample name" 
 		] 
 	];
 	rr:predicateObjectMap [

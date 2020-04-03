@@ -1,0 +1,120 @@
+@prefix rr: <http://www.w3.org/ns/r2rml#> .
+@prefix rml: <http://semweb.mmlab.be/ns/rml#> .
+@prefix ql: <http://semweb.mmlab.be/ns/ql#> .
+@prefix vocab: <http://project-iasis.eu/vocab/> .
+
+<#TriplesMap2>
+    a rr:TriplesMap;
+    rml:logicalSource [ rml:source "/Users/maria-esthervidal/Documents/docker/ISWC2020RMLFnQ/engines/MapFun/translator/output/volumen25.csv";
+                rml:referenceFormulation ql:CSV
+                ];
+    rr:subjectMap [
+        rr:template "http://project-iasis.eu/GenomicPosition/{cFormat}";
+        rr:class vocab:GenomicPosition
+    ];
+    rr:predicateObjectMap [
+        rr:predicate vocab:chromosome_start_end;
+        rr:objectMap [
+        rr:parentTriplesMap <#OUTPUT2>;
+        rr:joinCondition [
+            rr:child "Mutation genome position";
+            rr:parent "Mutation genome position";
+            ];
+        ];
+    ];
+    rr:predicateObjectMap [
+        rr:predicate vocab:mutation_cds;
+        rr:objectMap [
+        rr:parentTriplesMap <#OUTPUT5>;
+        rr:joinCondition [
+            rr:child "Mutation CDS";
+            rr:parent "Mutation CDS";
+            ];
+        ];
+    ].
+
+<#TriplesMap1>
+    a rr:TriplesMap;
+    rml:logicalSource [ rml:source "/Users/maria-esthervidal/Documents/docker/ISWC2020RMLFnQ/engines/MapFun/translator/output/volumen25.csv";
+                rml:referenceFormulation ql:CSV
+                ];
+    rr:subjectMap [
+        rr:template "http://project-iasis.eu/Mutation/{GENOMIC_MUTATION_ID}";
+        rr:class vocab:Mutation
+    ];
+    rr:predicateObjectMap [
+        rr:predicate vocab:mutation_somatic_status;
+        rr:objectMap [
+        rr:parentTriplesMap <#OUTPUT4>;
+        rr:joinCondition [
+            rr:child "Mutation somatic status";
+            rr:parent "Mutation somatic status";
+            ];
+        ];
+    ];
+    rr:predicateObjectMap [
+        rr:predicate vocab:tissue;
+        rr:objectMap [
+        rr:parentTriplesMap <#OUTPUT1>;
+        rr:joinCondition [
+            rr:child "Primary site";
+            rr:parent "Primary site";
+            ];
+        ];
+    ];
+    rr:predicateObjectMap [
+        rr:predicate vocab:geneName;
+        rr:objectMap [
+        rr:parentTriplesMap <#OUTPUT3>;
+        rr:joinCondition [
+            rr:child "Gene name";
+            rr:parent "Gene name";
+            ];
+        ];
+    ].
+
+<#OUTPUT1>
+    a rr:TriplesMap;
+    rml:logicalSource [ rml:source "/Users/maria-esthervidal/Documents/docker/ISWC2020RMLFnQ/experiments/graph/OUTPUT1.csv";
+                rml:referenceFormulation ql:CSV
+            ];
+    rr:subjectMap [
+        rml:reference "OUTPUT1"
+    ].
+
+<#OUTPUT2>
+    a rr:TriplesMap;
+    rml:logicalSource [ rml:source "/Users/maria-esthervidal/Documents/docker/ISWC2020RMLFnQ/experiments/graph/OUTPUT2.csv";
+                rml:referenceFormulation ql:CSV
+            ];
+    rr:subjectMap [
+        rml:reference "OUTPUT2"
+    ].
+
+<#OUTPUT3>
+    a rr:TriplesMap;
+    rml:logicalSource [ rml:source "/Users/maria-esthervidal/Documents/docker/ISWC2020RMLFnQ/experiments/graph/OUTPUT3.csv";
+                rml:referenceFormulation ql:CSV
+            ];
+    rr:subjectMap [
+        rml:reference "OUTPUT3"
+    ].
+
+<#OUTPUT4>
+    a rr:TriplesMap;
+    rml:logicalSource [ rml:source "/Users/maria-esthervidal/Documents/docker/ISWC2020RMLFnQ/experiments/graph/OUTPUT4.csv";
+                rml:referenceFormulation ql:CSV
+            ];
+    rr:subjectMap [
+        rml:reference "OUTPUT4"
+    ].
+
+<#OUTPUT5>
+    a rr:TriplesMap;
+    rml:logicalSource [ rml:source "/Users/maria-esthervidal/Documents/docker/ISWC2020RMLFnQ/experiments/graph/OUTPUT5.csv";
+                rml:referenceFormulation ql:CSV
+            ];
+    rr:subjectMap [
+        rml:reference "OUTPUT5"
+    ].
+

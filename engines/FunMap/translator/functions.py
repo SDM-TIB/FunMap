@@ -289,7 +289,7 @@ def join_csv(source, dic, output):
             values = []
             for row in reader:
                 value = execute_function(row,dic)
-                if value in values:
+                if value not in values:
                     line = []
                     for attr in dic["inputs"]:
                         if attr[1] is not "constant":
@@ -297,28 +297,6 @@ def join_csv(source, dic, output):
                     line.append(value)
                     writer.writerow(line)
                     values.append(value)
-
-def update_csv(source, dic):
-    with open(source, "r") as source_csv:
-        with open("temp.csv", "w") as temp_csv:
-            writer = csv.writer(temp_csv, quoting=csv.QUOTE_ALL)
-            reader = csv.DictReader(source_csv, delimiter=',')
-
-            keys = reader.fieldnames
-            keys.append(dic["output_name"])
-            writer.writerow(keys)
-
-            for row in reader:
-                row[dic["output_name"]] = execute_function(row,dic)
-                line = []
-                for key in row.keys():
-                    line.append(row[key])
-                writer.writerow(line)
-
-    os.system("rm " + source)
-    os.system("mv temp.csv " + source)
-
-
 
 
 def create_dictionary(triple_map):

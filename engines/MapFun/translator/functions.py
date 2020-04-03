@@ -286,13 +286,17 @@ def join_csv(source, dic, output):
             keys.append(dic["output_name"])
             writer.writerow(keys)
 
+            values = []
             for row in reader:
-                line = []
-                for attr in dic["inputs"]:
-                    if attr[1] is not "constant":
-                        line.append(row[attr[0]])
-                line.append(execute_function(row,dic))
-                writer.writerow(line)
+                value = execute_function(row,dic)
+                if value not in values:
+                    line = []
+                    for attr in dic["inputs"]:
+                        if attr[1] is not "constant":
+                            line.append(row[attr[0]])
+                    line.append(value)
+                    writer.writerow(line)
+                    values.append(value)
 
 def update_csv(source, dic):
     with open(source, "r") as source_csv:

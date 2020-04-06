@@ -288,16 +288,18 @@ def join_csv(source, dic, output):
         data = pd.read_csv(source)
         data.sort_values(dic["func_par"]["value"], inplace = True)
         data.drop_duplicates(subset = dic["func_par"]["value"], keep = "first", inplace = True)
+        data = data.where(pd.notnull(data), None)
         data = data.to_dict(orient='records')
 
         for row in data:
-            value = execute_function(row,dic)
-            line = []
-            for attr in dic["inputs"]:
-                if attr[1] is not "constant":
-                    line.append(row[attr[0]])
-            line.append(value)
-            writer.writerow(line)
+            if row[dic["func_par"]["value"]] is not None:
+                value = execute_function(row,dic)
+                line = []
+                for attr in dic["inputs"]:
+                    if attr[1] is not "constant":
+                        line.append(row[attr[0]])
+                line.append(value)
+                writer.writerow(line)
 
 
 def create_dictionary(triple_map):

@@ -2,6 +2,7 @@ import re
 import csv
 import sys
 import os
+import pandas as pd
 
 
 # returns a string in lower case
@@ -274,29 +275,29 @@ def execute_function(row,dic):
         sys.exit(1)
 
 def join_csv(source, dic, output):
-    with open(source, "r") as source_csv:
-        with open(output + "/" + dic["output_name"] + ".csv", "w") as temp_csv:
-            writer = csv.writer(temp_csv, quoting=csv.QUOTE_ALL)
-            reader = csv.DictReader(source_csv, delimiter=',')
+    with open(output + "/" + dic["output_name"] + ".csv", "w") as temp_csv:
+        writer = csv.writer(temp_csv, quoting=csv.QUOTE_ALL)
 
-            keys = []
+        keys = []
+        for attr in dic["inputs"]:
+            if attr[1] is not "constant":
+                keys.append(attr[0])
+        keys.append(dic["output_name"])
+        writer.writerow(keys)
+
+        data = pd.read_csv(source)
+        data.sort_values(dic["func_par"]["value"], inplace = True)
+        data.drop_duplicates(subset = dic["func_par"]["value"], keep = "first", inplace = True)
+        data = data.to_dict(orient='records')
+
+        for row in data:
+            value = execute_function(row,dic)
+            line = []
             for attr in dic["inputs"]:
                 if attr[1] is not "constant":
-                    keys.append(attr[0])
-            keys.append(dic["output_name"])
-            writer.writerow(keys)
-
-            values = {}
-            for row in reader:
-                value = execute_function(row,dic)
-                if value not in values:
-                    line = []
-                    for attr in dic["inputs"]:
-                        if attr[1] is not "constant":
-                            line.append(row[attr[0]])
-                    line.append(value)
-                    writer.writerow(line)
-                    values[value] = value
+                    line.append(row[attr[0]])
+            line.append(value)
+            writer.writerow(line)
 
 
 def create_dictionary(triple_map):

@@ -286,7 +286,7 @@ def join_csv(source, dic, output):
             keys.append(dic["output_name"])
             writer.writerow(keys)
 
-            values = []
+            values = {}
             for row in reader:
                 value = execute_function(row,dic)
                 if value not in values:
@@ -296,7 +296,7 @@ def join_csv(source, dic, output):
                             line.append(row[attr[0]])
                     line.append(value)
                     writer.writerow(line)
-                    values.append(value)
+                    values[value] = value
 
 
 def create_dictionary(triple_map):

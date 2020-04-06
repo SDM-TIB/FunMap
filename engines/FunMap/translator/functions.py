@@ -2,7 +2,6 @@ import re
 import csv
 import sys
 import os
-import pandas as pd
 
 
 # returns a string in lower case
@@ -275,31 +274,29 @@ def execute_function(row,dic):
         sys.exit(1)
 
 def join_csv(source, dic, output):
-    with open(output + "/" + dic["output_name"] + ".csv", "w") as temp_csv:
-        writer = csv.writer(temp_csv, quoting=csv.QUOTE_ALL)
+    with open(source, "r") as source_csv:
+        with open(output + "/" + dic["output_name"] + ".csv", "w") as temp_csv:
+            writer = csv.writer(temp_csv, quoting=csv.QUOTE_ALL)
+            reader = csv.DictReader(source_csv, delimiter=',')
 
-        keys = []
-        for attr in dic["inputs"]:
-            if attr[1] is not "constant":
-                keys.append(attr[0])
-        keys.append(dic["output_name"])
-        writer.writerow(keys)
+            keys = []
+            for attr in dic["inputs"]:
+                if attr[1] is not "constant":
+                    keys.append(attr[0])
+            keys.append(dic["output_name"])
+            writer.writerow(keys)
 
-        data = pd.read_csv(source)
-        data.sort_values(dic["func_par"]["value"], inplace = True)
-        data.drop_duplicates(subset = dic["func_par"]["value"], keep = "first", inplace = True)
-        data = data.where(pd.notnull(data), None)
-        data = data.to_dict(orient='records')
-
-        for row in data:
-            if row[dic["func_par"]["value"]] is not None:
-                value = execute_function(row,dic)
-                line = []
-                for attr in dic["inputs"]:
-                    if attr[1] is not "constant":
-                        line.append(row[attr[0]])
-                line.append(value)
-                writer.writerow(line)
+            values = {}
+            for row in reader:
+                if (row[dic["func_par"]["value"]] not in values) and (row[dic["func_par"]["value"]] is not ''):
+                    value = execute_function(row,dic)
+                    line = []
+                    for attr in dic["inputs"]:
+                        if attr[1] is not "constant":
+                            line.append(row[attr[0]])
+                    line.append(value)
+                    writer.writerow(line)
+                    values[row[dic["func_par"]["value"]] ] = value
 
 
 def create_dictionary(triple_map):

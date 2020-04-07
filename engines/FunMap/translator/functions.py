@@ -49,7 +49,7 @@ def match(value, regex):
 
 def variantIdentifier(column1, column2,prefix):
     value = ""
-    if (str(column1) != "" and "?" not in str(column1)):
+    if (str(column1) != "" and str(column1) != " "):
         value = re.sub('_.*','',str(column2))+"_"+str(column1).split(".")[1].replace(">", "~")
         value = prefix+value
     return value

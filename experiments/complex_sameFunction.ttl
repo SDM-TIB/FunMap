@@ -72,7 +72,7 @@
             ]
         ];  
         rr:predicateObjectMap [
-            rr:predicate ex:givenPrefix;
+            rr:predicate ex:prefix;
             rr:objectMap [ 
                 rr:constant "http://project-iasis.eu/Variant/"; 
             ]

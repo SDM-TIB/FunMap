@@ -37,8 +37,8 @@
     rml:logicalSource [ rml:source "data.csv";
                         rml:referenceFormulation ql:CSV ];
     rr:subjectMap [
-        rr:template "http://project-iasis.eu/GenomicPosition/{cFormat}";
-        rr:class iasis:GenomicPosition;
+        rr:template "http://project-iasis.eu/Sample/{Sample name}";
+        rr:class iasis:Sample;
     ]; 
     rr:predicateObjectMap [
         rr:predicate iasis:isAssociatedTo;

@@ -2,6 +2,7 @@ import re
 import csv
 import sys
 import os
+import pandas as pd
 
 
 # returns a string in lower case

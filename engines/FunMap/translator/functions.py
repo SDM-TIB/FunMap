@@ -50,7 +50,7 @@ def match(value, regex):
 def variantIdentifier(column1, column2,prefix):
     value = ""
     if (str(column1) != "nan"):
-        value = re.sub('_.*','',str(column2))+"_"+str(column1).split("c.")[1].replace(">", "~")
+        value = re.sub('_.*','',str(column2))+"_"+str(column1).replace(">", "~")
         value = prefix+value
     return value
 

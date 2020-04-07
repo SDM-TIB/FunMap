@@ -46,7 +46,7 @@
 
 <#FunctionMap1>
     a fnml:FunctionTermMap;
-    rr:termType rr:IRI
+    rr:termType rr:IRI;
 
     fnml:functionValue [
         rml:logicalSource [ rml:source "data.csv";

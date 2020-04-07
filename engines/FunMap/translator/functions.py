@@ -206,10 +206,12 @@ def update_mapping(triple_maps, dic, output, original, join):
                                 mapping += "            rr:child \"" + attr[0] + "\";\n"
                                 mapping += "            rr:parent \"" + attr[0] +"\";\n"
                                 mapping += "            ];\n"
+                                mapping += "        rr:termType rr:IRI\n"
                         mapping += "        ];\n"
                     else:
                         mapping += "[\n"
                         mapping += "        rml:reference \"" + dic[predicate_object.object_map.value]["output_name"] + "\";\n"
+                        mapping += "        rr:termType rr:IRI\n"
                         mapping += "        ];\n"
                 mapping += "    ];\n"
             if triples_map.function:

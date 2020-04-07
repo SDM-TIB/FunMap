@@ -288,15 +288,15 @@ def join_csv(source, dic, output):
 
             values = {}
             for row in reader:
-                value = execute_function(row,dic)
-                if value not in values:
+                if (row[dic["func_par"]["value"]] not in values) and (row[dic["func_par"]["value"]] is not ''):
+                    value = execute_function(row,dic)
                     line = []
                     for attr in dic["inputs"]:
                         if attr[1] is not "constant":
                             line.append(row[attr[0]])
                     line.append(value)
                     writer.writerow(line)
-                    values[value] = value
+                    values[row[dic["func_par"]["value"]] ] = value
 
 def update_csv(source, dic):
     with open(source, "r") as source_csv:

@@ -1,0 +1,41 @@
+@prefix fno:     <https://w3id.org/function/ontology#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix ex: <http://www.example.com> .
+
+ex:variantIdentifingProblem a fno:Problem;
+ex:variantIdCreatingAlgorithm a fno:Algorithm;
+
+ex:variantIdCreatingFunction a fno:Function;
+    fno:name "Variant ID creating function"^^xsd:string;
+    dcterms:description "This function creates a unified identifier for variant given in mutation COSMIC dataset by extracting from available data."^^xsd:string;
+    fno:solves ex:variantIdentifingProblem;
+    fno:implements ex:variantIdCreatingAlgorithm;
+    fno:expects ( ex:param_gene ex:param_cds ex:param_prefix ) ;
+    fno:returns ( ex:variantIdOut ) .
+
+ex:param_cds a fno:Parameter ;
+    fno:predicate ex:column1 ;
+    fno:type      xsd:string ;
+    fno:required  "true"^^xsd:boolean .  
+
+ex:param_gene a fno:Parameter ;
+    fno:predicate ex:column2 ;
+    fno:type      xsd:string ;
+    fno:required  "true"^^xsd:boolean .  
+
+ex:param_prefix a fno:Parameter ;
+    fno:predicate ex:givenPrefix ;
+    fno:type      xsd:string ;
+    fno:required  "true"^^xsd:boolean .     
+
+ex:variantIdOut a fno:Output ;
+    fno:predicate ex:variantID ;
+    fno:type      xsd:string ;
+    fno:required  "true"^^xsd:boolean .  
+
+ex:variantIdCreator a fno:Execution;
+    fno:executes ex:variantIdCreatingFunction;
+
+

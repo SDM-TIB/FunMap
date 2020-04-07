@@ -56,7 +56,7 @@
         rr:predicateObjectMap [
             rr:predicate fno:executes ;
             rr:objectMap [ 
-                rr:constant ex:replaceValue 
+                rr:constant ex:variantIdentifier 
             ]
         ];
         rr:predicateObjectMap [

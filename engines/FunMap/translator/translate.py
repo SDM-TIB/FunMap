@@ -166,6 +166,8 @@ def mapping_parser(mapping_file):
 					?_object_map rr:datatype ?object_datatype .
 				}
 				?_object_map fnml:functionValue ?function .
+				OPTIONAL {?_object_map rr:termType ?term .}
+				
 			}
 			}
 			OPTIONAL {
@@ -282,31 +284,6 @@ def mapping_parser(mapping_file):
 
 def translate(config_path):
 
-	"""
-	Takes the configuration file path and sets the necessary variables to perform the
-	semantification of each dataset presented in said file.
-
-	Given a TTL/N3 mapping file expressing the correspondance rules between the raw
-	data and the desired semantified data, the main function performs all the
-	necessary operations to do this transformation
-
-	Parameters
-	----------
-	config_path : string
-		Path to the configuration file
-
-	Returns
-	-------
-	An .nt file per each dataset mentioned in the configuration file semantified.
-	If the duplicates are asked to be removed in main memory, also returns a -min.nt
-	file with the triples sorted and with the duplicates removed.
-
-	(No variable returned)
-	
-	"""
-
-	
-
 	config = ConfigParser(interpolation=ExtendedInterpolation())
 	config.read(config_path)
 
@@ -324,15 +301,34 @@ def translate(config_path):
 			for triples_map in triples_map_list:
 				if str(triples_map.file_format).lower() == "csv" and triples_map.query == "None":
 					if triples_map.function:
-						dic = create_dictionary(triples_map)
-						current_func = {"output_name":"OUTPUT" + str(i),
-										"output_file": config["datasets"]["output_folder"] + "/OUTPUT" + str(i) + ".csv", 
-										"inputs":dic["inputs"], 
-										"function":dic["executes"],
-										"func_par":dic}
-						function_dic[triples_map.triples_map_id] = current_func
-						join_csv(triples_map.data_source, current_func, config["datasets"]["output_folder"])
-						i += 1	
+						pass
+					else:
+						for po in triples_map.predicate_object_maps_list:
+							if po.object_map.mapping_type == "reference function":
+								for triples_map_element in triples_map_list:
+									if triples_map_element.triples_map_id == po.object_map.value:
+										if triples_map_element.triples_map_id not in function_dic:
+											dic = create_dictionary(triples_map_element)
+											if po.object_map.term is not None:
+												if "IRI" in po.object_map.term:
+													current_func = {"output_name":"OUTPUT" + str(i),
+																	"output_file": config["datasets"]["output_folder"] + "/OUTPUT" + str(i) + ".csv", 
+																	"inputs":dic["inputs"], 
+																	"function":dic["executes"],
+																	"func_par":dic,
+																	"termType":True}
+													function_dic[triples_map_element.triples_map_id] = current_func
+													join_csv_URI(triples_map.data_source, current_func, config["datasets"]["output_folder"])
+											else:
+												current_func = {"output_name":"OUTPUT" + str(i),
+																"output_file": config["datasets"]["output_folder"] + "/OUTPUT" + str(i) + ".csv", 
+																"inputs":dic["inputs"], 
+																"function":dic["executes"],
+																"func_par":dic,
+																"termType":False}
+												function_dic[triples_map_element.triples_map_id] = current_func
+												join_csv(triples_map.data_source, current_func, config["datasets"]["output_folder"])
+											i += 1	
 				else:
 					print("Invalid reference formulation or format")
 					print("Aborting...")
@@ -344,30 +340,6 @@ def translate(config_path):
 		
 
 def main():
-
-	"""
-	Function executed when the current file is executed as a script, instead of being
-	executed as a Python package in another script.
-
-	When executing the current file as a script in the terminal, the following flags
-	are accepted:
-
-	-h (python3 semantify.py -h): prompts the correct use of semantify.py as a script
-	-c (python3 semantify.py -c <config_file>): executes the program as a script with
-		with the <config_file> parameter as the path to the configuration file to be
-		used
-	--config_file (python3 semantify.py --config_file <config_file>): same behaviour
-		as -c flag
-
-	Parameters
-	----------
-	Nothing
-
-	Returns
-	-------
-	Nothing
-
-	"""
 
 	argv = sys.argv[1:]
 	try:
@@ -386,26 +358,3 @@ def main():
 
 if __name__ == "__main__":
 	main()
-
-"""
-According to the meeting held on 11.04.2018, semantifying json files is not a top priority right
-now, thus the reimplementation of following functions remain largely undocumented and unfinished.
-
-def json_generator(file_descriptor, iterator):
-	if len(iterator) != 0:
-		if "[*]" not in iterator[0] and iterator[0] != "$":
-			yield from json_generator(file_descriptor[iterator[0]], iterator[1:])
-		elif "[*]" not in iterator[0] and iterator[0] == "$":
-			yield from json_generator(file, iterator[1:])
-		elif "[*]" in iterator[0] and "$" not in iterator[0]:
-			file_array = file_descriptor[iterator[0].replace("[*]","")]
-			for array_elem in file_array:
-				yield from json_generator(array_elem, iterator[1:])
-		elif iterator[0] == "$[*]":
-			for array_elem in file_descriptor:
-				yield from json_generator(array_elem, iterator[1:])
-	else:
-		yield file_descriptor
-
-
-"""

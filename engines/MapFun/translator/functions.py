@@ -46,6 +46,13 @@ def replaceValue(value, value2, value3):
 def match(value, regex):
     return re.match(regex, value)[0]
 
+def variantIdentifier(column1, column2,prefix):
+    value = ""
+    if (str(column1) != "nan" and "?" not in str(column1)):
+        value = re.sub('_.*','',str(column2))+"_"+str(column1).split(".")[1].replace(">", "~")
+        value = prefix+value
+    return value
+
 def prefix_extraction(uri):
     prefix = ""
     url = ""
@@ -206,12 +213,10 @@ def update_mapping(triple_maps, dic, output, original, join):
                                 mapping += "            rr:child \"" + attr[0] + "\";\n"
                                 mapping += "            rr:parent \"" + attr[0] +"\";\n"
                                 mapping += "            ];\n"
-                                mapping += "        rr:termType rr:IRI\n"
                         mapping += "        ];\n"
                     else:
                         mapping += "[\n"
                         mapping += "        rml:reference \"" + dic[predicate_object.object_map.value]["output_name"] + "\";\n"
-                        mapping += "        rr:termType rr:IRI\n"
                         mapping += "        ];\n"
                 mapping += "    ];\n"
             if triples_map.function:
@@ -229,7 +234,10 @@ def update_mapping(triple_maps, dic, output, original, join):
                 mapping += "                rml:referenceFormulation ql:CSV\n" 
             mapping += "            ];\n"
             mapping += "    rr:subjectMap [\n"
-            mapping += "        rml:reference \"" + dic[function]["output_name"] + "\"\n"
+            if dic[function]["termType"]:
+                mapping += "        rr:template \"" + dic[function]["output_name"] + "\"\n"
+            else:
+                mapping += "        rml:reference \"" + dic[function]["output_name"] + "\"\n"
             mapping += "    ].\n\n"
 
     prefix_string = ""
@@ -270,6 +278,8 @@ def execute_function(row,dic):
         return replaceValue(row[dic["func_par"]["value"]],dic["func_par"]["value2"],dic["func_par"]["value3"])
     elif "match" in dic["function"]:
         return match(dic["func_par"]["regex"],row[dic["func_par"]["value"]])
+    elif "variantIdentifier" in dic["function"]:
+        return variantIdentifier(dic["func_par"]["column1"],dic["func_par"]["column2"],dic["func_par"]["prefix"])
     else:
         print("Invalid function")
         print("Aborting...")
@@ -289,16 +299,65 @@ def join_csv(source, dic, output):
             writer.writerow(keys)
 
             values = {}
-            for row in reader:
-                if (row[dic["func_par"]["value"]] not in values) and (row[dic["func_par"]["value"]] is not ''):
-                    value = execute_function(row,dic)
-                    line = []
-                    for attr in dic["inputs"]:
-                        if attr[1] is not "constant":
-                            line.append(row[attr[0]])
-                    line.append(value)
-                    writer.writerow(line)
-                    values[row[dic["func_par"]["value"]] ] = value
+            if "variantIdentifier" in dic["function"]:
+                for row in reader:
+                    if (row[dic["func_par"]["column1"]]+row[dic["func_par"]["column2"]] not in values) and (row[dic["func_par"]["column1"]]+row[dic["func_par"]["column2"]] is not ''):
+                        value = execute_function(row,dic)
+                        line = []
+                        for attr in dic["inputs"]:
+                            if attr[1] is not "constant":
+                                line.append(row[attr[0]])
+                        line.append(value)
+                        writer.writerow(line)
+                        values[row[dic["func_par"]["column1"]]+row[dic["func_par"]["column2"]]] = value
+            else: 
+                for row in reader:
+                    if (row[dic["func_par"]["value"]] not in values) and (row[dic["func_par"]["value"]] is not ''):
+                        value = execute_function(row,dic)
+                        line = []
+                        for attr in dic["inputs"]:
+                            if attr[1] is not "constant":
+                                line.append(row[attr[0]])
+                        line.append(value)
+                        writer.writerow(line)
+                        values[row[dic["func_par"]["value"]]] = value
+
+def join_csv_URI(source, dic, output):
+    with open(source, "r") as source_csv:
+        with open(output + "/" + dic["output_name"] + ".csv", "w") as temp_csv:
+            writer = csv.writer(temp_csv, quoting=csv.QUOTE_ALL)
+            reader = csv.DictReader(source_csv, delimiter=',')
+
+            keys = []
+            for attr in dic["inputs"]:
+                if attr[1] is not "constant":
+                    keys.append(attr[0])
+            keys.append(dic["output_name"])
+            writer.writerow(keys)
+
+            values = {}
+            if "variantIdentifier" in dic["function"]:
+                for row in reader:
+                    if (row[dic["func_par"]["column1"]]+row[dic["func_par"]["column2"]] not in values) and (row[dic["func_par"]["column1"]]+row[dic["func_par"]["column2"]] is not ''):
+                        value = "<" + execute_function(row,dic) + ">"
+                        line = []
+                        for attr in dic["inputs"]:
+                            if attr[1] is not "constant":
+                                line.append(row[attr[0]])
+                        line.append(value)
+                        writer.writerow(line)
+                        values[row[dic["func_par"]["column1"]]+row[dic["func_par"]["column2"]]] = value
+            else: 
+                for row in reader:
+                    if (row[dic["func_par"]["value"]] not in values) and (row[dic["func_par"]["value"]] is not ''):
+                        value = "<" + execute_function(row,dic) + ">"
+                        line = []
+                        for attr in dic["inputs"]:
+                            if attr[1] is not "constant":
+                                line.append(row[attr[0]])
+                        line.append(value)
+                        writer.writerow(line)
+                        values[row[dic["func_par"]["value"]]] = value
 
 def update_csv(source, dic):
     with open(source, "r") as source_csv:
@@ -312,6 +371,26 @@ def update_csv(source, dic):
 
             for row in reader:
                 row[dic["output_name"]] = execute_function(row,dic)
+                line = []
+                for key in row.keys():
+                    line.append(row[key])
+                writer.writerow(line)
+
+    os.system("rm " + source)
+    os.system("mv temp.csv " + source)
+
+def update_csv_URI(source, dic):
+    with open(source, "r") as source_csv:
+        with open("temp.csv", "w") as temp_csv:
+            writer = csv.writer(temp_csv, quoting=csv.QUOTE_ALL)
+            reader = csv.DictReader(source_csv, delimiter=',')
+
+            keys = reader.fieldnames
+            keys.append(dic["output_name"])
+            writer.writerow(keys)
+
+            for row in reader:
+                row[dic["output_name"]] = "<" + execute_function(row,dic) + ">"
                 line = []
                 for key in row.keys():
                     line.append(row[key])

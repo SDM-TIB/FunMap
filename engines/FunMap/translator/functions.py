@@ -47,11 +47,11 @@ def match(value, regex):
     return re.match(regex, value)[0]
 
 
-def cFomart_function(uri_template,column1, column2):
+def cFomart_function(column1, column2,prefix):
     value = ""
     if (str(column1) != "nan" and "?" not in str(column1)):
         value = re.sub('_.*','',str(column2))+"_"+str(column1).split(".")[1].replace(">", "~")
-        value = uri_template+value
+        value = prefix+value
     return value
 
 def prefix_extraction(uri):

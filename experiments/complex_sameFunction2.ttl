@@ -25,7 +25,7 @@
         rr:predicate owl:sameAs;
         rr:objectMap <#FunctionMap1> ;
         rr:termType rr:IRI
-    ].
+    ];
     rr:predicateObjectMap [
         rr:predicate iasis:tissue;
         rr:objectMap [ 

@@ -286,18 +286,19 @@ def execute_function(row,dic):
         sys.exit(1)
 
 def join_csv(source, dic, output):
+    keys = []
+    for attr in dic["inputs"]:
+        if attr[1] is not "constant":
+            keys.append(attr[0])
+
     with open(source, "r") as source_csv:
         with open(output + "/" + dic["output_name"] + ".csv", "w") as temp_csv:
             writer = csv.writer(temp_csv, quoting=csv.QUOTE_ALL)
-            reader = csv.DictReader(source_csv, delimiter=',')
+            reader = csv.DictReader(source_csv, fieldnames=keys, delimiter=',')
 
-            keys = []
-            for attr in dic["inputs"]:
-                if attr[1] is not "constant":
-                    keys.append(attr[0])
             keys.append(dic["output_name"])
             writer.writerow(keys)
-
+            next(reader)
             values = {}
             if "variantIdentifier" in dic["function"]:
                 for row in reader:
@@ -323,18 +324,18 @@ def join_csv(source, dic, output):
                         values[row[dic["func_par"]["value"]]] = value
 
 def join_csv_URI(source, dic, output):
+    keys = []
+    for attr in dic["inputs"]:
+        if attr[1] is not "constant":
+            keys.append(attr[0])
     with open(source, "r") as source_csv:
         with open(output + "/" + dic["output_name"] + ".csv", "w") as temp_csv:
             writer = csv.writer(temp_csv, quoting=csv.QUOTE_ALL)
-            reader = csv.DictReader(source_csv, delimiter=',')
-
-            keys = []
-            for attr in dic["inputs"]:
-                if attr[1] is not "constant":
-                    keys.append(attr[0])
+            reader = csv.DictReader(source_csv, fieldnames=keys, delimiter=',')
+            
             keys.append(dic["output_name"])
             writer.writerow(keys)
-
+            next(reader)
             values = {}
             if "variantIdentifier" in dic["function"]:
                 for row in reader:

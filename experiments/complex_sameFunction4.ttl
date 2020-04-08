@@ -23,8 +23,7 @@
     ];
     rr:predicateObjectMap [
         rr:predicate owl:sameAs;
-        rr:objectMap <#FunctionMap1> ;
-        rr:termType rr:IRI
+        rr:objectMap <#FunctionMap1>
     ];
     rr:predicateObjectMap [
         rr:predicate iasis:tissue;
@@ -42,8 +41,7 @@
     ]; 
     rr:predicateObjectMap [
         rr:predicate iasis:isAssociatedTo;
-        rr:objectMap <#FunctionMap1> ;
-        rr:termType rr:IRI
+        rr:objectMap <#FunctionMap1>
     ].
 
 <#TriplesMap3>
@@ -55,8 +53,7 @@
     ];
     rr:predicateObjectMap [
         rr:predicate iasis:isLocatedIn;
-        rr:objectMap <#FunctionMap1> ;
-        rr:termType rr:IRI
+        rr:objectMap <#FunctionMap1>
     ].
 
 <#TriplesMap4>
@@ -68,12 +65,12 @@
     ];
     rr:predicateObjectMap [
         rr:predicate iasis:isObservedIn;
-        rr:objectMap <#FunctionMap1> ;
-        rr:termType rr:IRI
+        rr:objectMap <#FunctionMap1>
     ]. 
 
 <#FunctionMap1>
     a fnml:FunctionTermMap;
+    rr:termType rr:IRI;
 
     fnml:functionValue [
         rml:logicalSource [ rml:source "data.csv";

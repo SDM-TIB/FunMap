@@ -523,7 +523,10 @@ def create_dictionary(triple_map):
         elif "/" in tp.predicate_map.value:
             key = tp.predicate_map.value.split("/")[len(tp.predicate_map.value.split("/"))-1]
             tp_type = tp.predicate_map.mapping_type
-        if "#" in tp.object_map.value:
+        if "constant" in tp.object_map.mapping_type:
+            value = tp.object_map.value
+            tp_type = tp.object_map.mapping_type
+        elif "#" in tp.object_map.value:
             value = tp.object_map.value.split("#")[1]
             tp_type = tp.object_map.mapping_type
         elif "/" in tp.object_map.value:
@@ -536,5 +539,6 @@ def create_dictionary(triple_map):
         dic.update({key : value})
         if (key != "executes") and ([value,tp_type] not in inputs):
             inputs.append([value,tp_type])
+
     dic["inputs"] = inputs
     return dic

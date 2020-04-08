@@ -35,8 +35,9 @@ const doMapping = async () => {
         if (!data[0].toString().empty() && !data[0].toString().contains("?")){
           var re = new RegExp("_.*","g");
           var re2 = new RegExp(">","g");
-          result = data[1].toString().replace(re,"")+"_"+data[0].split(".")[1].replace(re2,"~");
-          result = data[2]+result
+          var re3 = new RegExp("c\\.","g");
+          result = data[1].toString().replace(re,"")+"_"+data[0].replace(re3,"").replace(re2,"~");
+          result = data[2]+"/"+result
         }
         //let result=data[0].toString().toLowerCase();
         return result;

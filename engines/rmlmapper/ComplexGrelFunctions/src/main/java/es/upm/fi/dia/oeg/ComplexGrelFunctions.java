@@ -13,8 +13,8 @@ public class ComplexGrelFunctions
     public static String variantIdentifier(String c1, String c2, String prefix){
         String value="";
         if (c1 != null && !c1.isEmpty() && !c1.contains("?")){
-            value = c2.replaceAll("_.*","") +"_"+c1.split("\\.")[1].replaceAll(">","~");
-            value = prefix + value;
+            value = c2.replaceAll("_.*","") +"_"+c1.replaceAll("c\\.","").replaceAll(">","~");
+            value = prefix+"/"+value;
         }
         return value;
 

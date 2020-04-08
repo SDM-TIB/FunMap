@@ -4,6 +4,8 @@ import sys
 import os
 import pandas as pd
 
+global columns
+columns = {}
 
 # returns a string in lower case
 def tolower(value):
@@ -295,36 +297,87 @@ def join_csv(source, dic, output):
             if attr[1] is not "constant":
                 keys.append(attr[0])
 
-        reader = pd.read_csv(source, usecols=keys)
-        reader = reader.where(pd.notnull(reader), None)
-        reader = reader.to_dict(orient='records')
-        keys.append(dic["output_name"])
-        writer.writerow(keys)
-
-
         values = {}
+        global columns
+
         if "variantIdentifier" in dic["function"]:
-            for row in reader:
-                if (row[dic["func_par"]["column1"]]+row[dic["func_par"]["column2"]] not in values) and (row[dic["func_par"]["column1"]]+row[dic["func_par"]["column2"]] is not None):
-                    value = execute_function(row,dic)
-                    line = []
-                    for attr in dic["inputs"]:
-                        if attr[1] is not "constant":
-                            line.append(row[attr[0]])
-                    line.append(value)
-                    writer.writerow(line)
-                    values[row[dic["func_par"]["column1"]]+row[dic["func_par"]["column2"]]] = value
-        else: 
-            for row in reader:
-                if (row[dic["func_par"]["value"]] not in values) and (row[dic["func_par"]["value"]] is not None):
-                    value = execute_function(row,dic)
-                    line = []
-                    for attr in dic["inputs"]:
-                        if attr[1] is not "constant":
-                            line.append(row[attr[0]])
-                    line.append(value)
-                    writer.writerow(line)
-                    values[row[dic["func_par"]["value"]]] = value
+
+            if  dic["func_par"]["column1"]+dic["func_par"]["column2"] in columns:
+
+                keys.append(dic["output_name"])
+                writer.writerow(keys)
+
+                for row in columns[dic["func_par"]["column1"]+dic["func_par"]["column2"]]:
+                    if (row[dic["func_par"]["column1"]]+row[dic["func_par"]["column2"]] not in values) and (row[dic["func_par"]["column1"]]+row[dic["func_par"]["column2"]] is not None):
+                        value = execute_function(row,dic)
+                        line = []
+                        for attr in dic["inputs"]:
+                            if attr[1] is not "constant":
+                                line.append(row[attr[0]])
+                        line.append(value)
+                        writer.writerow(line)
+                        values[row[dic["func_par"]["column1"]]+row[dic["func_par"]["column2"]]] = value
+
+            else:
+                reader = pd.read_csv(source, usecols=keys)
+                reader = reader.where(pd.notnull(reader), None)
+                reader = reader.to_dict(orient='records')
+                keys.append(dic["output_name"])
+                writer.writerow(keys)
+                projection = []
+
+                for row in reader:                    
+                    if (row[dic["func_par"]["column1"]]+row[dic["func_par"]["column2"]] not in values) and (row[dic["func_par"]["column1"]]+row[dic["func_par"]["column2"]] is not None):
+                        value = execute_function(row,dic)
+                        line = []
+                        for attr in dic["inputs"]:
+                            if attr[1] is not "constant":
+                                line.append(row[attr[0]])
+                        line.append(value)
+                        writer.writerow(line)
+                        values[row[dic["func_par"]["column1"]]+row[dic["func_par"]["column2"]]] = value
+                        projection.append({dic["func_par"]["column1"]:row[dic["func_par"]["column1"]], dic["func_par"]["column2"]:row[dic["func_par"]["column2"]]})
+
+                columns[dic["func_par"]["column1"]+dic["func_par"]["column2"]] = projection
+        else:
+            if dic["func_par"]["value"] in columns:
+
+                keys.append(dic["output_name"])
+                writer.writerow(keys)
+
+                for row in columns[dic["func_par"]["value"]]:
+                    if (row[dic["func_par"]["value"]] not in values) and (row[dic["func_par"]["value"]] is not None):
+                        value = execute_function(row,dic)
+                        line = []
+                        for attr in dic["inputs"]:
+                            if attr[1] is not "constant":
+                                line.append(row[attr[0]])
+                        line.append(value)
+                        writer.writerow(line)
+                        values[row[dic["func_par"]["value"]]] = value
+
+            else:
+
+                reader = pd.read_csv(source, usecols=keys)
+                reader = reader.where(pd.notnull(reader), None)
+                reader = reader.to_dict(orient='records')
+                keys.append(dic["output_name"])
+                writer.writerow(keys)
+                projection = []
+
+                for row in reader:
+                    if (row[dic["func_par"]["value"]] not in values) and (row[dic["func_par"]["value"]] is not None):
+                        value = execute_function(row,dic)
+                        line = []
+                        for attr in dic["inputs"]:
+                            if attr[1] is not "constant":
+                                line.append(row[attr[0]])
+                        line.append(value)
+                        writer.writerow(line)
+                        values[row[dic["func_par"]["value"]]] = value
+                        projection.append({dic["func_par"]["value"]:row[dic["func_par"]["value"]]})
+
+                columns[dic["func_par"]["value"]] = projection
 
 def join_csv_URI(source, dic, output):
     with open(output + "/" + dic["output_name"] + ".csv", "w") as temp_csv:
@@ -335,36 +388,87 @@ def join_csv_URI(source, dic, output):
             if attr[1] is not "constant":
                 keys.append(attr[0])
 
-        reader = pd.read_csv(source, usecols=keys)
-        reader = reader.where(pd.notnull(reader), None)
-        reader = reader.to_dict(orient='records')
-        keys.append(dic["output_name"])
-        writer.writerow(keys)
-
-
         values = {}
+        global columns
+        
         if "variantIdentifier" in dic["function"]:
-            for row in reader:
-                if (row[dic["func_par"]["column1"]]+row[dic["func_par"]["column2"]] not in values) and (row[dic["func_par"]["column1"]]+row[dic["func_par"]["column2"]] is not None):
-                    value = "<" + execute_function(row,dic) + ">"
-                    line = []
-                    for attr in dic["inputs"]:
-                        if attr[1] is not "constant":
-                            line.append(row[attr[0]])
-                    line.append(value)
-                    writer.writerow(line)
-                    values[row[dic["func_par"]["column1"]]+row[dic["func_par"]["column2"]]] = value
-        else: 
-            for row in reader:
-                if (row[dic["func_par"]["value"]] not in values) and (row[dic["func_par"]["value"]] is not None):
-                    value = "<" + execute_function(row,dic) + ">"
-                    line = []
-                    for attr in dic["inputs"]:
-                        if attr[1] is not "constant":
-                            line.append(row[attr[0]])
-                    line.append(value)
-                    writer.writerow(line)
-                    values[row[dic["func_par"]["value"]]] = value
+
+            if  dic["func_par"]["column1"]+dic["func_par"]["column2"] in columns:
+
+                keys.append(dic["output_name"])
+                writer.writerow(keys)
+
+                for row in columns[dic["func_par"]["column1"]+dic["func_par"]["column2"]]:
+                    if (row[dic["func_par"]["column1"]]+row[dic["func_par"]["column2"]] not in values) and (row[dic["func_par"]["column1"]]+row[dic["func_par"]["column2"]] is not None):
+                        value = "<" + execute_function(row,dic) + ">"
+                        line = []
+                        for attr in dic["inputs"]:
+                            if attr[1] is not "constant":
+                                line.append(row[attr[0]])
+                        line.append(value)
+                        writer.writerow(line)
+                        values[row[dic["func_par"]["column1"]]+row[dic["func_par"]["column2"]]] = value
+
+            else:
+                reader = pd.read_csv(source, usecols=keys)
+                reader = reader.where(pd.notnull(reader), None)
+                reader = reader.to_dict(orient='records')
+                keys.append(dic["output_name"])
+                writer.writerow(keys)
+                projection = []
+
+                for row in reader:                    
+                    if (row[dic["func_par"]["column1"]]+row[dic["func_par"]["column2"]] not in values) and (row[dic["func_par"]["column1"]]+row[dic["func_par"]["column2"]] is not None):
+                        value = "<" + execute_function(row,dic) + ">"
+                        line = []
+                        for attr in dic["inputs"]:
+                            if attr[1] is not "constant":
+                                line.append(row[attr[0]])
+                        line.append(value)
+                        writer.writerow(line)
+                        values[row[dic["func_par"]["column1"]]+row[dic["func_par"]["column2"]]] = value
+                        projection.append({dic["func_par"]["column1"]:row[dic["func_par"]["column1"]], dic["func_par"]["column2"]:row[dic["func_par"]["column2"]]})
+
+                columns[dic["func_par"]["column1"]+dic["func_par"]["column2"]] = projection
+        else:
+            if dic["func_par"]["value"] in columns:
+
+                keys.append(dic["output_name"])
+                writer.writerow(keys)
+
+                for row in columns[dic["func_par"]["value"]]:
+                    if (row[dic["func_par"]["value"]] not in values) and (row[dic["func_par"]["value"]] is not None):
+                        value = "<" + execute_function(row,dic) + ">"
+                        line = []
+                        for attr in dic["inputs"]:
+                            if attr[1] is not "constant":
+                                line.append(row[attr[0]])
+                        line.append(value)
+                        writer.writerow(line)
+                        values[row[dic["func_par"]["value"]]] = value
+
+            else:
+
+                reader = pd.read_csv(source, usecols=keys)
+                reader = reader.where(pd.notnull(reader), None)
+                reader = reader.to_dict(orient='records')
+                keys.append(dic["output_name"])
+                writer.writerow(keys)
+                projection = []
+
+                for row in reader:
+                    if (row[dic["func_par"]["value"]] not in values) and (row[dic["func_par"]["value"]] is not None):
+                        value = "<" + execute_function(row,dic) + ">"
+                        line = []
+                        for attr in dic["inputs"]:
+                            if attr[1] is not "constant":
+                                line.append(row[attr[0]])
+                        line.append(value)
+                        writer.writerow(line)
+                        values[row[dic["func_par"]["value"]]] = value
+                        projection.append({dic["func_par"]["value"]:row[dic["func_par"]["value"]]})
+
+                columns[dic["func_par"]["value"]] = projection
 
 def update_csv(source, dic):
     with open(source, "r") as source_csv:

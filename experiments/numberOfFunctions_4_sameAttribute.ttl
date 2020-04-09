@@ -82,7 +82,7 @@
         ]; 
         ]. 
 
-<#FunctionMap3>
+<#FunctionMap2>
     a fnml:FunctionTermMap;
 
     fnml:functionValue [

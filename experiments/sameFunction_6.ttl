@@ -10,7 +10,7 @@
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix iasis: <http://project-iasis.eu/vocab/> .
 @prefix fnml: <http://semweb.mmlab.be/ns/fnml#> .
-@prefix fno: <http://semweb.datasciencelab.be/ns/function#> .
+@prefix fno: <https://w3id.org/function/ontology#> .
 @prefix ex: <http://www.example.com/> .
 @base <http://MapFun.KG/> .
 

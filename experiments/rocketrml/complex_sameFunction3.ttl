@@ -10,8 +10,9 @@
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix iasis: <http://project-iasis.eu/vocab/> .
 @prefix fnml: <http://semweb.mmlab.be/ns/fnml#> .
-@prefix fno: <https://w3id.org/function/ontology#> .
+@prefix fno:  <https://w3id.org/function/ontology#> .
 @prefix ex: <http://www.example.com/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
 @base <http://MapFun.KG/> .
 
 <#TriplesMap1>
@@ -23,7 +24,7 @@
     ];
     rr:predicateObjectMap [
         rr:predicate owl:sameAs;
-        rr:objectMap <#FunctionMap1>
+        rr:objectMap <#FunctionMap1> 
     ];
     rr:predicateObjectMap [
         rr:predicate iasis:tissue;
@@ -56,17 +57,6 @@
         rr:objectMap <#FunctionMap1>
     ].
 
-<#TriplesMap4>
-    rml:logicalSource [ rml:source "data.csv";
-                        rml:referenceFormulation ql:CSV ];
-    rr:subjectMap [
-        rr:template "http://project-iasis.eu/Variant/{Mutation CDS}";
-        rr:class iasis:Variant;
-    ];
-    rr:predicateObjectMap [
-        rr:predicate iasis:isObservedIn;
-        rr:objectMap <#FunctionMap1>
-    ]. 
 
 <#FunctionMap1>
     a fnml:FunctionTermMap;
@@ -91,7 +81,7 @@
         rr:predicateObjectMap [
             rr:predicate ex:column2;
             rr:objectMap [ 
-                rml:reference "Gene name"; 
+                rr:constant "Gene name"; 
             ]
         ];  
         rr:predicateObjectMap [
@@ -101,3 +91,31 @@
             ]
         ]; 
         ]. 
+
+ex:variantIdentifier a fno:Function;
+    fno:name "Variant ID creating function"^^xsd:string;
+    dcterms:description "This function creates a unified identifier for variant given in mutation COSMIC dataset by extracting from available data."^^xsd:string;
+    fno:solves ex:variantIdentifingProblem;
+    fno:implements ex:variantIdentifierAlgorithm;
+    fno:expects ( ex:param_gene ex:param_cds ex:param_prefix ) ;
+    fno:returns ( ex:variantIdOut ) .
+
+ex:param_cds a fno:Parameter ;
+    fno:predicate ex:column1 ;
+    fno:type      xsd:string ;
+    fno:required  "true"^^xsd:boolean .  
+
+ex:param_gene a fno:Parameter ;
+    fno:predicate ex:column2 ;
+    fno:type      xsd:string ;
+    fno:required  "true"^^xsd:boolean .  
+
+ex:param_prefix a fno:Parameter ;
+    fno:predicate ex:prefix ;
+    fno:type      xsd:string ;
+    fno:required  "true"^^xsd:boolean .     
+
+ex:variantIdOut a fno:Output ;
+    fno:predicate ex:variantID ;
+    fno:type      xsd:string ;
+    fno:required  "true"^^xsd:boolean .  

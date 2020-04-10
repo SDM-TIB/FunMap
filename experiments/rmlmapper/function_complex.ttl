@@ -2,7 +2,11 @@
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@prefix ex: <http://www.example.com> .
+@prefix exm:   <http://fno.io/ex/rmlmapping#> .
+@prefix fnoi:    <https://w3id.org/function/vocabulary/implementation#> .
+@prefix fnom:    <https://w3id.org/function/vocabulary/mapping#> .
+@prefix doap:    <http://usefulinc.com/ns/doap#> .
+@prefix ex: <http://www.example.com/> .
 
 ex:variantIdentifingProblem a fno:Problem;
 ex:variantIdentifierAlgorithm a fno:Algorithm .
@@ -39,3 +43,14 @@ ex:variantIdCreator a fno:Execution;
     fno:executes ex:variantIdentifier .
 
 
+exm:variantIdentifierMapping
+    a                    fnoi:Mapping ;
+    fno:function         ex:variantIdentifier ;
+    fno:implementation   exm:complexJavaString ;
+    fno:methodMapping    [ a                fnom:StringMethodMapping ;
+                           fnom:method-name "variantIdentifier" ] .
+
+exm:complexJavaString
+    a                  fnoi:JavaClass ;
+    doap:download-page "ComplexGrelFunctions.jar" ;
+    fnoi:class-name    "es.upm.fi.dia.oeg.ComplexGrelFunctions" .

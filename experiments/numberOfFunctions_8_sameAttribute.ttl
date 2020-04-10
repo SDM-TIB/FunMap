@@ -23,16 +23,12 @@
         rr:class iasis:Mutation;
     ];
     rr:predicateObjectMap [
-        rr:predicate iasis:geneName;
-        rr:objectMap <#FunctionMap5>
-    ];
-    rr:predicateObjectMap [
-        rr:predicate iasis:sample;
+        rr:predicate iasis:modifiedVersion1;
         rr:objectMap <#FunctionMap1>
     ];
     rr:predicateObjectMap [
-        rr:predicate iasis:tissue;
-        rr:objectMap <#FunctionMap4>
+        rr:predicate iasis:modifiedVersion2;
+        rr:objectMap <#FunctionMap2>
     ].
 
 
@@ -43,83 +39,49 @@
         rr:template "http://project-iasis.eu/GenomicPosition/{cFormat}";
         rr:class iasis:GenomicPosition;
     ];  
-
     rr:predicateObjectMap [
-        rr:predicate iasis:mutation_cds;
-        rr:objectMap <#FunctionMap2>
+        rr:predicate iasis:modifiedVersion3;
+        rr:objectMap <#FunctionMap3>
     ];
     rr:predicateObjectMap [
-        rr:predicate iasis:chromosome_start_end;
-        rr:objectMap <#FunctionMap3>
+        rr:predicate iasis:modifiedVersion4;
+        rr:objectMap <#FunctionMap4>
     ].  
 
+<#TriplesMap3>
+    rml:logicalSource [ rml:source "data.csv";
+                        rml:referenceFormulation ql:CSV ];
+    rr:subjectMap [
+        rr:template "http://project-iasis.eu/Gene/{Gene name}";
+        rr:class iasis:Gene;
+    ];
+    rr:predicateObjectMap [
+        rr:predicate iasis:modifiedVersion5;
+        rr:objectMap <#FunctionMap5>
+    ];
+    rr:predicateObjectMap [
+        rr:predicate iasis:modifiedVersion6;
+        rr:objectMap <#FunctionMap6>
+    ].
+
+
+<#TriplesMap4>
+    rml:logicalSource [ rml:source "data.csv";
+                        rml:referenceFormulation ql:CSV ];
+    rr:subjectMap [
+        rr:template "http://project-iasis.eu/Variant/{Mutation CDS}";
+        rr:class iasis:Variant;
+    ];
+    rr:predicateObjectMap [
+        rr:predicate iasis:modifiedVersion7;
+        rr:objectMap <#FunctionMap7>
+    ];
+    rr:predicateObjectMap [
+        rr:predicate iasis:modifiedVersion8;
+        rr:objectMap <#FunctionMap8>
+    ].      
+
 <#FunctionMap1>
-    a fnml:FunctionTermMap;
-
-    fnml:functionValue [
-        rml:logicalSource [ rml:source "data.csv";
-        rml:referenceFormulation ql:CSV 
-                            ];
-        rr:predicateObjectMap [
-            rr:predicate fno:executes ;
-            rr:objectMap [ 
-                rr:constant ex:replaceValue 
-            ]
-        ];
-        rr:predicateObjectMap [
-            rr:predicate ex:value;
-            rr:objectMap [ 
-                rml:reference "Sample name" 
-            ]
-        ];  
-        rr:predicateObjectMap [
-            rr:predicate ex:value2;
-            rr:objectMap [ 
-                rr:constant "_"; 
-            ]
-        ];  
-        rr:predicateObjectMap [
-            rr:predicate ex:value3;
-            rr:objectMap [ 
-                rr:constant "-"; 
-            ]
-        ]; 
-        ].
-
-<#FunctionMap2>
-    a fnml:FunctionTermMap;
-
-    fnml:functionValue [
-        rml:logicalSource [ rml:source "data.csv";
-        rml:referenceFormulation ql:CSV 
-                            ];
-        rr:predicateObjectMap [
-            rr:predicate fno:executes ;
-            rr:objectMap [ 
-                rr:constant ex:replaceValue 
-            ]
-        ];
-        rr:predicateObjectMap [
-            rr:predicate ex:value;
-            rr:objectMap [ 
-                rml:reference "Mutation CDS" 
-            ]
-        ];  
-        rr:predicateObjectMap [
-            rr:predicate ex:value2;
-            rr:objectMap [ 
-                rr:constant ">"; 
-            ]
-        ];  
-        rr:predicateObjectMap [
-            rr:predicate ex:value3;
-            rr:objectMap [ 
-                rr:constant "_"; 
-            ]
-        ]; 
-        ].
-
-<#FunctionMap3>
     a fnml:FunctionTermMap;
 
     fnml:functionValue [
@@ -152,7 +114,7 @@
         ]; 
         ]. 
 
-<#FunctionMap4>
+<#FunctionMap2>
     a fnml:FunctionTermMap;
 
     fnml:functionValue [
@@ -168,12 +130,45 @@
         rr:predicateObjectMap [
             rr:predicate ex:value;
             rr:objectMap [ 
-                rml:reference "Primary site" 
+                rml:reference "Mutation genome position" 
             ]
         ];    
-        ].                
+        ].  
 
-<#FunctionMap5>
+<#FunctionMap3>
+    a fnml:FunctionTermMap;
+
+    fnml:functionValue [
+        rml:logicalSource [ rml:source "data.csv";
+        rml:referenceFormulation ql:CSV 
+                            ];
+        rr:predicateObjectMap [
+            rr:predicate fno:executes ;
+            rr:objectMap [ 
+                rr:constant ex:replaceValue 
+            ]
+        ];
+        rr:predicateObjectMap [
+            rr:predicate ex:value;
+            rr:objectMap [ 
+                rml:reference "Mutation genome position" 
+            ]
+        ];  
+        rr:predicateObjectMap [
+            rr:predicate ex:value2;
+            rr:objectMap [ 
+                rr:constant ":"; 
+            ]
+        ];  
+        rr:predicateObjectMap [
+            rr:predicate ex:value3;
+            rr:objectMap [ 
+                rr:constant "_"; 
+            ]
+        ]; 
+        ]. 
+
+<#FunctionMap4>
     a fnml:FunctionTermMap;
 
     fnml:functionValue [
@@ -189,8 +184,139 @@
         rr:predicateObjectMap [
             rr:predicate ex:value;
             rr:objectMap [ 
-                rml:reference "Gene name" 
+                rml:reference "Mutation genome position" 
             ]
         ];    
-        ].  
-        
+        ].               
+
+<#FunctionMap5>
+    a fnml:FunctionTermMap;
+
+    fnml:functionValue [
+        rml:logicalSource [ rml:source "data.csv";
+        rml:referenceFormulation ql:CSV 
+                            ];
+        rr:predicateObjectMap [
+            rr:predicate fno:executes ;
+            rr:objectMap [ 
+                rr:constant ex:replaceValue 
+            ]
+        ];
+        rr:predicateObjectMap [
+            rr:predicate ex:value;
+            rr:objectMap [ 
+                rml:reference "Mutation genome position" 
+            ]
+        ];  
+        rr:predicateObjectMap [
+            rr:predicate ex:value2;
+            rr:objectMap [ 
+                rr:constant "-"; 
+            ]
+        ];  
+        rr:predicateObjectMap [
+            rr:predicate ex:value3;
+            rr:objectMap [ 
+                rr:constant ":::"; 
+            ]
+        ]; 
+        ]. 
+
+<#FunctionMap6>
+    a fnml:FunctionTermMap;
+
+    fnml:functionValue [
+        rml:logicalSource [ rml:source "data.csv";
+        rml:referenceFormulation ql:CSV 
+                            ];
+        rr:predicateObjectMap [
+            rr:predicate fno:executes ;
+            rr:objectMap [ 
+                rr:constant ex:replaceValue 
+            ]
+        ];
+        rr:predicateObjectMap [
+            rr:predicate ex:value;
+            rr:objectMap [ 
+                rml:reference "Mutation genome position" 
+            ]
+        ];  
+        rr:predicateObjectMap [
+            rr:predicate ex:value2;
+            rr:objectMap [ 
+                rr:constant ":"; 
+            ]
+        ];  
+        rr:predicateObjectMap [
+            rr:predicate ex:value3;
+            rr:objectMap [ 
+                rr:constant "---"; 
+            ]
+        ]; 
+        ]. 
+
+<#FunctionMap7>
+    a fnml:FunctionTermMap;
+
+    fnml:functionValue [
+        rml:logicalSource [ rml:source "data.csv";
+        rml:referenceFormulation ql:CSV 
+                            ];
+        rr:predicateObjectMap [
+            rr:predicate fno:executes ;
+            rr:objectMap [ 
+                rr:constant ex:replaceValue 
+            ]
+        ];
+        rr:predicateObjectMap [
+            rr:predicate ex:value;
+            rr:objectMap [ 
+                rml:reference "Mutation genome position" 
+            ]
+        ];  
+        rr:predicateObjectMap [
+            rr:predicate ex:value2;
+            rr:objectMap [ 
+                rr:constant "-"; 
+            ]
+        ];  
+        rr:predicateObjectMap [
+            rr:predicate ex:value3;
+            rr:objectMap [ 
+                rr:constant "---"; 
+            ]
+        ]; 
+        ]. 
+
+<#FunctionMap8>
+    a fnml:FunctionTermMap;
+
+    fnml:functionValue [
+        rml:logicalSource [ rml:source "data.csv";
+        rml:referenceFormulation ql:CSV 
+                            ];
+        rr:predicateObjectMap [
+            rr:predicate fno:executes ;
+            rr:objectMap [ 
+                rr:constant ex:replaceValue 
+            ]
+        ];
+        rr:predicateObjectMap [
+            rr:predicate ex:value;
+            rr:objectMap [ 
+                rml:reference "Mutation genome position" 
+            ]
+        ];  
+        rr:predicateObjectMap [
+            rr:predicate ex:value2;
+            rr:objectMap [ 
+                rr:constant ":"; 
+            ]
+        ];  
+        rr:predicateObjectMap [
+            rr:predicate ex:value3;
+            rr:objectMap [ 
+                rr:constant ":::"; 
+            ]
+        ]; 
+        ].         

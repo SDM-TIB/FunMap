@@ -23,7 +23,7 @@
     ];
     rr:predicateObjectMap [
         rr:predicate owl:sameAs;
-        rr:objectMap <#FunctionMap1>
+        rr:objectMap <#FunctionMap1> 
     ];
     rr:predicateObjectMap [
         rr:predicate iasis:tissue;
@@ -41,32 +41,8 @@
     ]; 
     rr:predicateObjectMap [
         rr:predicate iasis:isAssociatedTo;
-        rr:objectMap <#FunctionMap1>
+        rr:objectMap <#FunctionMap1> 
     ].
-
-<#TriplesMap3>
-    rml:logicalSource [ rml:source "data.csv";
-                        rml:referenceFormulation ql:CSV ];
-    rr:subjectMap [
-        rr:template "http://project-iasis.eu/Gene/{Gene name}";
-        rr:class iasis:Gene;
-    ];
-    rr:predicateObjectMap [
-        rr:predicate iasis:isLocatedIn;
-        rr:objectMap <#FunctionMap1>
-    ].
-
-<#TriplesMap4>
-    rml:logicalSource [ rml:source "data.csv";
-                        rml:referenceFormulation ql:CSV ];
-    rr:subjectMap [
-        rr:template "http://project-iasis.eu/Variant/{Mutation CDS}";
-        rr:class iasis:Variant;
-    ];
-    rr:predicateObjectMap [
-        rr:predicate iasis:isObservedIn;
-        rr:objectMap <#FunctionMap1>
-    ]. 
 
 <#FunctionMap1>
     a fnml:FunctionTermMap;
@@ -91,7 +67,7 @@
         rr:predicateObjectMap [
             rr:predicate ex:column2;
             rr:objectMap [ 
-                rml:reference "Gene name"; 
+                rr:constant "Gene name"; 
             ]
         ];  
         rr:predicateObjectMap [

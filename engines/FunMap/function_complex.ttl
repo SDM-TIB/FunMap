@@ -38,4 +38,3 @@ ex:variantIdOut a fno:Output ;
 ex:variantIdCreator a fno:Execution;
     fno:executes ex:variantIdentifier .
 
-

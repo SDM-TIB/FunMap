@@ -32,7 +32,7 @@ const doMapping = async () => {
       ,
       'http://www.example.com/variantIdentifier': function (data) {
         let result=""
-        if (!data[0].toString().isEmpty() && !data[0].toString().contains("?")){
+        if (data[0].toString()!='' && !data[0].toString().contains("?")){
           var re = new RegExp("_.*","g");
           var re2 = new RegExp(">","g");
           var re3 = new RegExp("c\\.","g");

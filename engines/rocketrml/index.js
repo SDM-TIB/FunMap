@@ -37,7 +37,7 @@ const doMapping = async () => {
           var re2 = new RegExp(">","g");
           var re3 = new RegExp("c\\.","g");
           result = data[1].toString().replace(re,"")+"_"+data[0].replace(re3,"").replace(re2,"~");
-          result = data[2]+"/"+result
+          result = data[2]+result
         }
         return result;
       }

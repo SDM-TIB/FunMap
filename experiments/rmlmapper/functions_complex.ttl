@@ -16,7 +16,7 @@ ex:variantIdentifier a fno:Function;
     dcterms:description "This function creates a unified identifier for variant given in mutation COSMIC dataset by extracting from available data."^^xsd:string;
     fno:solves ex:variantIdentifingProblem;
     fno:implements ex:variantIdentifierAlgorithm;
-    fno:expects ( ex:param_gene ex:param_cds ex:param_prefix ) ;
+    fno:expects ( ex:param_cds ex:param_gene ex:param_prefix ) ;
     fno:returns ( ex:variantIdOut ) .
 
 ex:param_cds a fno:Parameter ;

@@ -80,7 +80,7 @@
         rr:predicateObjectMap [
             rr:predicate ex:column2;
             rr:objectMap [ 
-                rr:constant "Gene name"; 
+                rml:reference "Gene name"; 
             ]
         ];  
         rr:predicateObjectMap [

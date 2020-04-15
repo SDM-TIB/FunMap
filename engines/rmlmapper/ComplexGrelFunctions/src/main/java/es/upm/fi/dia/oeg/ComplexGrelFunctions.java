@@ -14,7 +14,7 @@ public class ComplexGrelFunctions
         String value="";
         if (c1 != null && !c1.isEmpty() && !c1.contains("?")){
             value = c2.replaceAll("_.*","") +"_"+c1.replaceAll("c\\.","").replaceAll(">","~");
-            value = prefix+"/"+value;
+            value = prefix+value;
         }
         return value;
 

@@ -10,7 +10,7 @@
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix iasis: <http://project-iasis.eu/vocab/> .
 @prefix fnml: <http://semweb.mmlab.be/ns/fnml#> .
-@prefix fno: <https://w3id.org/function/ontology#> .
+@prefix fno:  <https://w3id.org/function/ontology#> .
 @prefix ex: <http://www.example.com/> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @base <http://MapFun.KG/> .
@@ -24,7 +24,7 @@
     ];
     rr:predicateObjectMap [
         rr:predicate owl:sameAs;
-        rr:objectMap <#FunctionMap1> 
+        rr:objectMap <#FunctionMap1>
     ];
     rr:predicateObjectMap [
         rr:predicate iasis:tissue;
@@ -37,13 +37,66 @@
     rml:logicalSource [ rml:source "data.csv";
                         rml:referenceFormulation ql:CSV ];
     rr:subjectMap [
-        rr:template "http://project-iasis.eu/GenomicPosition/{cFormat}";
-        rr:class iasis:GenomicPosition;
+        rr:template "http://project-iasis.eu/Sample/{Sample name}";
+        rr:class iasis:Sample;
     ]; 
     rr:predicateObjectMap [
         rr:predicate iasis:isAssociatedTo;
-        rr:objectMap <#FunctionMap1> 
+        rr:objectMap <#FunctionMap1>
     ].
+
+<#TriplesMap3>
+    rml:logicalSource [ rml:source "data.csv";
+                        rml:referenceFormulation ql:CSV ];
+    rr:subjectMap [
+        rr:template "http://project-iasis.eu/Gene/{Gene name}";
+        rr:class iasis:Gene;
+    ];
+    rr:predicateObjectMap [
+        rr:predicate iasis:isLocatedIn;
+        rr:objectMap <#FunctionMap1>
+    ].
+
+<#TriplesMap4>
+    rml:logicalSource [ rml:source "data.csv";
+                        rml:referenceFormulation ql:CSV ];
+    rr:subjectMap [
+        rr:template "http://project-iasis.eu/Variant/{Mutation CDS}";
+        rr:class iasis:Variant;
+    ];
+    rr:predicateObjectMap [
+        rr:predicate iasis:isObservedIn;
+        rr:objectMap <#FunctionMap1>
+    ]. 
+
+<#TriplesMap5>
+    rml:logicalSource [ rml:source "data.csv";
+                        rml:referenceFormulation ql:CSV ];
+    rr:subjectMap [
+        rr:template "http://project-iasis.eu/TumorTissue/{Primary site}";
+        rr:class iasis:TumorTissue;
+    ];
+    rr:predicateObjectMap [
+        rr:predicate iasis:isRelatedTo;
+        rr:objectMap <#FunctionMap1> 
+    ]. 
+
+<#TriplesMap6>
+    rml:logicalSource [ rml:source "data.csv";
+                        rml:referenceFormulation ql:CSV ];
+    rr:subjectMap [
+        rr:template "http://project-iasis.eu/Mutation/{GENOMIC_MUTATION_ID}";
+    ];
+    rr:predicateObjectMap [
+        rr:predicate iasis:hasPosition;
+        rr:objectMap <#FunctionMap1> 
+    ];
+    rr:predicateObjectMap [
+        rr:predicate iasis:tissue;
+        rr:objectMap [ 
+            rml:reference "Primary site" 
+        ]
+    ].         
 
 <#FunctionMap1>
     a fnml:FunctionTermMap;
@@ -68,7 +121,7 @@
         rr:predicateObjectMap [
             rr:predicate ex:column2;
             rr:objectMap [ 
-                rr:constant "Gene name"; 
+                rml:reference "Gene name"; 
             ]
         ];  
         rr:predicateObjectMap [

@@ -15,7 +15,7 @@ do
 		for i in 1 2 3 4 5
 		do
 			start=$(date +%s.%N)
-			java -jar rmlmapper.jar -m $mapping -f function_complex.ttl -o output.nt -d
+			java -jar rmlmapper.jar -m $mapping -f functions_complex.ttl -o output.nt -d
 			dur=$(echo "$(date +%s.%N) - $start" | bc)
 			noutput=$(wc -l output.nt | cut -d " " -f 1)
 			echo "rmlmapper,$data,$mapping,$dur,$noutput"  >> results.csv

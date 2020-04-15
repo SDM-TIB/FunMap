@@ -283,7 +283,7 @@ def execute_function(row,dic):
     elif "match" in dic["function"]:
         return match(dic["func_par"]["regex"],row[dic["func_par"]["value"]])
     elif "variantIdentifier" in dic["function"]:
-        return variantIdentifier(dic["func_par"]["column1"],dic["func_par"]["column2"],dic["func_par"]["prefix"])
+        return variantIdentifier(row[dic["func_par"]["column1"]],row[dic["func_par"]["column2"]],dic["func_par"]["prefix"])
     else:
         print("Invalid function")
         print("Aborting...")

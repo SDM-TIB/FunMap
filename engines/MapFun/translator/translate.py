@@ -295,13 +295,25 @@ def translate(config_path):
 
 			print("Executing {}...".format(config[dataset_i]["name"]))
 			function_dic = {}
+			file_projection = {}
 			i = 1
+			j = 1
 			for triples_map in triples_map_list:
+				fields = {}
 				if str(triples_map.file_format).lower() == "csv" and triples_map.query == "None":
 					if triples_map.function:
 						pass
 					else:
 						if "true" in str(config[dataset_i]["same_function"]).lower():
+							subject_field = triples_map.subject_map.value.split("{")
+							if len(subject_field) == 2:
+								fields[subject_field[1].split("}")[0]] = "subject"
+							elif len(subject_field) == 1:
+								fields[subject_field[0]] = "subject"
+							else:
+								for sf in subject_field:
+									if "}" in sf:
+										fields[sf.split("}")[0]] = "subject"
 							for po in triples_map.predicate_object_maps_list:
 								if po.object_map.mapping_type == "reference function":
 									for triples_map_element in triples_map_list:
@@ -328,8 +340,43 @@ def translate(config_path):
 													function_dic[triples_map_element.triples_map_id] = current_func
 													join_csv(triples_map.data_source, current_func, config["datasets"]["output_folder"])
 												i += 1
+								else:
+									if "{" in po.object_map.value:
+										object_field = po.object_map.value.split("{")
+										if len(object_field) == 2:
+											fields[object_field[1].split("}")[0]] = "object"
+										else:
+											for of in object_field:
+												if "}" in of:
+													fields[of.split("}")[0]] = "object"
+									else:
+										fields[po.object_map.value] = "object"
+
+							if config["datasets"]["projection"].lower() == "yes":
+								with open(config["datasets"]["output_folder"] + "/PROJECT" + str(j) + ".csv", "w") as temp_csv:
+									writer = csv.writer(temp_csv, quoting=csv.QUOTE_ALL)
+
+									reader = pd.read_csv(triples_map.data_source, usecols=fields.keys())
+									reader = reader.where(pd.notnull(reader), None)
+									reader = reader.to_dict(orient='records')
+
+									writer.writerow(fields.keys())
+									for row in reader:
+										writer.writerow(row.values())
+									file_projection[triples_map.triples_map_id] = config["datasets"]["output_folder"] + "/PROJECT" + str(j) + ".csv"
+									j += 1
+
 							join = True
 						else:
+							subject_field = triples_map.subject_map.value.split("{")
+							if len(subject_field) == 2:
+								fields[subject_field[1].split("}")[0]] = "subject"
+							elif len(subject_field) == 1:
+								fields[subject_field[0]] = "subject"
+							else:
+								for sf in subject_field:
+									if "}" in sf:
+										fields[sf.split("}")[0]] = "subject"
 							for po in triples_map.predicate_object_maps_list:
 								if po.object_map.mapping_type == "reference function":
 									for triples_map_element in triples_map_list:
@@ -345,7 +392,7 @@ def translate(config_path):
 																		"func_par":dic,
 																		"termType":True}
 														function_dic[triples_map_element.triples_map_id] = current_func
-														update_csv_URI(triples_map.data_source, current_func, config["datasets"]["output_folder"])
+														update_csv_URI(triples_map.data_source, current_func)
 												else:
 													current_func = {"output_name":"OUTPUT" + str(i),
 																	"output_file": config["datasets"]["output_folder"] + "/OUTPUT" + str(i) + ".csv", 
@@ -354,14 +401,43 @@ def translate(config_path):
 																	"func_par":dic,
 																	"termType":False}
 													function_dic[triples_map_element.triples_map_id] = current_func
-													update_csv(triples_map.data_source, current_func, config["datasets"]["output_folder"])
+													update_csv(triples_map.data_source, current_func)
 												i += 1
-							join = False	
+								else:
+									if "{" in po.object_map.value:
+										object_field = po.object_map.value.split("{")
+										if len(object_field) == 2:
+											fields[object_field[1].split("}")[0]] = "object"
+										else:
+											for of in object_field:
+												if "}" in of:
+													fields[of.split("}")[0]] = "object"
+									else:
+										fields[po.object_map.value] = "object"
+
+								if config["datasets"]["projection"].lower() == "yes":
+									with open(config["datasets"]["output_folder"] + "/PROJECT" + str(j) + ".csv", "w") as temp_csv:
+										writer = csv.writer(temp_csv, quoting=csv.QUOTE_ALL)
+
+										reader = pd.read_csv(triples_map.data_source, usecols=fields.keys())
+										reader = reader.where(pd.notnull(reader), None)
+										reader = reader.to_dict(orient='records')
+
+										writer.writerow(fields.keys())
+										for row in reader:
+											writer.writerow(row.values())
+										file_projection[triples_map.triples_map_id] = config["datasets"]["output_folder"] + "/PROJECT" + str(j) + ".csv"
+										j += 1
+							join = False
+
 				else:
 					print("Invalid reference formulation or format")
 					print("Aborting...")
 					sys.exit(1)
-			update_mapping(triples_map_list, function_dic, config["datasets"]["output_folder"], config[dataset_i]["mapping"],join)
+			if config["datasets"]["projection"].lower() == "yes":
+				update_mapping(triples_map_list, function_dic, config["datasets"]["output_folder"], config[dataset_i]["mapping"],join,file_projection)
+			else:
+				update_mapping(triples_map_list, function_dic, config["datasets"]["output_folder"], config[dataset_i]["mapping"],join,{})
 
 			print("Successfully executed the functions in {}\n".format(config[dataset_i]["name"]))
 

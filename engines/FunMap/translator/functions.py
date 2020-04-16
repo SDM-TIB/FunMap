@@ -105,7 +105,7 @@ def prefix_extraction(uri):
         url = temp
     return prefix, url, value
 
-def update_mapping(triple_maps, dic, output, original, join):
+def update_mapping(triple_maps, dic, output, original, join, data_source):
     mapping = ""
     for triples_map in triple_maps:
 
@@ -118,8 +118,10 @@ def update_mapping(triple_maps, dic, output, original, join):
                 mapping += "<#" + triples_map.triples_map_id + ">\n"
 
             mapping += "    a rr:TriplesMap;\n"
-
-            mapping += "    rml:logicalSource [ rml:source \"" + triples_map.data_source +"\";\n"
+            if data_source:
+                mapping += "    rml:logicalSource [ rml:source \"" + data_source[triples_map.triples_map_id] +"\";\n"
+            else:
+                mapping += "    rml:logicalSource [ rml:source \"" + triples_map.data_source +"\";\n"
             if str(triples_map.file_format).lower() == "csv" and triples_map.query == "None": 
                 mapping += "                rml:referenceFormulation ql:CSV\n" 
             mapping += "                ];\n"

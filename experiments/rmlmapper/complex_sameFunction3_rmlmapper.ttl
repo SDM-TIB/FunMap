@@ -14,7 +14,7 @@
 @prefix ex: <http://www.example.com/> .
 @base <http://MapFun.KG/> .
 
-<#TriplesMap1>
+<#TriplesMap1> a rr:TriplesMap;
     rml:logicalSource [ rml:source "data.csv";
                         rml:referenceFormulation ql:CSV ];
     rr:subjectMap [
@@ -32,7 +32,7 @@
         ]
     ].    
 
-<#TriplesMap2>
+<#TriplesMap2> a rr:TriplesMap;
     rml:logicalSource [ rml:source "data.csv";
                         rml:referenceFormulation ql:CSV ];
     rr:subjectMap [
@@ -44,7 +44,7 @@
         rr:objectMap <#FunctionMap1>
     ].
 
-<#TriplesMap3>
+<#TriplesMap3> a rr:TriplesMap;
     rml:logicalSource [ rml:source "data.csv";
                         rml:referenceFormulation ql:CSV ];
     rr:subjectMap [

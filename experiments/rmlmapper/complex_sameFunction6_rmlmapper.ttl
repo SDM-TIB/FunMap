@@ -14,7 +14,7 @@
 @prefix ex: <http://www.example.com/> .
 @base <http://MapFun.KG/> .
 
-<#TriplesMap1>
+<#TriplesMap1> a rr:TriplesMap;
     rml:logicalSource [ rml:source "data.csv";
                         rml:referenceFormulation ql:CSV ];
     rr:subjectMap [
@@ -23,7 +23,8 @@
     ];
     rr:predicateObjectMap [
         rr:predicate owl:sameAs;
-        rr:objectMap <#FunctionMap1>
+        rr:objectMap <#FunctionMap1>;
+        rr:termType rr:IRI
     ];
     rr:predicateObjectMap [
         rr:predicate iasis:tissue;
@@ -32,7 +33,7 @@
         ]
     ].    
 
-<#TriplesMap2>
+<#TriplesMap2> a rr:TriplesMap;
     rml:logicalSource [ rml:source "data.csv";
                         rml:referenceFormulation ql:CSV ];
     rr:subjectMap [
@@ -41,10 +42,11 @@
     ]; 
     rr:predicateObjectMap [
         rr:predicate iasis:isAssociatedTo;
-        rr:objectMap <#FunctionMap1>
+        rr:objectMap <#FunctionMap1>;
+        rr:termType rr:IRI
     ].
 
-<#TriplesMap3>
+<#TriplesMap3> a rr:TriplesMap;
     rml:logicalSource [ rml:source "data.csv";
                         rml:referenceFormulation ql:CSV ];
     rr:subjectMap [
@@ -53,10 +55,11 @@
     ];
     rr:predicateObjectMap [
         rr:predicate iasis:isLocatedIn;
-        rr:objectMap <#FunctionMap1>
+        rr:objectMap <#FunctionMap1>;
+        rr:termType rr:IRI
     ].
 
-<#TriplesMap4>
+<#TriplesMap4> a rr:TriplesMap;
     rml:logicalSource [ rml:source "data.csv";
                         rml:referenceFormulation ql:CSV ];
     rr:subjectMap [
@@ -65,10 +68,11 @@
     ];
     rr:predicateObjectMap [
         rr:predicate iasis:isObservedIn;
-        rr:objectMap <#FunctionMap1>
+        rr:objectMap <#FunctionMap1>;
+        rr:termType rr:IRI
     ]. 
 
-<#TriplesMap5>
+<#TriplesMap5> a rr:TriplesMap;
     rml:logicalSource [ rml:source "data.csv";
                         rml:referenceFormulation ql:CSV ];
     rr:subjectMap [
@@ -77,10 +81,11 @@
     ];
     rr:predicateObjectMap [
         rr:predicate iasis:isRelatedTo;
-        rr:objectMap <#FunctionMap1> 
+        rr:objectMap <#FunctionMap1>;
+        rr:termType rr:IRI 
     ]. 
 
-<#TriplesMap6>
+<#TriplesMap6> a rr:TriplesMap;
     rml:logicalSource [ rml:source "data.csv";
                         rml:referenceFormulation ql:CSV ];
     rr:subjectMap [
@@ -88,7 +93,8 @@
     ];
     rr:predicateObjectMap [
         rr:predicate iasis:hasPosition;
-        rr:objectMap <#FunctionMap1> 
+        rr:objectMap <#FunctionMap1>;
+        rr:termType rr:IRI 
     ];
     rr:predicateObjectMap [
         rr:predicate iasis:tissue;
@@ -97,9 +103,8 @@
         ]
     ].      
 
-<#FunctionMap1>
+<#FunctionMap1> a rr:TriplesMap;
     a fnml:FunctionTermMap;
-    rr:termType rr:IRI;
 
     fnml:functionValue [
         rml:logicalSource [ rml:source "data.csv";

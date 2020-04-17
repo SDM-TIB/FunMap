@@ -330,6 +330,11 @@ def translate(config_path):
 																	"function":dic["executes"],
 																	"func_par":dic,
 																	"termType":True}
+													if current_func["function"] is "variantIdentifier":
+														fields[current_func["func_par"]["column1"]] = "object"
+														fields[current_func["func_par"]["column2"]] = "object"
+													else:
+														fields[current_func["func_par"]["value"]] = "object"
 													function_dic[triples_map_element.triples_map_id] = current_func
 													join_csv_URI(triples_map.data_source, current_func, config["datasets"]["output_folder"])
 											else:
@@ -339,6 +344,11 @@ def translate(config_path):
 																"function":dic["executes"],
 																"func_par":dic,
 																"termType":False}
+												if current_func["function"] is "variantIdentifier":
+													fields[current_func["func_par"]["column1"]] = "object"
+													fields[current_func["func_par"]["column2"]] = "object"
+												else:
+													fields[current_func["func_par"]["value"]] = "object"
 												function_dic[triples_map_element.triples_map_id] = current_func
 												join_csv(triples_map.data_source, current_func, config["datasets"]["output_folder"])
 											i += 1
@@ -354,24 +364,30 @@ def translate(config_path):
 								else:
 									fields[po.object_map.value] = "object"
 
-						if config["datasets"]["projection"].lower() == "yes":
-							with open(config["datasets"]["output_folder"] + "/PROJECT" + str(j) + ".csv", "w") as temp_csv:
+						if config["datasets"]["MapSDI"].lower() == "yes":
+							with open("temp.csv", "w") as temp_csv:
 								writer = csv.writer(temp_csv, quoting=csv.QUOTE_ALL)
 
 								reader = pd.read_csv(triples_map.data_source, usecols=fields.keys())
 								reader = reader.where(pd.notnull(reader), None)
 								reader = reader.to_dict(orient='records')
-
-								writer.writerow(fields.keys())
+								
 								for row in reader:
-									writer.writerow(row.values())
+									writer.writerow(row.values())	
 								file_projection[triples_map.triples_map_id] = config["datasets"]["output_folder"] + "/PROJECT" + str(j) + ".csv"
-								j += 1
+
+							with open(config["datasets"]["output_folder"] + "/PROJECT" + str(j) + ".csv", "w") as temp_csv:
+								writer = csv.writer(temp_csv, quoting=csv.QUOTE_ALL) 
+								writer.writerow(fields.keys())
+								
+							os.system("sort -u temp.csv >> " + config["datasets"]["output_folder"] + "/PROJECT" + str(j) + ".csv")
+							os.system("rm temp.csv")	
+							j += 1
 				else:
 					print("Invalid reference formulation or format")
 					print("Aborting...")
 					sys.exit(1)
-			if config["datasets"]["projection"].lower() == "yes":
+			if config["datasets"]["MapSDI"].lower() == "yes":
 				update_mapping(triples_map_list, function_dic, config["datasets"]["output_folder"], config[dataset_i]["mapping"],True,file_projection)
 			else:
 				update_mapping(triples_map_list, function_dic, config["datasets"]["output_folder"], config[dataset_i]["mapping"],True,{})

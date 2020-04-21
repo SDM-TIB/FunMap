@@ -330,11 +330,6 @@ def translate(config_path):
 																	"function":dic["executes"],
 																	"func_par":dic,
 																	"termType":True}
-													if current_func["function"] is "variantIdentifier":
-														fields[current_func["func_par"]["column1"]] = "object"
-														fields[current_func["func_par"]["column2"]] = "object"
-													else:
-														fields[current_func["func_par"]["value"]] = "object"
 													function_dic[triples_map_element.triples_map_id] = current_func
 													join_csv_URI(triples_map.data_source, current_func, config["datasets"]["output_folder"])
 											else:
@@ -344,14 +339,14 @@ def translate(config_path):
 																"function":dic["executes"],
 																"func_par":dic,
 																"termType":False}
-												if current_func["function"] is "variantIdentifier":
-													fields[current_func["func_par"]["column1"]] = "object"
-													fields[current_func["func_par"]["column2"]] = "object"
-												else:
-													fields[current_func["func_par"]["value"]] = "object"
 												function_dic[triples_map_element.triples_map_id] = current_func
 												join_csv(triples_map.data_source, current_func, config["datasets"]["output_folder"])
 											i += 1
+										if "variantIdentifier" in current_func["function"]:
+											fields[current_func["func_par"]["column1"]] = "object"
+											fields[current_func["func_par"]["column2"]] = "object"
+										else:
+											fields[current_func["func_par"]["value"]] = "object"
 							else:
 								if "{" in po.object_map.value:
 									object_field = po.object_map.value.split("{")

@@ -24,13 +24,7 @@
     rr:predicateObjectMap [
         rr:predicate iasis:isLocatedIn;
         rr:objectMap <#FunctionMap1> 
-    ];
-    rr:predicateObjectMap [
-        rr:predicate iasis:tissue;
-        rr:objectMap [ 
-            rml:reference "Primary site" 
-        ]
-    ].    
+    ].   
 
 <#TriplesMap2>
     rml:logicalSource [ rml:source "data.csv";

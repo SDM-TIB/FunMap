@@ -25,7 +25,13 @@
         rr:predicate owl:sameAs;
         rr:objectMap <#FunctionMap1>;
         rr:termType rr:IRI
-    ].    
+    ];
+    rr:predicateObjectMap [
+        rr:predicate iasis:tissue;
+        rr:objectMap [ 
+            rml:reference "Primary site" 
+        ]
+    ].        
 
 <#TriplesMap2> a rr:TriplesMap;
     rml:logicalSource [ rml:source "data.csv";

@@ -360,23 +360,20 @@ def translate(config_path):
 									fields[po.object_map.value] = "object"
 
 						if config["datasets"]["MapSDI"].lower() == "yes":
-							with open("temp.csv", "w") as temp_csv:
-								writer = csv.writer(temp_csv, quoting=csv.QUOTE_ALL)
-
-								reader = pd.read_csv(triples_map.data_source, usecols=fields.keys())
-								reader = reader.where(pd.notnull(reader), None)
-								reader = reader.to_dict(orient='records')
-								
-								for row in reader:
-									writer.writerow(row.values())	
-								file_projection[triples_map.triples_map_id] = config["datasets"]["output_folder"] + "/PROJECT" + str(j) + ".csv"
 
 							with open(config["datasets"]["output_folder"] + "/PROJECT" + str(j) + ".csv", "w") as temp_csv:
 								writer = csv.writer(temp_csv, quoting=csv.QUOTE_ALL) 
-								writer.writerow(fields.keys())
+
+								reader = pd.read_csv(triples_map.data_source, usecols=fields.keys())
+								reader = reader.where(pd.notnull(reader), None)
+								reader = reader.drop_duplicates(keep='first')
+								reader = reader.to_dict(orient='records')
+															
+								writer.writerow(reader[0].keys())
+								for row in reader:
+									writer.writerow(row.values())	
+								file_projection[triples_map.triples_map_id] = config["datasets"]["output_folder"] + "/PROJECT" + str(j) + ".csv"
 								
-							os.system("sort -u temp.csv >> " + config["datasets"]["output_folder"] + "/PROJECT" + str(j) + ".csv")
-							os.system("rm temp.csv")	
 							j += 1
 				else:
 					print("Invalid reference formulation or format")

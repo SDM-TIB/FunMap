@@ -1,0 +1,56 @@
+@prefix fno: <https://w3id.org/function/ontology#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix exm:   <http://fno.io/ex/rmlmapping#> .
+@prefix fnoi:    <https://w3id.org/function/vocabulary/implementation#> .
+@prefix fnom:    <https://w3id.org/function/vocabulary/mapping#> .
+@prefix doap:    <http://usefulinc.com/ns/doap#> .
+@prefix ex: <http://www.example.com/> .
+
+ex:variantIdentifingProblem a fno:Problem .
+ex:variantIdentifierAlgorithm a fno:Algorithm .
+
+ex:variantIdentifier a fno:Function;
+    fno:name "Variant ID creating function"^^xsd:string;
+    dcterms:description "This function creates a unified identifier for variant given in mutation COSMIC dataset by extracting from available data."^^xsd:string;
+    fno:solves ex:variantIdentifingProblem;
+    fno:implements ex:variantIdentifierAlgorithm;
+    fno:expects ( ex:param_cds ex:param_gene ex:param_prefix ) ;
+    fno:returns ( ex:variantIdOut ) .
+
+ex:param_cds a fno:Parameter ;
+    fno:predicate ex:column1 ;
+    fno:type      xsd:string ;
+    fno:required  "true"^^xsd:boolean .  
+
+ex:param_gene a fno:Parameter ;
+    fno:predicate ex:column2 ;
+    fno:type      xsd:string ;
+    fno:required  "true"^^xsd:boolean .  
+
+ex:param_prefix a fno:Parameter ;
+    fno:predicate ex:prefix ;
+    fno:type      xsd:string ;
+    fno:required  "true"^^xsd:boolean .     
+
+ex:variantIdOut a fno:Output ;
+    fno:predicate ex:variantID ;
+    fno:type      xsd:string ;
+    fno:required  "true"^^xsd:boolean .  
+
+ex:variantIdCreator a fno:Execution;
+    fno:executes ex:variantIdentifier .
+
+
+exm:variantIdentifierMapping
+    a                    fnoi:Mapping ;
+    fno:function         ex:variantIdentifier ;
+    fno:implementation   exm:complexJavaString ;
+    fno:methodMapping    [ a                fnom:StringMethodMapping ;
+                           fnom:method-name "variantIdentifier" ] .
+
+exm:complexJavaString
+    a                  fnoi:JavaClass ;
+    doap:download-page "ComplexGrelFunctions.jar" ;
+    fnoi:class-name    "es.upm.fi.dia.oeg.ComplexGrelFunctions" .

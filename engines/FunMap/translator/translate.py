@@ -2,17 +2,11 @@ import os
 import re
 import csv
 import sys
-import uuid
 import rdflib
-import getopt
-import subprocess
 from rdflib.plugins.sparql import prepareQuery
 from configparser import ConfigParser, ExtendedInterpolation
 import traceback
 from concurrent.futures import ThreadPoolExecutor
-import time
-import json
-import xml.etree.ElementTree as ET
 from .functions import *
 import pandas as pd
 
@@ -359,7 +353,7 @@ def translate(config_path):
 								else:
 									fields[po.object_map.value] = "object"
 
-						if config["datasets"]["MapSDI"].lower() == "yes":
+						if config["datasets"]["enrichment"].lower() == "yes":
 
 							with open(config["datasets"]["output_folder"] + "/PROJECT" + str(j) + ".csv", "w") as temp_csv:
 								writer = csv.writer(temp_csv, quoting=csv.QUOTE_ALL) 
@@ -379,7 +373,7 @@ def translate(config_path):
 					print("Invalid reference formulation or format")
 					print("Aborting...")
 					sys.exit(1)
-			if config["datasets"]["MapSDI"].lower() == "yes":
+			if config["datasets"]["enrichment"].lower() == "yes":
 				update_mapping(triples_map_list, function_dic, config["datasets"]["output_folder"], config[dataset_i]["mapping"],True,file_projection)
 			else:
 				update_mapping(triples_map_list, function_dic, config["datasets"]["output_folder"], config[dataset_i]["mapping"],True,{})

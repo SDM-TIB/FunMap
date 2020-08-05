@@ -292,6 +292,33 @@ def execute_function(row,dic):
         print("Aborting...")
         sys.exit(1)
 
+def execute_function(row,header,dic):
+    if "tolower" in dic["function"]:
+        return tolower(row[header.index(dic["func_par"]["value"])])
+    elif "toupper" in dic["function"]:
+        return toupper(row[header.index(dic["func_par"]["value"])])
+    elif "totitle" in dic["function"]:
+        return totitle(row[header.index(dic["func_par"]["value"])])
+    elif "trim" in dic["function"]:
+        return trim(row[header.index(dic["func_par"]["value"])])
+    elif "chomp" in dic["function"]:
+        return chomp(row[header.index(dic["func_par"]["value"])],dic["func_par"]["toremove"])
+    elif "substring" in dic["function"]:
+        if "index2" in dic["func_par"].keys():
+            return substring(row[header.index(dic["func_par"]["value"])],dic["func_par"]["index1"],dic["func_par"]["index2"])
+        else:
+            return substring(row[header.index(dic["func_par"]["value"])],dic["func_par"]["index1"],None)
+    elif "replaceValue" in dic["function"]:
+        return replaceValue(row[header.index(dic["func_par"]["value"])],dic["func_par"]["value2"],dic["func_par"]["value3"])
+    elif "match" in dic["function"]:
+        return match(dic["func_par"]["regex"],row[header.index(dic["func_par"]["value"])])
+    elif "variantIdentifier" in dic["function"]:
+        return variantIdentifier(row[header.index(dic["func_par"]["column1"])],row[header.index(dic["func_par"]["column2"])],dic["func_par"]["prefix"])
+    else:
+        print("Invalid function")
+        print("Aborting...")
+        sys.exit(1)
+
 def join_csv(source, dic, output):
     with open(output + "/" + dic["output_name"] + ".csv", "w") as temp_csv:
         writer = csv.writer(temp_csv, quoting=csv.QUOTE_ALL)
@@ -504,3 +531,113 @@ def create_dictionary(triple_map):
 
     dic["inputs"] = inputs
     return dic
+
+def join_mysql(data, headers, dic, db):
+    values = {}
+    cursor = db.cursor()
+    create = "CREATE TABLE " + dic["output_file"] + " ( "
+    for func in dic["func_par"]:
+        create += dic["func_par"][func] + " varchar(50),\n"
+    create += dic["output_name"] + " varchar(50));"
+    cursor.execute(create)
+    if "variantIdentifier" in dic["function"]:
+        for row in data:
+            if (row[header.index(dic["func_par"]["column1"])]+row[header.index(dic["func_par"]["column2"])] not in values) and (row[header.index(dic["func_par"]["column1"])]+row[header.index(dic["func_par"]["column2"])] is not None):
+                value = execute_function(row,headers,dic)
+                line = "INSERT INTO " + dic["output_file"] + "\n"  
+                line += "VALUES ("
+                for attr in dic["inputs"]:
+                    if attr[1] is not "constant":
+                        line += row[header.index(attr[0])] + ", "
+                line += value + ");"
+                cursor.execute(line)
+                values[row[header.index(dic["func_par"]["column1"])]+row[header.index(dic["func_par"]["column2"])]] = value
+    else:
+        for row in data:
+            if (row[header.index(dic["func_par"]["value"])] not in values) and (row[header.index(dic["func_par"]["value"])] is not None):
+                value = execute_function(row,headers,dic)
+                line = "INSERT INTO " + dic["output_file"] + "\n"  
+                line += "VALUES ("
+                for attr in dic["inputs"]:
+                    if attr[1] is not "constant":
+                        line += row[header.index(attr[0])] + ", "
+                line += value + ");"
+                cursor.execute(line)
+                values[row[header.index(dic["func_par"]["value"])]] = value
+
+
+def translate_postgressql(triples_map):
+
+    query_list = []
+    
+    
+    proyections = []
+
+        
+    if "{" in triples_map.subject_map.value:
+        subject = triples_map.subject_map.value
+        count = count_characters(subject)
+        if (count == 1) and (subject.split("{")[1].split("}")[0] not in proyections):
+            subject = subject.split("{")[1].split("}")[0]
+            if "[" in subject:
+                subject = subject.split("[")[0]
+            proyections.append(subject)
+        elif count > 1:
+            subject_list = subject.split("{")
+            for s in subject_list:
+                if "}" in s:
+                    subject = s.split("}")[0]
+                    if "[" in subject:
+                        subject = subject.split("[")
+                    if subject not in proyections:
+                        proyections.append(subject)
+
+    for po in triples_map.predicate_object_maps_list:
+        if "{" in po.object_map.value:
+            count = count_characters(po.object_map.value)
+            if 0 < count <= 1 :
+                predicate = po.object_map.value.split("{")[1].split("}")[0]
+                if "[" in predicate:
+                    predicate = predicate.split("[")[0]
+                if predicate not in proyections:
+                    proyections.append(predicate)
+
+            elif 1 < count:
+                predicate = po.object_map.value.split("{")
+                for po_e in predicate:
+                    if "}" in po_e:
+                        pre = po_e.split("}")[0]
+                        if "[" in pre:
+                            pre = pre.split("[")
+                        if pre not in proyections:
+                            proyections.append(pre)
+        elif "#" in po.object_map.value:
+            pass
+        elif "/" in po.object_map.value:
+            pass
+        else:
+            predicate = po.object_map.value 
+            if "[" in predicate:
+                predicate = predicate.split("[")[0]
+            if predicate not in proyections:
+                    proyections.append(predicate)
+        if po.object_map.child != None:
+            if po.object_map.child not in proyections:
+                    proyections.append(po.object_map.child)
+
+    temp_query = "SELECT "
+    for p in proyections:
+        if p is not "None":
+            if p == proyections[len(proyections)-1]:
+                temp_query += "\"" + p + "\""
+            else:
+                temp_query += "\"" + p + "\", " 
+        else:
+            temp_query = temp_query[:-2] 
+    if triples_map.tablename != "None":
+        temp_query = temp_query + " FROM " + triples_map.tablename + ";"
+    else:
+        temp_query = temp_query + " FROM " + triples_map.data_source + ";"
+    query_list.append(temp_query)
+
+    return triples_map.iterator, query_list

@@ -369,10 +369,53 @@ def translate(config_path):
 								file_projection[triples_map.triples_map_id] = config["datasets"]["output_folder"] + "/PROJECT" + str(j) + ".csv"
 								
 							j += 1
+				elif config["datasets"]["dbType"] == "mysql":
+					if triples_map.function:
+						pass
+					else:
+						database, query_list = translate_sql(triples_map)
+						db = connector.connect(host = config[dataset_i]["host"], port = int(config[dataset_i]["port"]), user = config[dataset_i]["user"], password = config[dataset_i]["password"])
+						cursor = db.cursor()
+						if database != "None":
+							cursor.execute("use " + database)
+						else:
+							cursor.execute("use test")
+						for po in triples_map.predicate_object_maps_list:
+							if po.object_map.mapping_type == "reference function":
+								for triples_map_element in triples_map_list:
+									if triples_map_element.triples_map_id == po.object_map.value:
+										if triples_map_element.triples_map_id not in function_dic:
+											if triples_map.query == "None":	
+												for query in query_list:
+													current_func = {"output_name": "OUTPUT" + str(i),
+																	"output_file": triples_map_element.triples_map_id + "_OUTPUT" + str(i), 
+																	"inputs":dic["inputs"], 
+																	"function":dic["executes"],
+																	"func_par":dic,
+																	"termType":False}
+													cursor.execute("DROP TABLE IF EXISTS " + current_func + ";")
+													cursor.execute(query)
+													row_headers=[x[0] for x in cursor.description]
+													function_dic[triples_map_element.triples_map_id] = current_func
+													join_mysql(cursor, row_headers, current_func, db)
+											else:
+												current_func = {"output_name":"OUTPUT" + str(i),
+																"output_file": config["datasets"]["output_folder"] + "/OUTPUT" + str(i) + ".csv", 
+																"inputs":dic["inputs"], 
+																"function":dic["executes"],
+																"func_par":dic,
+																"termType":False}
+												cursor.execute("DROP TABLE IF EXISTS " + current_func + ";")
+												cursor.execute(triples_map.query)
+												row_headers=[x[0] for x in cursor.description]
+												function_dic[triples_map_element.triples_map_id] = current_func
+												join_mysql(cursor, row_headers, current_func, db)
+											i += 1
 				else:
 					print("Invalid reference formulation or format")
 					print("Aborting...")
 					sys.exit(1)
+					
 			if config["datasets"]["enrichment"].lower() == "yes":
 				update_mapping(triples_map_list, function_dic, config["datasets"]["output_folder"], config[dataset_i]["mapping"],True,file_projection)
 			else:

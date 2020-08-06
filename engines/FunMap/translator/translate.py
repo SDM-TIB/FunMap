@@ -404,10 +404,12 @@ def translate(config_path):
 															query = query.replace(po.object_map.value,current_func["func_par"]["column1"]+", "+current_func["func_par"]["column2"])
 													else:
 														query = query.replace(po.object_map.value,current_func["func_par"]["value"])
-													print(query)
 													cursor.execute("DROP TABLE IF EXISTS " + current_func["output_file"] + ";")
 													cursor.execute(query)
 													row_headers=[x[0] for x in cursor.description]
+													row_headers=[]
+													db = ""
+													cursor = ""
 													function_dic[triples_map_element.triples_map_id] = current_func
 													join_mysql(cursor, row_headers, current_func, db)
 											else:

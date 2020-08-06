@@ -386,6 +386,7 @@ def translate(config_path):
 								for triples_map_element in triples_map_list:
 									if triples_map_element.triples_map_id == po.object_map.value:
 										if triples_map_element.triples_map_id not in function_dic:
+											dic = create_dictionary(triples_map_element)
 											if triples_map.query == "None":	
 												for query in query_list:
 													current_func = {"output_name": "OUTPUT" + str(i),
@@ -394,6 +395,16 @@ def translate(config_path):
 																	"function":dic["executes"],
 																	"func_par":dic,
 																	"termType":False}
+													if "variantIdentifier" in current_func["function"]:
+														if current_func["func_par"]["column1"] not in query and current_func["func_par"]["column2"] in query:
+															query = query.replace(po.object_map.value,current_func["func_par"]["column1"])
+														elif current_func["func_par"]["column1"] in query and current_func["func_par"]["column2"] not in query:
+															query = query.replace(po.object_map.value,current_func["func_par"]["column2"])
+														elif current_func["func_par"]["column1"] not in query and current_func["func_par"]["column2"] not in query:
+															query = query.replace(po.object_map.value,current_func["func_par"]["column1"]+", "+current_func["func_par"]["column2"])
+													else:
+														query = query.replace(po.object_map.value,current_func["func_par"]["value"])
+													print(query)
 													cursor.execute("DROP TABLE IF EXISTS " + current_func + ";")
 													cursor.execute(query)
 													row_headers=[x[0] for x in cursor.description]

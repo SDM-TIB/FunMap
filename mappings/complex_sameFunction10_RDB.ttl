@@ -16,7 +16,7 @@
 @base <http://MapFun.KG/> .
 
 <#TriplesMap1>
-    rml:logicalSource [ rml:source <#DB1>;
+    rml:logicalSource [ rml:source <#DB_source>;
                         rr:tableName "data";];
     rr:subjectMap [
         rr:template "http://project-iasis.eu/Mutation/{GENOMIC_MUTATION_ID}";
@@ -34,7 +34,7 @@
     ].        
 
 <#TriplesMap2>
-    rml:logicalSource [ rml:source <#DB1>;
+    rml:logicalSource [ rml:source <#DB_source>;
                         rr:tableName "data";];
     rr:subjectMap [
         rr:template "http://project-iasis.eu/GenomicPosition/{cFormat}";
@@ -46,7 +46,7 @@
     ].
 
 <#TriplesMap3>
-    rml:logicalSource [ rml:source <#DB1>;
+    rml:logicalSource [ rml:source <#DB_source>;
                         rr:tableName "data";];
     rr:subjectMap [
         rr:template "http://project-iasis.eu/Gene/{Gene name}";
@@ -58,7 +58,7 @@
     ].
 
 <#TriplesMap4>
-    rml:logicalSource [ rml:source <#DB1>;
+    rml:logicalSource [ rml:source <#DB_source>;
                         rr:tableName "data";];
     rr:subjectMap [
         rr:template "http://project-iasis.eu/Variant/{Mutation CDS}";
@@ -70,7 +70,7 @@
     ].    
 
 <#TriplesMap5>
-    rml:logicalSource [ rml:source <#DB1>;
+    rml:logicalSource [ rml:source <#DB_source>;
                         rr:tableName "data";];
     rr:subjectMap [
         rr:template "http://project-iasis.eu/TumorTissue/{Primary site}";
@@ -82,7 +82,7 @@
     ]. 
 
 <#TriplesMap6>
-    rml:logicalSource [ rml:source <#DB1>;
+    rml:logicalSource [ rml:source <#DB_source>;
                         rr:tableName "data";];
     rr:subjectMap [
         rr:template "http://project-iasis.eu/Mutation/{GENOMIC_MUTATION_ID}";
@@ -93,7 +93,7 @@
     ].    
 
 <#TriplesMap7>
-    rml:logicalSource [ rml:source <#DB1>;
+    rml:logicalSource [ rml:source <#DB_source>;
                         rr:tableName "data";];
     rr:subjectMap [
         rr:template "http://project-iasis.eu/GenomicPosition/{cFormat}";
@@ -104,7 +104,7 @@
     ].
 
 <#TriplesMap8>
-    rml:logicalSource [ rml:source <#DB1>;
+    rml:logicalSource [ rml:source <#DB_source>;
                         rr:tableName "data";];
     rr:subjectMap [
         rr:template "http://project-iasis.eu/Gene/{Gene name}";
@@ -115,7 +115,7 @@
     ].
 
 <#TriplesMap9>
-    rml:logicalSource [ rml:source <#DB1>;
+    rml:logicalSource [ rml:source <#DB_source>;
                         rr:tableName "data";];
     rr:subjectMap [
         rr:template "http://project-iasis.eu/Variant/{Mutation CDS}";
@@ -126,7 +126,7 @@
     ].    
 
 <#TriplesMap10>
-    rml:logicalSource [ rml:source <#DB1>;
+    rml:logicalSource [ rml:source <#DB_source>;
                         rr:tableName "data";];
     rr:subjectMap [
         rr:template "http://project-iasis.eu/TumorTissue/{Primary site}";
@@ -147,7 +147,7 @@
     rr:termType rr:IRI;
 
     fnml:functionValue [
-        rml:logicalSource [ rml:source <#DB1>;
+        rml:logicalSource [ rml:source <#DB_source>;
                             rr:tableName "data";];
         rr:predicateObjectMap [
             rr:predicate fno:executes ;
@@ -175,8 +175,8 @@
         ]; 
         ].  
 
-<#DB1> a d2rq:Database;
-  d2rq:jdbcDSN "CONNECTIONDSN"; # the "jbdc:mysql:// part is ignored
+<#DB_source> a d2rq:Database;
+  d2rq:jdbcDSN "jdbc:mysql://localhost:3306/funmap";
   d2rq:jdbcDriver "com.mysql.cj.jdbc.Driver"; # this is ignored
   d2rq:username "root";
   d2rq:password "tib" .

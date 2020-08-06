@@ -566,7 +566,7 @@ def join_mysql(data, headers, dic, db):
                 values[row[header.index(dic["func_par"]["value"])]] = value
 
 
-def translate_postgressql(triples_map):
+def translate_sql(triples_map):
 
     query_list = []
     
@@ -629,9 +629,9 @@ def translate_postgressql(triples_map):
     for p in proyections:
         if p is not "None":
             if p == proyections[len(proyections)-1]:
-                temp_query += "\"" + p + "\""
+                temp_query += p
             else:
-                temp_query += "\"" + p + "\", " 
+                temp_query += p + ", " 
         else:
             temp_query = temp_query[:-2] 
     if triples_map.tablename != "None":

@@ -179,4 +179,4 @@
   d2rq:jdbcDSN "CONNECTIONDSN"; # the "jbdc:mysql:// part is ignored
   d2rq:jdbcDriver "com.mysql.cj.jdbc.Driver"; # this is ignored
   d2rq:username "root";
-  d2rq:password "" .
+  d2rq:password "tib" .

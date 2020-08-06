@@ -9,6 +9,7 @@ import traceback
 from concurrent.futures import ThreadPoolExecutor
 from .functions import *
 import pandas as pd
+from mysql import connector
 
 try:
 	from triples_map import TriplesMap as tm

@@ -641,3 +641,10 @@ def translate_sql(triples_map):
     query_list.append(temp_query)
 
     return triples_map.iterator, query_list
+
+def count_characters(string):
+    count = 0
+    for s in string:
+        if s == "{":
+            count += 1
+    return count

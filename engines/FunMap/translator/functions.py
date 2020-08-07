@@ -536,9 +536,12 @@ def join_mysql(data, headers, dic, db):
     values = {}
     cursor = db.cursor()
     create = "CREATE TABLE " + dic["output_file"] + " ( "
-    for func in dic["func_par"]:
-        create += dic["func_par"][func] + " varchar(50),\n"
-    create += dic["output_name"] + " varchar(50));"
+    if "variantIdentifier" in dic["function"]:
+        create += "`" + dic["func_par"]["column1"] + "` varchar(200),\n"
+        create += "`" + dic["func_par"]["column2"] + "` varchar(200),\n"
+    else:
+        create += "`" + dic["func_par"]["value"] + "` varchar(200),\n"
+    create += "`" + dic["output_name"] + "` varchar(200));"
     cursor.execute(create)
     if "variantIdentifier" in dic["function"]:
         for row in data:
@@ -629,9 +632,9 @@ def translate_sql(triples_map):
     for p in proyections:
         if p is not "None":
             if p == proyections[len(proyections)-1]:
-                temp_query += p
+                temp_query += "`" + p + "`"
             else:
-                temp_query += p + ", " 
+                temp_query += "`" + p + "`, " 
         else:
             temp_query = temp_query[:-2] 
     if triples_map.tablename != "None":

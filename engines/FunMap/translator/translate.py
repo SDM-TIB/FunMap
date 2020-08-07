@@ -380,7 +380,8 @@ def translate(config_path):
 						if database != "None":
 							cursor.execute("use " + database)
 						else:
-							cursor.execute("use test")
+							if config[dataset_i]["db"].lower() != "none":
+								cursor.execute("use " + config[dataset_i]["db"])
 						for po in triples_map.predicate_object_maps_list:
 							if po.object_map.mapping_type == "reference function":
 								for triples_map_element in triples_map_list:
@@ -397,19 +398,16 @@ def translate(config_path):
 																	"termType":False}
 													if "variantIdentifier" in current_func["function"]:
 														if current_func["func_par"]["column1"] not in query and current_func["func_par"]["column2"] in query:
-															query = query.replace(po.object_map.value,current_func["func_par"]["column1"])
+															query = query.replace("`" + po.object_map.value + "`","`" + current_func["func_par"]["column1"] + "`")
 														elif current_func["func_par"]["column1"] in query and current_func["func_par"]["column2"] not in query:
-															query = query.replace(po.object_map.value,current_func["func_par"]["column2"])
+															query = query.replace("`" + po.object_map.value + "`","`" + current_func["func_par"]["column2"] + "`")
 														elif current_func["func_par"]["column1"] not in query and current_func["func_par"]["column2"] not in query:
-															query = query.replace(po.object_map.value,current_func["func_par"]["column1"]+", "+current_func["func_par"]["column2"])
+															query = query.replace("`" + po.object_map.value + "`","`" + current_func["func_par"]["column1"]+"`, `"+current_func["func_par"]["column2"]+ "`")
 													else:
-														query = query.replace(po.object_map.value,current_func["func_par"]["value"])
+														query = query.replace("`" + po.object_map.value + "`","`" + current_func["func_par"]["value"] + "`")
 													cursor.execute("DROP TABLE IF EXISTS " + current_func["output_file"] + ";")
 													cursor.execute(query)
 													row_headers=[x[0] for x in cursor.description]
-													row_headers=[]
-													db = ""
-													cursor = ""
 													function_dic[triples_map_element.triples_map_id] = current_func
 													join_mysql(cursor, row_headers, current_func, db)
 											else:

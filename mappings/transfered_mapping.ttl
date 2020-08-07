@@ -254,8 +254,8 @@
 
 <#OUTPUT1>
     a rr:TriplesMap;
-    rml:logicalSource [ rml:source <#DB_output>;
-                        rr:tableName "ub1bL148C24_OUTPUT1";];
+    rml:logicalSource [ rml:source <#DB_source>;
+                        rr:tableName "OUTPUT1";];
     rr:subjectMap [
         rml:reference "OUTPUT1"
     ].
@@ -266,9 +266,4 @@
   d2rq:username "root";
   d2rq:password "tib" .
 
-<#DB_output> a d2rq:Database;
-  d2rq:jdbcDSN "jdbc:mysql://localhost:3306/funmap";
-  d2rq:jdbcDriver "com.mysql.cj.jdbc.Driver"; # this is ignored
-  d2rq:username "root";
-  d2rq:password "tib" .
 

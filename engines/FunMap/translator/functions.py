@@ -532,7 +532,7 @@ def create_dictionary(triple_map):
     dic["inputs"] = inputs
     return dic
 
-def join_mysql(data, headers, dic, db):
+def join_mysql(data, header, dic, db):
     values = {}
     cursor = db.cursor(buffered=True)
     create = "CREATE TABLE " + dic["output_file"] + " ( "
@@ -546,25 +546,25 @@ def join_mysql(data, headers, dic, db):
     if "variantIdentifier" in dic["function"]:
         for row in data:
             if (row[header.index(dic["func_par"]["column1"])]+row[header.index(dic["func_par"]["column2"])] not in values) and (row[header.index(dic["func_par"]["column1"])]+row[header.index(dic["func_par"]["column2"])] is not None):
-                value = execute_function(row,headers,dic)
+                value = execute_function(row,header,dic)
                 line = "INSERT INTO " + dic["output_file"] + "\n"  
                 line += "VALUES ("
                 for attr in dic["inputs"]:
                     if attr[1] is not "constant":
-                        line += row[header.index(attr[0])] + ", "
-                line += value + ");"
+                        line += "'" + row[header.index(attr[0])] + "', "
+                line += "'" + value + "');"
                 cursor.execute(line)
                 values[row[header.index(dic["func_par"]["column1"])]+row[header.index(dic["func_par"]["column2"])]] = value
     else:
         for row in data:
             if (row[header.index(dic["func_par"]["value"])] not in values) and (row[header.index(dic["func_par"]["value"])] is not None):
-                value = execute_function(row,headers,dic)
+                value = execute_function(row,header,dic)
                 line = "INSERT INTO " + dic["output_file"] + "\n"  
                 line += "VALUES ("
                 for attr in dic["inputs"]:
                     if attr[1] is not "constant":
-                        line += row[header.index(attr[0])] + ", "
-                line += value + ");"
+                        line += "'" + row[header.index(attr[0])] + "', "
+                line += "'" + value + "');"
                 cursor.execute(line)
                 values[row[header.index(dic["func_par"]["value"])]] = value
 

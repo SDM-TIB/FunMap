@@ -18,7 +18,7 @@
 <#TriplesMap8>
     a rr:TriplesMap;
     rml:logicalSource [ rml:source <#DB_source>;
-                        rr:tableName "data";];
+                        rr:tableName "PROJECT1";];
     rr:subjectMap [
         rr:template "http://project-iasis.eu/Gene/{Gene name}";
     ];
@@ -40,7 +40,7 @@
 <#TriplesMap3>
     a rr:TriplesMap;
     rml:logicalSource [ rml:source <#DB_source>;
-                        rr:tableName "data";];
+                        rr:tableName "PROJECT6";];
     rr:subjectMap [
         rr:template "http://project-iasis.eu/Gene/{Gene name}";
         rr:class iasis:Gene
@@ -63,7 +63,7 @@
 <#TriplesMap4>
     a rr:TriplesMap;
     rml:logicalSource [ rml:source <#DB_source>;
-                        rr:tableName "data";];
+                        rr:tableName "PROJECT8";];
     rr:subjectMap [
         rr:template "http://project-iasis.eu/Variant/{Mutation CDS}";
         rr:class iasis:Variant
@@ -86,7 +86,7 @@
 <#TriplesMap1>
     a rr:TriplesMap;
     rml:logicalSource [ rml:source <#DB_source>;
-                        rr:tableName "data";];
+                        rr:tableName "PROJECT10";];
     rr:subjectMap [
         rr:template "http://project-iasis.eu/Mutation/{GENOMIC_MUTATION_ID}";
         rr:class iasis:Mutation
@@ -115,7 +115,7 @@
 <#TriplesMap2>
     a rr:TriplesMap;
     rml:logicalSource [ rml:source <#DB_source>;
-                        rr:tableName "data";];
+                        rr:tableName "PROJECT2";];
     rr:subjectMap [
         rr:template "http://project-iasis.eu/GenomicPosition/{cFormat}";
         rr:class iasis:GenomicPosition
@@ -138,7 +138,7 @@
 <#TriplesMap6>
     a rr:TriplesMap;
     rml:logicalSource [ rml:source <#DB_source>;
-                        rr:tableName "data";];
+                        rr:tableName "PROJECT4";];
     rr:subjectMap [
         rr:template "http://project-iasis.eu/Mutation/{GENOMIC_MUTATION_ID}";
     ];
@@ -160,7 +160,7 @@
 <#TriplesMap7>
     a rr:TriplesMap;
     rml:logicalSource [ rml:source <#DB_source>;
-                        rr:tableName "data";];
+                        rr:tableName "PROJECT9";];
     rr:subjectMap [
         rr:template "http://project-iasis.eu/GenomicPosition/{cFormat}";
     ];
@@ -182,7 +182,7 @@
 <#TriplesMap9>
     a rr:TriplesMap;
     rml:logicalSource [ rml:source <#DB_source>;
-                        rr:tableName "data";];
+                        rr:tableName "PROJECT3";];
     rr:subjectMap [
         rr:template "http://project-iasis.eu/Variant/{Mutation CDS}";
     ];
@@ -204,7 +204,7 @@
 <#TriplesMap5>
     a rr:TriplesMap;
     rml:logicalSource [ rml:source <#DB_source>;
-                        rr:tableName "data";];
+                        rr:tableName "PROJECT5";];
     rr:subjectMap [
         rr:template "http://project-iasis.eu/TumorTissue/{Primary site}";
         rr:class iasis:TumorTissue
@@ -227,7 +227,7 @@
 <#TriplesMap10>
     a rr:TriplesMap;
     rml:logicalSource [ rml:source <#DB_source>;
-                        rr:tableName "data";];
+                        rr:tableName "PROJECT7";];
     rr:subjectMap [
         rr:template "http://project-iasis.eu/TumorTissue/{Primary site}";
     ];

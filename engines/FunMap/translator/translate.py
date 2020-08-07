@@ -376,7 +376,7 @@ def translate(config_path):
 					else:
 						database, query_list = translate_sql(triples_map)
 						db = connector.connect(host = config[dataset_i]["host"], port = int(config[dataset_i]["port"]), user = config[dataset_i]["user"], password = config[dataset_i]["password"])
-						cursor = db.cursor()
+						cursor = db.cursor(buffered=True)
 						if database != "None":
 							cursor.execute("use " + database)
 						else:

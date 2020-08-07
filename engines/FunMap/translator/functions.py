@@ -534,7 +534,7 @@ def create_dictionary(triple_map):
 
 def join_mysql(data, headers, dic, db):
     values = {}
-    cursor = db.cursor()
+    cursor = db.cursor(buffered=True)
     create = "CREATE TABLE " + dic["output_file"] + " ( "
     if "variantIdentifier" in dic["function"]:
         create += "`" + dic["func_par"]["column1"] + "` varchar(200),\n"

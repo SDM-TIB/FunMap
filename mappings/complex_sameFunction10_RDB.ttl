@@ -25,13 +25,7 @@
     rr:predicateObjectMap [
         rr:predicate iasis:isLocatedIn;
         rr:objectMap <#FunctionMap1> 
-    ];
-    rr:predicateObjectMap [
-        rr:predicate iasis:tissue;
-        rr:objectMap [ 
-            rml:reference "Primary site" 
-        ]
-    ].        
+    ].       
 
 <#TriplesMap2>
     rml:logicalSource [ rml:source <#DB_source>;
@@ -134,13 +128,7 @@
     rr:predicateObjectMap [
         rr:predicate iasis:hasPosition;
         rr:objectMap <#FunctionMap1> 
-    ];
-    rr:predicateObjectMap [
-        rr:predicate iasis:tissue;
-        rr:objectMap [ 
-            rml:reference "Primary site" 
-        ]
-    ].         
+    ].        
 
 <#FunctionMap1>
     a fnml:FunctionTermMap;

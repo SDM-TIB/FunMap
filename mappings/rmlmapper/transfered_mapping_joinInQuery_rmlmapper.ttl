@@ -18,6 +18,7 @@
 <#TriplesMap8>
     a rr:TriplesMap;
     rml:logicalSource [ rml:source <#DB_source>;
+                        rr:tableName "PROJECT1","OUTPUT1";
                         rml:query "SELECT DISTINCT p.`Gene name`, o.`OUTPUT1` FROM PROJECT1 as p, OUTPUT1 as o WHERE p.`Gene name`=o.`Gene name`and p.`Mutation CDS`=o.`Mutation CDS`";
                         rr:sqlVersion rr:SQL2008;];
     rr:subjectMap [
@@ -33,6 +34,7 @@
 <#TriplesMap3>
     a rr:TriplesMap;
     rml:logicalSource [ rml:source <#DB_source>;
+                        rr:tableName "PROJECT6","OUTPUT1";
                         rml:query "SELECT DISTINCT p.`Gene name`, o.`OUTPUT1` FROM PROJECT6 as p, OUTPUT1 as o WHERE p.`Gene name`=o.`Gene name`and p.`Mutation CDS`=o.`Mutation CDS`";
                         rr:sqlVersion rr:SQL2008;];
     rr:subjectMap [
@@ -49,6 +51,7 @@
 <#TriplesMap4>
     a rr:TriplesMap;
     rml:logicalSource [ rml:source <#DB_source>;
+                        rr:tableName "PROJECT8","OUTPUT1";
                         rml:query "SELECT DISTINCT p.`Mutation CDS`, o.`OUTPUT1` FROM PROJECT8 as p, OUTPUT1 as o WHERE p.`Gene name`=o.`Gene name`and p.`Mutation CDS`=o.`Mutation CDS`";
                         rr:sqlVersion rr:SQL2008;];
     rr:subjectMap [
@@ -65,6 +68,7 @@
 <#TriplesMap1>
     a rr:TriplesMap;
     rml:logicalSource [ rml:source <#DB_source>;
+                        rr:tableName "PROJECT10","OUTPUT1";
                         rml:query "SELECT DISTINCT p.`GENOMIC_MUTATION_ID`, o.`OUTPUT1` FROM PROJECT10 as p, OUTPUT1 as o WHERE p.`Gene name`=o.`Gene name`and p.`Mutation CDS`=o.`Mutation CDS`";
                         rr:sqlVersion rr:SQL2008;];
     rr:subjectMap [
@@ -81,6 +85,7 @@
 <#TriplesMap2>
     a rr:TriplesMap;
     rml:logicalSource [ rml:source <#DB_source>;
+                        rr:tableName "PROJECT2","OUTPUT1";
                         rml:query "SELECT DISTINCT p.`cFormat`, o.`OUTPUT1` FROM PROJECT2 as p, OUTPUT1 as o WHERE p.`Gene name`=o.`Gene name`and p.`Mutation CDS`=o.`Mutation CDS`";
                         rr:sqlVersion rr:SQL2008;];
     rr:subjectMap [
@@ -97,6 +102,7 @@
 <#TriplesMap6>
     a rr:TriplesMap;
     rml:logicalSource [ rml:source <#DB_source>;
+                        rr:tableName "PROJECT4","OUTPUT1";
                         rml:query "SELECT DISTINCT p.`GENOMIC_MUTATION_ID`, o.`OUTPUT1` FROM PROJECT4 as p, OUTPUT1 as o WHERE p.`Gene name`=o.`Gene name`and p.`Mutation CDS`=o.`Mutation CDS`";
                         rr:sqlVersion rr:SQL2008;];
     rr:subjectMap [
@@ -112,6 +118,7 @@
 <#TriplesMap7>
     a rr:TriplesMap;
     rml:logicalSource [ rml:source <#DB_source>;
+                        rr:tableName "PROJECT9","OUTPUT1";
                         rml:query "SELECT DISTINCT p.`cFormat`, o.`OUTPUT1` FROM PROJECT9 as p, OUTPUT1 as o WHERE p.`Gene name`=o.`Gene name`and p.`Mutation CDS`=o.`Mutation CDS`";
                         rr:sqlVersion rr:SQL2008;];
     rr:subjectMap [
@@ -127,6 +134,7 @@
 <#TriplesMap9>
     a rr:TriplesMap;
     rml:logicalSource [ rml:source <#DB_source>;
+                        rr:tableName "PROJECT3","OUTPUT1";
                         rml:query "SELECT DISTINCT p.`Mutation CDS`, o.`OUTPUT1` FROM PROJECT3 as p, OUTPUT1 as o WHERE p.`Gene name`=o.`Gene name`and p.`Mutation CDS`=o.`Mutation CDS`";
                         rr:sqlVersion rr:SQL2008;];
     rr:subjectMap [
@@ -142,6 +150,7 @@
 <#TriplesMap5>
     a rr:TriplesMap;
     rml:logicalSource [ rml:source <#DB_source>;
+                        rr:tableName "PROJECT5","OUTPUT1";
                         rml:query "SELECT DISTINCT p.`Primary site`, o.`OUTPUT1` FROM PROJECT5 as p, OUTPUT1 as o WHERE p.`Gene name`=o.`Gene name`and p.`Mutation CDS`=o.`Mutation CDS`";
                         rr:sqlVersion rr:SQL2008;];
     rr:subjectMap [
@@ -158,6 +167,7 @@
 <#TriplesMap10>
     a rr:TriplesMap;
     rml:logicalSource [ rml:source <#DB_source>;
+                        rr:tableName "PROJECT7","OUTPUT1";
                         rml:query "SELECT DISTINCT p.`Primary site`, o.`OUTPUT1` FROM PROJECT7 as p, OUTPUT1 as o WHERE p.`Gene name`=o.`Gene name`and p.`Mutation CDS`=o.`Mutation CDS`";
                         rr:sqlVersion rr:SQL2008;];
     rr:subjectMap [
@@ -171,7 +181,7 @@
     ].
 
 <#DB_source> a d2rq:Database;
-  d2rq:jdbcDSN "jdbc:mysql://localhost:3306/funmap?user=root&password=tib&allowPublicKeyRetrieval=true";
+  d2rq:jdbcDSN "jdbc:mysql://localhost:3306/rdfizer?user=root&password=tib&allowPublicKeyRetrieval=true";
   d2rq:jdbcDriver "com.mysql.cj.jdbc.Driver"; # this is ignored
   d2rq:username "root";
   d2rq:password "tib" .

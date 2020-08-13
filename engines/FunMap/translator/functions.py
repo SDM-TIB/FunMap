@@ -628,7 +628,7 @@ def translate_sql(triples_map):
             if po.object_map.child not in proyections:
                     proyections.append(po.object_map.child)
 
-    temp_query = "SELECT "
+    temp_query = "SELECT DISTINCT "
     for p in proyections:
         if p is not "None":
             if p == proyections[len(proyections)-1]:

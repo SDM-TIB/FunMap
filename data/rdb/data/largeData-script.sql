@@ -35,46 +35,46 @@ CREATE TABLE OUTPUT1 (`Gene name` VARCHAR(200),`Mutation CDS` VARCHAR(200),`OUTP
 
 INSERT INTO PROJECT1
 SELECT `Gene name`, `Mutation CDS`
-FROM data
+FROM data;
 
 INSERT INTO PROJECT2
 SELECT `Gene name`, `Mutation CDS`, `cFormat`
-FROM data
+FROM data;
 
 INSERT INTO PROJECT3
 SELECT `Gene name`, `Mutation CDS`
-FROM data
+FROM data;
 
 INSERT INTO PROJECT4
 SELECT `Gene name`, `Mutation CDS`, `GENOMIC_MUTATION_ID`
-FROM data
+FROM data;
 
 INSERT INTO PROJECT5
 SELECT `Gene name`, `Primary site`, `Mutation CDS`
-FROM data
+FROM data;
 
 INSERT INTO PROJECT6
 SELECT `Gene name`, `Mutation CDS`
-FROM data
+FROM data;
 
 INSERT INTO PROJECT7
 SELECT `Gene name`, `Primary site`, `Mutation CDS`
-FROM data
+FROM data;
 
 INSERT INTO PROJECT8
 SELECT `Gene name`, `Mutation CDS`
-FROM data
+FROM data;
 
 INSERT INTO PROJECT9
 SELECT `Gene name`, `Mutation CDS`, `cFormat`
-FROM data
+FROM data;
 
 INSERT INTO PROJECT10
 SELECT `Gene name`, `Primary site`, `Mutation CDS`
-FROM data
+FROM data;
 
 INSERT INTO OUTPUT1
 SELECT `Gene name`, `Mutation CDS`, `OUTPUT1`
-FROM data
+FROM data;
 
 

@@ -52,17 +52,17 @@ LOAD DATA LOCAL INFILE '/data/batch18.csv' INTO TABLE data FIELDS TERMINATED BY 
 LOAD DATA LOCAL INFILE '/data/batch19.csv' INTO TABLE data FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\n' IGNORE 1 ROWS;
 LOAD DATA LOCAL INFILE '/data/batch20.csv' INTO TABLE data FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\n' IGNORE 1 ROWS;
 
-INSERT INTO PROJECT1 SELECT `Gene name`, `Mutation CDS` FROM data;
-INSERT INTO PROJECT2 SELECT `Gene name`, `Mutation CDS`, `cFormat` FROM data;
-INSERT INTO PROJECT3 SELECT `Gene name`, `Mutation CDS` FROM data;
-INSERT INTO PROJECT4 SELECT `Gene name`, `Mutation CDS`, `GENOMIC_MUTATION_ID` FROM data; 
-INSERT INTO PROJECT5 SELECT `Gene name`, `Primary site`, `Mutation CDS` FROM data; 
-INSERT INTO PROJECT6 SELECT `Gene name`, `Mutation CDS` FROM data;
-INSERT INTO PROJECT7 SELECT `Gene name`, `Primary site`, `Mutation CDS` FROM data;
-INSERT INTO PROJECT8 SELECT `Gene name`, `Mutation CDS` FROM data;
-INSERT INTO PROJECT9 SELECT `Gene name`, `Mutation CDS`, `cFormat` FROM data;
-INSERT INTO PROJECT10 SELECT `Gene name`, `Primary site`, `Mutation CDS`, `GENOMIC_MUTATION_ID` FROM data;
-INSERT INTO OUTPUT1 SELECT `Gene name`, `Mutation CDS`, `cFormat` FROM data;
+INSERT INTO PROJECT1 SELECT DISTINCT `Gene name`, `Mutation CDS` FROM data;
+INSERT INTO PROJECT2 SELECT DISTINCT `Gene name`, `Mutation CDS`, `cFormat` FROM data;
+INSERT INTO PROJECT3 SELECT DISTINCT `Gene name`, `Mutation CDS` FROM data;
+INSERT INTO PROJECT4 SELECT DISTINCT `Gene name`, `Mutation CDS`, `GENOMIC_MUTATION_ID` FROM data; 
+INSERT INTO PROJECT5 SELECT DISTINCT `Gene name`, `Primary site`, `Mutation CDS` FROM data; 
+INSERT INTO PROJECT6 SELECT DISTINCT `Gene name`, `Mutation CDS` FROM data;
+INSERT INTO PROJECT7 SELECT DISTINCT `Gene name`, `Primary site`, `Mutation CDS` FROM data;
+INSERT INTO PROJECT8 SELECT DISTINCT `Gene name`, `Mutation CDS` FROM data;
+INSERT INTO PROJECT9 SELECT DISTINCT `Gene name`, `Mutation CDS`, `cFormat` FROM data;
+INSERT INTO PROJECT10 SELECT DISTINCT `Gene name`, `Primary site`, `Mutation CDS`, `GENOMIC_MUTATION_ID` FROM data;
+INSERT INTO OUTPUT1 SELECT DISTINCT `Gene name`, `Mutation CDS`, `cFormat` FROM data;
 
 create index p1 on PROJECT1 (`Gene name`, `Mutation CDS`);
 create index p2 on PROJECT2 (`Gene name`, `Mutation CDS`);

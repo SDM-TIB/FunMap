@@ -292,7 +292,7 @@ def execute_function(row,dic):
         print("Aborting...")
         sys.exit(1)
 
-def execute_function(row,header,dic):
+def execute_function_mysql(row,header,dic):
     if "tolower" in dic["function"]:
         return tolower(row[header.index(dic["func_par"]["value"])])
     elif "toupper" in dic["function"]:
@@ -537,16 +537,16 @@ def join_mysql(data, header, dic, db):
     cursor = db.cursor(buffered=True)
     create = "CREATE TABLE " + dic["output_file"] + " ( "
     if "variantIdentifier" in dic["function"]:
-        create += "`" + dic["func_par"]["column1"] + "` varchar(200),\n"
-        create += "`" + dic["func_par"]["column2"] + "` varchar(200),\n"
+        create += "`" + dic["func_par"]["column1"] + "` varchar(300),\n"
+        create += "`" + dic["func_par"]["column2"] + "` varchar(300),\n"
     else:
-        create += "`" + dic["func_par"]["value"] + "` varchar(200),\n"
-    create += "`" + dic["output_name"] + "` varchar(200));"
+        create += "`" + dic["func_par"]["value"] + "` varchar(300),\n"
+    create += "`" + dic["output_name"] + "` varchar(300));"
     cursor.execute(create)
     if "variantIdentifier" in dic["function"]:
         for row in data:
             if (row[header.index(dic["func_par"]["column1"])]+row[header.index(dic["func_par"]["column2"])] not in values) and (row[header.index(dic["func_par"]["column1"])]+row[header.index(dic["func_par"]["column2"])] is not None):
-                value = execute_function(row,header,dic)
+                value = execute_function_mysql(row,header,dic)
                 line = "INSERT INTO " + dic["output_file"] + "\n"  
                 line += "VALUES ("
                 for attr in dic["inputs"]:
@@ -558,7 +558,7 @@ def join_mysql(data, header, dic, db):
     else:
         for row in data:
             if (row[header.index(dic["func_par"]["value"])] not in values) and (row[header.index(dic["func_par"]["value"])] is not None):
-                value = execute_function(row,header,dic)
+                value = execute_function_mysql(row,header,dic)
                 line = "INSERT INTO " + dic["output_file"] + "\n"  
                 line += "VALUES ("
                 for attr in dic["inputs"]:

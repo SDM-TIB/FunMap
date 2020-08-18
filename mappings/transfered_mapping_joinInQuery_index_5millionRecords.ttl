@@ -19,7 +19,7 @@
     a rr:TriplesMap;
     rml:logicalSource [ rml:source <#DB_source>;
                         rr:tableName "PROJECT1","OUTPUT1";
-                        rml:query "SELECT DISTINCT p.`Gene name`, o.`OUTPUT1` FROM PROJECT1 as p, OUTPUT1 as o WHERE p.`Gene name`=o.`Gene name`and p.`Mutation CDS`=o.`Mutation CDS`";];
+                        rml:query "SSELECT DISTINCT PROJECT1.`Gene name`, OUTPUT1.`OUTPUT1` FROM PROJECT1 USE INDEX (p1), OUTPUT1 USE INDEX (o1) WHERE PROJECT1.`Gene name`=OUTPUT1.`Gene name`and PROJECT1.`Mutation CDS`=OUTPUT1.`Mutation CDS`";];
     rr:subjectMap [
         rr:template "http://project-iasis.eu/Gene/{Gene name}";
     ];
@@ -34,7 +34,7 @@
     a rr:TriplesMap;
     rml:logicalSource [ rml:source <#DB_source>;
                         rr:tableName "PROJECT6","OUTPUT1";
-                        rml:query "SELECT DISTINCT p.`Gene name`, o.`OUTPUT1` FROM PROJECT6 as p, OUTPUT1 as o WHERE p.`Gene name`=o.`Gene name`and p.`Mutation CDS`=o.`Mutation CDS`";];
+                        rml:query "SELECT DISTINCT PROJECT1.`Gene name`, OUTPUT1.`OUTPUT1` FROM PROJECT6 USE INDEX (p6), OUTPUT1 USE INDEX (o1) WHERE PROJECT6.`Gene name`=OUTPUT1.`Gene name`and PROJECT6.`Mutation CDS`=OUTPUT1.`Mutation CDS`";];
     rr:subjectMap [
         rr:template "http://project-iasis.eu/Gene/{Gene name}";
         rr:class iasis:Gene
@@ -50,7 +50,7 @@
     a rr:TriplesMap;
     rml:logicalSource [ rml:source <#DB_source>;
                         rr:tableName "PROJECT8","OUTPUT1";
-                        rml:query "SELECT DISTINCT p.`Mutation CDS`, o.`OUTPUT1` FROM PROJECT8 as p, OUTPUT1 as o WHERE p.`Gene name`=o.`Gene name`and p.`Mutation CDS`=o.`Mutation CDS`";];
+                        rml:query "SELECT DISTINCT PROJECT8.`Mutation CDS`, OUTPUT1.`OUTPUT1` FROM PROJECT8 USE INDEX (p8), OUTPUT1 USE INDEX (o1) WHERE PROJECT8.`Gene name`=OUTPUT1.`Gene name`and PROJECT8.`Mutation CDS`=OUTPUT1.`Mutation CDS`";];
     rr:subjectMap [
         rr:template "http://project-iasis.eu/Variant/{Mutation CDS}";
         rr:class iasis:Variant
@@ -66,7 +66,7 @@
     a rr:TriplesMap;
     rml:logicalSource [ rml:source <#DB_source>;
                         rr:tableName "PROJECT10","OUTPUT1";
-                        rml:query "SELECT DISTINCT p.`GENOMIC_MUTATION_ID`, o.`OUTPUT1` FROM PROJECT10 as p, OUTPUT1 as o WHERE p.`Gene name`=o.`Gene name`and p.`Mutation CDS`=o.`Mutation CDS`";];
+                        rml:query "SELECT DISTINCT PROJECT10.`GENOMIC_MUTATION_ID`, OUTPUT1.`OUTPUT1` FROM PROJECT10 USE INDEX (p10), OUTPUT1 USE INDEX (o1) WHERE PROJECT10.`Gene name`=OUTPUT1.`Gene name`and PROJECT10.`Mutation CDS`=OUTPUT1.`Mutation CDS`";];
     rr:subjectMap [
         rr:template "http://project-iasis.eu/Mutation/{GENOMIC_MUTATION_ID}";
         rr:class iasis:Mutation
@@ -82,8 +82,7 @@
     a rr:TriplesMap;
     rml:logicalSource [ rml:source <#DB_source>;
                         rr:tableName "PROJECT2","OUTPUT1";
-                        rml:query "SELECT DISTINCT p.`cFormat`, o.`OUTPUT1` FROM PROJECT2 as p, OUTPUT1 as o WHERE p.`Gene name`=o.`Gene name`and p.`Mutation CDS`=o.`Mutation CDS`";];
-    rr:subjectMap [
+                        rml:query "SELECT DISTINCT PROJECT2.`cFormat`, OUTPUT1.`OUTPUT1` FROM PROJECT2 USE INDEX (p2), OUTPUT1 USE INDEX (o1) WHERE PROJECT2.`Gene name`=OUTPUT1.`Gene name`and PROJECT2.`Mutation CDS`=OUTPUT1.`Mutation CDS`";];
         rr:template "http://project-iasis.eu/GenomicPosition/{cFormat}";
         rr:class iasis:GenomicPosition
     ];
@@ -98,7 +97,7 @@
     a rr:TriplesMap;
     rml:logicalSource [ rml:source <#DB_source>;
                         rr:tableName "PROJECT4","OUTPUT1";
-                        rml:query "SELECT DISTINCT p.`GENOMIC_MUTATION_ID`, o.`OUTPUT1` FROM PROJECT4 as p, OUTPUT1 as o WHERE p.`Gene name`=o.`Gene name`and p.`Mutation CDS`=o.`Mutation CDS`";];
+                        rml:query "SELECT DISTINCT PROJECT4.`GENOMIC_MUTATION_ID`, OUTPUT1.`OUTPUT1` FROM PROJECT4 USE INDEX (p4), OUTPUT1 USE INDEX (o1) WHERE PROJECT4.`Gene name`=OUTPUT1.`Gene name`and PROJECT4.`Mutation CDS`=OUTPUT1.`Mutation CDS`";];
     rr:subjectMap [
         rr:template "http://project-iasis.eu/Mutation/{GENOMIC_MUTATION_ID}";
     ];
@@ -113,7 +112,7 @@
     a rr:TriplesMap;
     rml:logicalSource [ rml:source <#DB_source>;
                         rr:tableName "PROJECT9","OUTPUT1";
-                        rml:query "SELECT DISTINCT p.`cFormat`, o.`OUTPUT1` FROM PROJECT9 as p, OUTPUT1 as o WHERE p.`Gene name`=o.`Gene name`and p.`Mutation CDS`=o.`Mutation CDS`";];
+                        rml:query "SELECT DISTINCT PROJECT9.`cFormat`, OUTPUT1.`OUTPUT1` FROM PROJECT9 USE INDEX (p9), OUTPUT1 USE INDEX (o1) WHERE PROJECT9.`Gene name`=OUTPUT1.`Gene name`and PROJECT9.`Mutation CDS`=OUTPUT1.`Mutation CDS`";];
     rr:subjectMap [
         rr:template "http://project-iasis.eu/GenomicPosition/{cFormat}";
     ];
@@ -128,7 +127,7 @@
     a rr:TriplesMap;
     rml:logicalSource [ rml:source <#DB_source>;
                         rr:tableName "PROJECT3","OUTPUT1";
-                        rml:query "SELECT DISTINCT p.`Mutation CDS`, o.`OUTPUT1` FROM PROJECT3 as p, OUTPUT1 as o WHERE p.`Gene name`=o.`Gene name`and p.`Mutation CDS`=o.`Mutation CDS`";];
+                        rml:query "SELECT DISTINCT PROJECT2.`Mutation CDS`, OUTPUT1.`OUTPUT1` FROM PROJECT3 USE INDEX (p3), OUTPUT1 USE INDEX (o1) WHERE PROJECT3.`Gene name`=OUTPUT1.`Gene name`and PROJECT3.`Mutation CDS`=OUTPUT1.`Mutation CDS`";];
     rr:subjectMap [
         rr:template "http://project-iasis.eu/Variant/{Mutation CDS}";
     ];
@@ -143,7 +142,7 @@
     a rr:TriplesMap;
     rml:logicalSource [ rml:source <#DB_source>;
                         rr:tableName "PROJECT5","OUTPUT1";
-                        rml:query "SELECT DISTINCT p.`Primary site`, o.`OUTPUT1` FROM PROJECT5 as p, OUTPUT1 as o WHERE p.`Gene name`=o.`Gene name`and p.`Mutation CDS`=o.`Mutation CDS`";];
+                        rml:query "SELECT DISTINCT PROJECT5.`Primary site`, OUTPUT1.`OUTPUT1` FROM PROJECT5 USE INDEX (p5), OUTPUT1 USE INDEX (o1) WHERE PROJECT5.`Gene name`=OUTPUT1.`Gene name`and PROJECT5.`Mutation CDS`=OUTPUT1.`Mutation CDS`";];
     rr:subjectMap [
         rr:template "http://project-iasis.eu/TumorTissue/{Primary site}";
         rr:class iasis:TumorTissue
@@ -159,7 +158,7 @@
     a rr:TriplesMap;
     rml:logicalSource [ rml:source <#DB_source>;
                         rr:tableName "PROJECT7","OUTPUT1";
-                        rml:query "SELECT DISTINCT p.`Primary site`, o.`OUTPUT1` FROM PROJECT7 as p, OUTPUT1 as o WHERE p.`Gene name`=o.`Gene name`and p.`Mutation CDS`=o.`Mutation CDS`";];
+                        rml:query "SELECT DISTINCT PROJECT7.`Primary site`, OUTPUT1.`OUTPUT1` FROM PROJECT7 USE INDEX (p7), OUTPUT1 USE INDEX (o1) WHERE PROJECT7.`Gene name`=OUTPUT1.`Gene name`and PROJECT7.`Mutation CDS`=OUTPUT1.`Mutation CDS`";];
     rr:subjectMap [
         rr:template "http://project-iasis.eu/TumorTissue/{Primary site}";
     ];

@@ -62,6 +62,17 @@
         rr:predicate iasis:isObservedIn;
         rr:objectMap <#FunctionMap1> 
     ].    
+<#TriplesMap5>
+    rml:logicalSource [ rml:source <#DB_source>;
+                        rr:tableName "data";];
+    rr:subjectMap [
+        rr:template "http://project-iasis.eu/TumorTissue/{Primary site}";
+        rr:class iasis:TumorTissue;
+    ];
+    rr:predicateObjectMap [
+        rr:predicate iasis:isRelatedTo;
+        rr:objectMap <#FunctionMap1> 
+    ]. 
 
 <#TriplesMap6>
     rml:logicalSource [ rml:source <#DB_source>;
@@ -106,6 +117,17 @@
         rr:predicate iasis:isOn;
         rr:objectMap <#FunctionMap1> 
     ].           
+
+<#TriplesMap10>
+    rml:logicalSource [ rml:source <#DB_source>;
+                        rr:tableName "data";];
+    rr:subjectMap [
+        rr:template "http://project-iasis.eu/TumorTissue/{Primary site}";
+    ];
+    rr:predicateObjectMap [
+        rr:predicate iasis:hasPosition;
+        rr:objectMap <#FunctionMap1> 
+    ]. 
 
 <#FunctionMap1>
     a fnml:FunctionTermMap;

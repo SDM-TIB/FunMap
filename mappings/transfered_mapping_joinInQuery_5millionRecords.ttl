@@ -139,37 +139,6 @@
         ]
     ].
 
-<#TriplesMap5>
-    a rr:TriplesMap;
-    rml:logicalSource [ rml:source <#DB_source>;
-                        rr:tableName "PROJECT5","OUTPUT1";
-                        rml:query "SELECT DISTINCT p.`Primary site`, o.`OUTPUT1` FROM PROJECT5 as p, OUTPUT1 as o WHERE p.`Gene name`=o.`Gene name`and p.`Mutation CDS`=o.`Mutation CDS`";];
-    rr:subjectMap [
-        rr:template "http://project-iasis.eu/TumorTissue/{Primary site}";
-        rr:class iasis:TumorTissue
-    ];
-    rr:predicateObjectMap [
-        rr:predicate iasis:isRelatedTo;
-        rr:objectMap [
-        rml:reference "OUTPUT1"
-        ]
-    ].
-
-<#TriplesMap10>
-    a rr:TriplesMap;
-    rml:logicalSource [ rml:source <#DB_source>;
-                        rr:tableName "PROJECT7","OUTPUT1";
-                        rml:query "SELECT DISTINCT p.`Primary site`, o.`OUTPUT1` FROM PROJECT7 as p, OUTPUT1 as o WHERE p.`Gene name`=o.`Gene name`and p.`Mutation CDS`=o.`Mutation CDS`";];
-    rr:subjectMap [
-        rr:template "http://project-iasis.eu/TumorTissue/{Primary site}";
-    ];
-    rr:predicateObjectMap [
-        rr:predicate iasis:hasPosition;
-        rr:objectMap [
-        rml:reference "OUTPUT1"
-        ]
-    ].
-
 <#DB_source> a d2rq:Database;
   d2rq:jdbcDSN "jdbc:mysql://localhost:3306/largeData";
   d2rq:jdbcDriver "com.mysql.cj.jdbc.Driver"; # this is ignored

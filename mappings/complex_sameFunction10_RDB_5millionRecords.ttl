@@ -62,7 +62,6 @@
         rr:predicate iasis:isObservedIn;
         rr:objectMap <#FunctionMap1> 
     ].    
-
 <#TriplesMap5>
     rml:logicalSource [ rml:source <#DB_source>;
                         rr:tableName "data";];
@@ -117,7 +116,7 @@
     rr:predicateObjectMap [
         rr:predicate iasis:isOn;
         rr:objectMap <#FunctionMap1> 
-    ].    
+    ].           
 
 <#TriplesMap10>
     rml:logicalSource [ rml:source <#DB_source>;
@@ -128,7 +127,7 @@
     rr:predicateObjectMap [
         rr:predicate iasis:hasPosition;
         rr:objectMap <#FunctionMap1> 
-    ].        
+    ]. 
 
 <#FunctionMap1>
     a fnml:FunctionTermMap;
@@ -164,7 +163,7 @@
         ].  
 
 <#DB_source> a d2rq:Database;
-  d2rq:jdbcDSN "jdbc:mysql://localhost:3306/funmap";
+  d2rq:jdbcDSN "jdbc:mysql://localhost:3306/largeData";
   d2rq:jdbcDriver "com.mysql.cj.jdbc.Driver"; # this is ignored
   d2rq:username "root";
   d2rq:password "tib" .

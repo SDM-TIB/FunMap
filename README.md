@@ -14,23 +14,26 @@ main_directory: /
 
 [datasets]
 number_of_datasets: 1
-name: funmap # name of dataset
-output_folder: ${default:main_directory}results/ # path of results
-enrichment: yes # yes executes FunMap, no executes FunMap- (without projections)
-dbType: mysql # only for RDB instance
+# name of dataset
+name: funmap 
+# path of results
+output_folder: ${default:main_directory}results/ 
+# yes executes FunMap, no executes FunMap- (without projections)
+enrichment: yes +
+# only for RDB instance
+dbType: mysql 
 
 [dataset1]
 name: funmap
-mapping: ${default:main_directory}mappings/mapping.ttl # mapping path
-user: user # only for RDB, user to access DB
-password: pass # only for RDB, password to access DB
-host: 127.0.0.1 # only for RDB, host to access DB
-port: 3306 # only for RDB, port to access DB
-db: dbName # only for RDB, database name 
+# mapping path
+mapping: ${default:main_directory}mappings/mapping.ttl 
+# only for RDB
+user: user 
+password: pass
+host: 127.0.0.1
+port: 3306 
+db: dbName
 ```
-
-
-
 
 ### Run with Docker 
 ```
@@ -39,7 +42,7 @@ docker build -t funmap .
 
 # For CSV files
 docker-compose up -d
-# If your sources are CSV files, the path of the files has to be: /data/nameOfTheFile.csv.
+# The path of the files in the mappings has to be: /data/nameOfTheFile.csv.
 cp csvFiles.csv data/
 cp mapping.ttl mappings/
 

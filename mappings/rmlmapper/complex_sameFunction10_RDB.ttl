@@ -15,10 +15,9 @@
 @prefix ex: <http://www.example.com/> .
 @base <http://MapFun.KG/> .
 
-<#TriplesMap1> a rr:TriplesMap;
+<#TriplesMap1>
     rml:logicalSource [ rml:source <#DB_source>;
-                        rr:tableName "data";
-                        rr:sqlVersion rr:SQL2008;];
+                        rr:tableName "data";];
     rr:subjectMap [
         rr:template "http://project-iasis.eu/Mutation/{GENOMIC_MUTATION_ID}";
         rr:class iasis:Mutation;
@@ -26,12 +25,11 @@
     rr:predicateObjectMap [
         rr:predicate iasis:isLocatedIn;
         rr:objectMap <#FunctionMap1> 
-    ].      
+    ].       
 
-<#TriplesMap2> a rr:TriplesMap;
+<#TriplesMap2>
     rml:logicalSource [ rml:source <#DB_source>;
-                        rr:tableName "data";
-                        rr:sqlVersion rr:SQL2008;];
+                        rr:tableName "data";];
     rr:subjectMap [
         rr:template "http://project-iasis.eu/GenomicPosition/{cFormat}";
         rr:class iasis:GenomicPosition;
@@ -41,10 +39,9 @@
         rr:objectMap <#FunctionMap1> 
     ].
 
-<#TriplesMap3> a rr:TriplesMap;
+<#TriplesMap3>
     rml:logicalSource [ rml:source <#DB_source>;
-                        rr:tableName "data";
-                        rr:sqlVersion rr:SQL2008;];
+                        rr:tableName "data";];
     rr:subjectMap [
         rr:template "http://project-iasis.eu/Gene/{Gene name}";
         rr:class iasis:Gene;
@@ -54,10 +51,9 @@
         rr:objectMap <#FunctionMap1> 
     ].
 
-<#TriplesMap4> a rr:TriplesMap;
+<#TriplesMap4>
     rml:logicalSource [ rml:source <#DB_source>;
-                        rr:tableName "data";
-                        rr:sqlVersion rr:SQL2008;];
+                        rr:tableName "data";];
     rr:subjectMap [
         rr:template "http://project-iasis.eu/Variant/{Mutation CDS}";
         rr:class iasis:Variant;
@@ -67,10 +63,9 @@
         rr:objectMap <#FunctionMap1> 
     ].    
 
-<#TriplesMap5> a rr:TriplesMap;
+<#TriplesMap5>
     rml:logicalSource [ rml:source <#DB_source>;
-                        rr:tableName "data";
-                        rr:sqlVersion rr:SQL2008;];
+                        rr:tableName "data";];
     rr:subjectMap [
         rr:template "http://project-iasis.eu/TumorTissue/{Primary site}";
         rr:class iasis:TumorTissue;
@@ -80,10 +75,9 @@
         rr:objectMap <#FunctionMap1> 
     ]. 
 
-<#TriplesMap6> a rr:TriplesMap;
+<#TriplesMap6>
     rml:logicalSource [ rml:source <#DB_source>;
-                        rr:tableName "data";
-                        rr:sqlVersion rr:SQL2008;];
+                        rr:tableName "data";];
     rr:subjectMap [
         rr:template "http://project-iasis.eu/Mutation/{GENOMIC_MUTATION_ID}";
     ];
@@ -92,10 +86,9 @@
         rr:objectMap <#FunctionMap1> 
     ].    
 
-<#TriplesMap7> a rr:TriplesMap;
+<#TriplesMap7>
     rml:logicalSource [ rml:source <#DB_source>;
-                        rr:tableName "data";
-                        rr:sqlVersion rr:SQL2008;];
+                        rr:tableName "data";];
     rr:subjectMap [
         rr:template "http://project-iasis.eu/GenomicPosition/{cFormat}";
     ];  
@@ -104,10 +97,9 @@
         rr:objectMap <#FunctionMap1> 
     ].
 
-<#TriplesMap8> a rr:TriplesMap;
+<#TriplesMap8>
     rml:logicalSource [ rml:source <#DB_source>;
-                        rr:tableName "data";
-                        rr:sqlVersion rr:SQL2008;];
+                        rr:tableName "data";];
     rr:subjectMap [
         rr:template "http://project-iasis.eu/Gene/{Gene name}";
     ];
@@ -116,10 +108,9 @@
         rr:objectMap <#FunctionMap1> 
     ].
 
-<#TriplesMap9> a rr:TriplesMap;
+<#TriplesMap9>
     rml:logicalSource [ rml:source <#DB_source>;
-                        rr:tableName "data";
-                        rr:sqlVersion rr:SQL2008;];
+                        rr:tableName "data";];
     rr:subjectMap [
         rr:template "http://project-iasis.eu/Variant/{Mutation CDS}";
     ];
@@ -128,26 +119,24 @@
         rr:objectMap <#FunctionMap1> 
     ].    
 
-<#TriplesMap10> a rr:TriplesMap;
+<#TriplesMap10>
     rml:logicalSource [ rml:source <#DB_source>;
-                        rr:tableName "data";
-                        rr:sqlVersion rr:SQL2008;];
+                        rr:tableName "data";];
     rr:subjectMap [
         rr:template "http://project-iasis.eu/TumorTissue/{Primary site}";
     ];
     rr:predicateObjectMap [
         rr:predicate iasis:hasPosition;
         rr:objectMap <#FunctionMap1> 
-    ].         
+    ].        
 
-<#FunctionMap1> a rr:TriplesMap;
+<#FunctionMap1>
     a fnml:FunctionTermMap;
     rr:termType rr:IRI;
 
     fnml:functionValue [
         rml:logicalSource [ rml:source <#DB_source>;
-                            rr:tableName "data";
-                            rr:sqlVersion rr:SQL2008;];
+                            rr:tableName "data";];
         rr:predicateObjectMap [
             rr:predicate fno:executes ;
             rr:objectMap [ 
@@ -175,7 +164,7 @@
         ].  
 
 <#DB_source> a d2rq:Database;
-  d2rq:jdbcDSN "jdbc:mysql://localhost:3306/funmap?user=root&password=tib&allowPublicKeyRetrieval=true";
+  d2rq:jdbcDSN "jdbc:mysql://localhost:3306/funmap";
   d2rq:jdbcDriver "com.mysql.cj.jdbc.Driver"; # this is ignored
   d2rq:username "root";
   d2rq:password "tib" .

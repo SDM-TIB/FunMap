@@ -181,7 +181,7 @@
     ].
 
 <#DB_source> a d2rq:Database;
-  d2rq:jdbcDSN "jdbc:mysql://localhost:3306/rdfizer?user=root&password=tib&allowPublicKeyRetrieval=true";
+  d2rq:jdbcDSN "jdbc:mysql://localhost:3306/funmap?user=root&password=tib&allowPublicKeyRetrieval=true";
   d2rq:jdbcDriver "com.mysql.cj.jdbc.Driver"; # this is ignored
   d2rq:username "root";
   d2rq:password "tib" .

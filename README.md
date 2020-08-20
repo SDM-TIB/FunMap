@@ -45,12 +45,14 @@ docker-compose up -d
 # The path of the files in the mappings has to be: /data/nameOfTheFile.csv.
 cp csvFiles.csv data/
 cp mapping.ttl mappings/
+cp config.ini funmap/
 
 # For RDB instance
 mkdir sql
 cp sqlScript.sql sql/
 docker-compose up -d 
 cp mapping.ttl mappings/
+cp config.ini funmap/
 
 # Execution
 docker exec -it funmap python3 /funmap/run_translator.py /funmap/config[_rdb].ini

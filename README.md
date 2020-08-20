@@ -5,15 +5,9 @@ We present FunMap, an interpreter of RML+FnO,that converts a data integration sy
 ![FunMap-workflow](images/architecture.png?raw=true "FunMap-workflow")
 
 
-## How to run FunMap?
+## ISWC experiments
 
+Data Folder: CSV and RDB used for the experiments. RDB provide a docker compose to create automatically the databases
+Mappings folder: mappings for FunMap (CSV and RDB), RocketRML (CSV), RMLMapper (CSV and RDB) and SDM-RDFizer (CSV and RDB)
+Engines folder: FunMap, RocketRML, RMLMapper and SDM-RDFizer docker images to run the experiments
 
-
-
-## Authors
-
-- Samaneh Jozashoori (samaneh.jozashoori@tib.eu)
-- David Chaves-Fraga (dchaves@fi.upm.es)
-- Enrique Iglesias ( s6enigle@uni-bonn.de)
-- Oscar Corcho (ocorcho@fi.upm.es)
-- Maria-Esther Vidal (maria.vidal@tib.eu)

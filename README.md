@@ -7,8 +7,32 @@ We present FunMap, an interpreter of RML+FnO,that converts a data integration sy
 
 ## How to run FunMap?
 
+Run with Docker 
+```
+# Preparation
+docker build -t funmap .
 
+# For CSV files
+docker-compose up -d
+# If your sources are CSV files, the path of the files has to be: /data/nameOfTheFile.csv.
+cp csvFiles.csv data/
+cp mapping.ttl mappings/
 
+# For RDB instance
+mkdir sql
+cp sqlScript.sql sql/
+docker-compose up -d 
+cp mapping.ttl mappings/
+
+# Execution
+docker exec -it funmap python3 /funmap/run_translator.py /funmap/config[_rdb].ini
+```
+
+Run with Python3
+```
+pip install -r requirements.txt
+python3 run_translator.py config[_rdb].ini
+```
 
 ## Authors
 

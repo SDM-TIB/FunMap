@@ -19,7 +19,7 @@ name: funmap
 # path of results
 output_folder: ${default:main_directory}results/ 
 # yes executes FunMap, no executes FunMap- (without projections)
-enrichment: yes +
+enrichment: yes
 # only for RDB instance
 dbType: mysql 
 

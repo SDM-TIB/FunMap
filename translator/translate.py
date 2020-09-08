@@ -17,6 +17,11 @@ except:
 	from .triples_map import TriplesMap as tm
 
 
+global jdbcDriver
+jdbcDriver = ""
+global jdbcDSN
+jdbcDSN = ""
+
 def string_separetion(string):
 	if ("{" in string) and ("[" in string):
 		prefix = string.split("{")[0]
@@ -186,6 +191,9 @@ def mapping_parser(mapping_file):
 			triples_map_exists = triples_map_exists or (str(triples_map.triples_map_id) == str(result_triples_map.triples_map_id))
 		
 		subject_map = None
+		if result_triples_map.jdbcDSN is not None:
+			jdbcDSN = result_triples_map.jdbcDSN
+			jdbcDriver = result_triples_map.jdbcDriver
 		if not triples_map_exists:
 			if result_triples_map.subject_template is not None:
 				if result_triples_map.rdf_class is None:
@@ -343,16 +351,19 @@ def translate(config_path):
 										else:
 											fields[current_func["func_par"]["value"]] = "object"
 							else:
-								if "{" in po.object_map.value:
-									object_field = po.object_map.value.split("{")
-									if len(object_field) == 2:
-										fields[object_field[1].split("}")[0]] = "object"
-									else:
-										for of in object_field:
-											if "}" in of:
-												fields[of.split("}")[0]] = "object"
+								if po.object_map.mapping_type == "parent triples map":
+									fields[po.object_map.child] = "object"
 								else:
-									fields[po.object_map.value] = "object"
+									if "{" in po.object_map.value:
+										object_field = po.object_map.value.split("{")
+										if len(object_field) == 2:
+											fields[object_field[1].split("}")[0]] = "object"
+										else:
+											for of in object_field:
+												if "}" in of:
+													fields[of.split("}")[0]] = "object"
+									else:
+										fields[po.object_map.value] = "object"
 
 						if config["datasets"]["enrichment"].lower() == "yes":
 
@@ -377,25 +388,28 @@ def translate(config_path):
 						database, query_list = translate_sql(triples_map)
 						db = connector.connect(host = config[dataset_i]["host"], port = int(config[dataset_i]["port"]), user = config[dataset_i]["user"], password = config[dataset_i]["password"])
 						cursor = db.cursor(buffered=True)
+
 						if database != "None":
 							cursor.execute("use " + database)
 						else:
 							if config[dataset_i]["db"].lower() != "none":
 								cursor.execute("use " + config[dataset_i]["db"])
+						
 						for po in triples_map.predicate_object_maps_list:
 							if po.object_map.mapping_type == "reference function":
 								for triples_map_element in triples_map_list:
 									if triples_map_element.triples_map_id == po.object_map.value:
-										if triples_map_element.triples_map_id not in function_dic:
-											dic = create_dictionary(triples_map_element)
-											if triples_map.query == "None":	
+										dic = create_dictionary(triples_map_element)
+										current_func = {"output_name": "OUTPUT" + str(i),
+														"output_file": triples_map_element.triples_map_id + "_OUTPUT" + str(i), 
+														"inputs":dic["inputs"], 
+														"function":dic["executes"],
+														"func_par":dic,
+														"termType":False}
+										if config["datasets"]["enrichment"].lower() == "yes":
+											if triples_map.query == "None":
 												for query in query_list:
-													current_func = {"output_name": "OUTPUT" + str(i),
-																	"output_file": triples_map_element.triples_map_id + "_OUTPUT" + str(i), 
-																	"inputs":dic["inputs"], 
-																	"function":dic["executes"],
-																	"func_par":dic,
-																	"termType":False}
+
 													if "variantIdentifier" in current_func["function"]:
 														if current_func["func_par"]["column1"] not in query and current_func["func_par"]["column2"] in query:
 															query = query.replace("`" + po.object_map.value + "`","`" + current_func["func_par"]["column1"] + "`")
@@ -405,23 +419,81 @@ def translate(config_path):
 															query = query.replace("`" + po.object_map.value + "`","`" + current_func["func_par"]["column1"]+"`, `"+current_func["func_par"]["column2"]+ "`")
 													else:
 														query = query.replace("`" + po.object_map.value + "`","`" + current_func["func_par"]["value"] + "`")
+
+													create_table = "CREATE TABLE PROJECT" + str(j) + " ("
+													insert = "INSERT INTO PROJECT" + str(j) + " SELECT DISTINCT "
+													fields = query.split("SELECT DISTINCT")[1].split("FROM")[0].split(",")
+													for f in fields:
+														create_table += f + " varchar(300),\n"
+														insert += f + ", "
+													create_table = create_table[:-2] + ");"
+													insert = insert[:-2] + "FROM " + query.split("FROM")[1]
+													cursor.execute("DROP TABLE IF EXISTS PROJECT" + str(j) + ";")
+													cursor.execute(create_table)
+													cursor.execute(insert)
+													file_projection[triples_map.triples_map_id] = "PROJECT" + str(j)
+													if "variantIdentifier" in current_func["function"]:
+														index = "CREATE index p" + str(j) + " on PROJECT" + str(j)
+														index += " (`" + current_func["func_par"]["column1"] + "` , `"
+														index += current_func["func_par"]["column2"] + "`);" 
+													else:
+														index = "CREATE index p" + str(j) + " on PROJECT" + str(j)
+														index += " (`" + current_func["func_par"]["column1"] + "`);"
+													cursor.execute(index)
+													j += 1
+											else:
+												cursor.execute("DROP TABLE IF EXISTS PROJECT" + str(j) + ";")
+												if "DISTINCT" in triples_map.query:
+													fields = triples_map.query.split("SELECT DISTINCT")[1].split("FROM")[0].split(",")
+												else:
+													fields = triples_map.query.split("SELECT")[1].split("FROM")[0].split(",")
+												create_table = "CREATE TABLE PROJECT" + str(j) + " ( "
+												insert = "INSERT INTO PROJECT" + str(j) + " SELECT DISTINCT "
+												for f in fields:
+													create_table += f + " varchar(300),\n"
+													insert += f + ", "
+												create_table = create_table[:-2] + ");"
+												insert = insert[:-2] + "FROM " + triples_map.query.split("FROM")[1]
+												cursor.execute(create_table)
+												cursor.execute(insert)
+												file_projection[triples_map.triples_map_id] = "PROJECT" + str(j)
+												if "variantIdentifier" in current_func["function"]:
+													index = "CREATE index p" + str(j) + " on PROJECT" + str(j)
+													index += " (`" + current_func["func_par"]["column1"] + "` , `"
+													index += current_func["func_par"]["column2"] + "`);" 
+												else:
+													index = "CREATE index p" + str(j) + " on PROJECT" + str(j)
+													index += " (`" + current_func["func_par"]["column1"] + "`);"
+												cursor.execute(index)
+											j += 1
+
+										if triples_map_element.triples_map_id not in function_dic:
+											if triples_map.query == "None":	
+												for query in query_list:
+													if "variantIdentifier" in current_func["function"]:
+														if current_func["func_par"]["column1"] not in query and current_func["func_par"]["column2"] in query:
+															query = query.replace("`" + po.object_map.value + "`","`" + current_func["func_par"]["column1"] + "`")
+														elif current_func["func_par"]["column1"] in query and current_func["func_par"]["column2"] not in query:
+															query = query.replace("`" + po.object_map.value + "`","`" + current_func["func_par"]["column2"] + "`")
+														elif current_func["func_par"]["column1"] not in query and current_func["func_par"]["column2"] not in query:
+															query = query.replace("`" + po.object_map.value + "`","`" + current_func["func_par"]["column1"]+"`, `"+current_func["func_par"]["column2"]+ "`")
+													else:
+														query = query.replace("`" + po.object_map.value + "`","`" + current_func["func_par"]["value"] + "`")
+
+
 													cursor.execute("DROP TABLE IF EXISTS " + current_func["output_file"] + ";")
 													cursor.execute(query)
 													row_headers=[x[0] for x in cursor.description]
 													function_dic[triples_map_element.triples_map_id] = current_func
 													join_mysql(cursor, row_headers, current_func, db)
+		
 											else:
-												current_func = {"output_name":"OUTPUT" + str(i),
-																"output_file": config["datasets"]["output_folder"] + "/OUTPUT" + str(i) + ".csv", 
-																"inputs":dic["inputs"], 
-																"function":dic["executes"],
-																"func_par":dic,
-																"termType":False}
-												cursor.execute("DROP TABLE IF EXISTS " + current_func + ";")
+												cursor.execute("DROP TABLE IF EXISTS " + current_func["output_file"] + ";")
 												cursor.execute(triples_map.query)
 												row_headers=[x[0] for x in cursor.description]
 												function_dic[triples_map_element.triples_map_id] = current_func
 												join_mysql(cursor, row_headers, current_func, db)
+
 											i += 1
 				else:
 					print("Invalid reference formulation or format")
@@ -429,9 +501,16 @@ def translate(config_path):
 					sys.exit(1)
 					
 			if config["datasets"]["enrichment"].lower() == "yes":
-				update_mapping(triples_map_list, function_dic, config["datasets"]["output_folder"], config[dataset_i]["mapping"],True,file_projection)
+				if str(triples_map.file_format).lower() == "csv" and triples_map.query == "None":
+					update_mapping(triples_map_list, function_dic, config["datasets"]["output_folder"], config[dataset_i]["mapping"],True,file_projection)
+				else:
+					update_mapping_rdb(triples_map_list, function_dic, config["datasets"]["output_folder"], config[dataset_i]["mapping"],True,file_projection)
 			else:
-				update_mapping(triples_map_list, function_dic, config["datasets"]["output_folder"], config[dataset_i]["mapping"],True,{})
+				if str(triples_map.file_format).lower() == "csv" and triples_map.query == "None":
+					update_mapping(triples_map_list, function_dic, config["datasets"]["output_folder"], config[dataset_i]["mapping"],True,{})
+				else:
+					update_mapping_rdb(triples_map_list, function_dic, config["datasets"]["output_folder"], config[dataset_i]["mapping"],True,{})
+
 
 			print("Successfully executed the functions in {}\n".format(config[dataset_i]["name"]))
 

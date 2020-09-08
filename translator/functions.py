@@ -57,6 +57,14 @@ def variantIdentifier(column1, column2,prefix):
         value = prefix+value
     return value
 
+# returns conditionally a certain string
+def condreplace(value, value1, value2, replvalue1, replvalue2):
+    if (value == 1): 
+        value = replvalue1
+    elif (value == 0): 
+        value = replvalue2
+    return value
+
 def prefix_extraction(uri):
     prefix = ""
     url = ""
@@ -78,6 +86,12 @@ def prefix_extraction(uri):
             prefix = "fno"
         elif "XML" in uri:
             prefix = "xsd"
+        elif "journey" in uri:
+            prefix = "tmjourney"
+        elif "commons" in uri:
+            prefix = "tmcommons"
+        elif "organisations" in uri:
+            prefix = "tmorg"
         url, value = uri.split("#")[0]+"#", uri.split("#")[1]
     else:
         if "resource" in uri:
@@ -94,6 +108,8 @@ def prefix_extraction(uri):
             prefix = "iasis"
         else:
             prefix = uri.split("/")[len(uri.split("/"))-2]
+            if "." in prefix:
+                prefix = prefix.split(".")[0] 
         value = uri.split("/")[len(uri.split("/"))-1]
         char = ""
         temp = ""
@@ -265,6 +281,179 @@ def update_mapping(triple_maps, dic, output, original, join, data_source):
     mapping_file.write(prefix_string)
     mapping_file.close()
 
+def update_mapping_rdb(triple_maps, dic, output, original, join, data_source):
+    mapping = ""
+    for triples_map in triple_maps:
+
+        if triples_map.function:
+            pass
+        else:
+            if "#" in triples_map.triples_map_id:
+                mapping += "<#" + triples_map.triples_map_id.split("#")[1] + ">\n"
+            else: 
+                mapping += "<#" + triples_map.triples_map_id + ">\n"
+
+            mapping += "    a rr:TriplesMap;\n"
+            if data_source:
+                mapping += "    rml:logicalSource [ rml:source <DB_source>;\n"
+                mapping += "                        rr:tableName \"" + data_source[triples_map.triples_map_id] + "\";\n"
+            else:
+                mapping += "    rml:logicalSource [ rml:source <DB_source>;\n"
+                mapping += "                        rr:tableName \"" + triples_map.tablename + "\";\n"
+            if triples_map.query != "None": 
+                mapping += "                rml:query \"" + triples_map.query +"\"\n" 
+            mapping += "                ];\n"
+
+            
+            mapping += "    rr:subjectMap [\n"
+            if triples_map.subject_map.subject_mapping_type is "template":
+                mapping += "        rr:template \"" + triples_map.subject_map.value + "\";\n"
+            elif triples_map.subject_map.subject_mapping_type is "reference":
+                mapping += "        rml:reference " + triples_map.subject_map.value + ";\n"
+            elif triples_map.subject_map.subject_mapping_type is "constant":
+                mapping += "        rr:constant " + triples_map.subject_map.value + ";\n"
+            elif triples_map.subject_map.subject_mapping_type is "function":
+                mapping = mapping[:-2]
+                mapping += "<" + triples_map.subject_map.value + ">;\n"
+            if triples_map.subject_map.rdf_class is not None:
+                prefix, url, value = prefix_extraction(triples_map.subject_map.rdf_class)
+                mapping += "        rr:class " + prefix + ":" + value  + "\n"
+            mapping += "    ];\n"
+
+            for predicate_object in triples_map.predicate_object_maps_list:
+                
+                mapping += "    rr:predicateObjectMap [\n"
+                if "constant" in predicate_object.predicate_map.mapping_type :
+                    prefix, url, value = prefix_extraction(predicate_object.predicate_map.value)
+                    mapping += "        rr:predicate " + prefix + ":" + value + ";\n"
+                elif "constant shortcut" in predicate_object.predicate_map.mapping_type:
+                    prefix, url, value = prefix_extraction(predicate_object.predicate_map.value)
+                    mapping += "        rr:predicate " + prefix + ":" + value + ";\n"
+                elif "template" in predicate_object.predicate_map.mapping_type:
+                    mapping += "        rr:predicateMap[\n"
+                    mapping += "            rr:template \"" + predicate_object.predicate_map.value + "\"\n"  
+                    mapping += "        ];\n"
+                elif "reference" in predicate_object.predicate_map.mapping_type:
+                    mapping += "        rr:predicateMap[\n"
+                    mapping += "            rml:reference \"" + predicate_object.predicate_map.value + "\"\n" 
+                    mapping += "        ];\n"
+
+                mapping += "        rr:objectMap "
+                if "constant" in predicate_object.object_map.mapping_type:
+                    mapping += "[\n"
+                    mapping += "        rr:constant \"" + predicate_object.object_map.value + "\"\n"
+                    mapping += "        ]\n"
+                elif "template" in predicate_object.object_map.mapping_type:
+                    mapping += "[\n"
+                    mapping += "        rr:template  \"" + predicate_object.object_map.value + "\"\n"
+                    mapping += "        ]\n"
+                elif "reference" == predicate_object.object_map.mapping_type:
+                    mapping += "[\n"
+                    mapping += "        rml:reference \"" + predicate_object.object_map.value + "\"\n"
+                    mapping += "        ]\n"
+                elif "parent triples map function" in predicate_object.object_map.mapping_type:
+                    mapping += "[\n"
+                    mapping += "        rr:parentTriplesMap <" + predicate_object.object_map.value + ">;\n"
+                    mapping += "        rr:joinCondition [\n"
+                    mapping += "            rr:child <" + predicate_object.object_map.child + ">;\n"
+                    mapping += "            rr:parent <" + predicate_object.object_map.parent + ">;\n"
+                    mapping += "        ]\n"
+                elif "parent triples map parent function" in predicate_object.object_map.mapping_type:
+                    mapping += "[\n"
+                    mapping += "        rr:parentTriplesMap <" + predicate_object.object_map.value + ">;\n"
+                    mapping += "        rr:joinCondition [\n"
+                    mapping += "            rr:child \"" + predicate_object.object_map.child + "\";\n"
+                    mapping += "            rr:parent <" + predicate_object.object_map.parent + ">;\n"
+                    mapping += "        ]\n"
+                elif "parent triples map child function" in predicate_object.object_map.mapping_type:
+                    mapping += "[\n"
+                    mapping += "        rr:parentTriplesMap <" + predicate_object.object_map.value + ">;\n"
+                    mapping += "        rr:joinCondition [\n"
+                    mapping += "            rr:child \"" + predicate_object.object_map.child + "\";\n"
+                    mapping += "            rr:parent <" + predicate_object.object_map.parent + ">;\n"
+                    mapping += "        ]\n"
+                elif "parent triples map" in predicate_object.object_map.mapping_type:
+                    mapping += "[\n"
+                    mapping += "        rr:parentTriplesMap <" + predicate_object.object_map.value + ">\n"
+                    if (predicate_object.object_map.child is not None) and (predicate_object.object_map.parent is not None):
+                        mapping = mapping[:-1]
+                        mapping += ";\n"
+                        mapping += "        rr:joinCondition [\n"
+                        mapping += "            rr:child \"" + predicate_object.object_map.child + "\";\n"
+                        mapping += "            rr:parent \"" + predicate_object.object_map.parent + "\";\n"
+                        mapping += "        ]\n"
+                    mapping += "        ]\n"
+                elif "constant shortcut" in predicate_object.object_map.mapping_type:
+                    mapping += "[\n"
+                    mapping += "        rr:constant \"" + predicate_object.object_map.value + "\"\n"
+                    mapping += "        ]\n"
+                elif "reference function" in predicate_object.object_map.mapping_type:
+                    if join:
+                        mapping += "[\n"
+                        mapping += "        rr:parentTriplesMap <#" + dic[predicate_object.object_map.value]["output_name"] + ">;\n"
+                        for attr in dic[predicate_object.object_map.value]["inputs"]:
+                            if attr[1] is not "constant":
+                                mapping += "        rr:joinCondition [\n"
+                                mapping += "            rr:child \"" + attr[0] + "\";\n"
+                                mapping += "            rr:parent \"" + attr[0] +"\";\n"
+                                mapping += "            ];\n"
+                        mapping += "        ];\n"
+                    else:
+                        mapping += "[\n"
+                        mapping += "        rml:reference \"" + dic[predicate_object.object_map.value]["output_name"] + "\";\n"
+                        mapping += "        ];\n"
+                mapping += "    ];\n"
+            if triples_map.function:
+                pass
+            else:
+                mapping = mapping[:-2]
+                mapping += ".\n\n"
+
+    if join:
+        for function in dic.keys():
+            mapping += "<#" + dic[function]["output_name"] + ">\n"
+            mapping += "    a rr:TriplesMap;\n"
+            mapping += "    rml:logicalSource [ rml:source \"" + dic[function]["output_file"] +"\";\n"
+            if "csv" in dic[function]["output_file"]:
+                mapping += "                rml:referenceFormulation ql:CSV\n" 
+            mapping += "            ];\n"
+            mapping += "    rr:subjectMap [\n"
+            if dic[function]["termType"]:
+                mapping += "        rml:reference \"" + dic[function]["output_name"] + "\";\n"
+                mapping += "        rr:termType rr:IRI\n"
+            else:
+                mapping += "        rml:reference \"" + dic[function]["output_name"] + "\"\n"
+            mapping += "    ].\n\n"
+
+    prefix_string = ""
+    db_source = "<#DB_source> a d2rq:Database;\n"
+    
+    f = open(original,"r")
+    original_mapping = f.readlines()
+    for prefix in original_mapping:
+        if "prefix;" in prefix or "d2rq:Database;" in prefix:
+            pass
+        elif ("prefix" in prefix) or ("base" in prefix):
+           prefix_string += prefix
+        elif "jdbcDSN" in prefix:
+            db_source +=  prefix 
+        elif "jdbcDriver" in prefix:
+            db_source += prefix 
+        elif "d2rq:username" in prefix:
+            db_source += prefix 
+        elif "d2rq:password" in prefix:
+            db_source += prefix 
+    f.close()  
+
+    prefix_string += "\n"
+    prefix_string += mapping
+
+    prefix_string += db_source 
+    
+    mapping_file = open(output + "/transfered_mapping.ttl","w")
+    mapping_file.write(prefix_string)
+    mapping_file.close()
+
 def execute_function(row,dic):
     if "tolower" in dic["function"]:
         return tolower(row[dic["func_par"]["value"]])
@@ -287,6 +476,8 @@ def execute_function(row,dic):
         return match(dic["func_par"]["regex"],row[dic["func_par"]["value"]])
     elif "variantIdentifier" in dic["function"]:
         return variantIdentifier(row[dic["func_par"]["column1"]],row[dic["func_par"]["column2"]],dic["func_par"]["prefix"])
+    elif "condreplace" in dic["function"]:
+        return condreplace(row[dic["func_par"]["value"]],dic["func_par"]["value1"],dic["func_par"]["value2"],dic["func_par"]["replvalue1"],dic["func_par"]["replvalue2"])
     else:
         print("Invalid function")
         print("Aborting...")
@@ -314,6 +505,8 @@ def execute_function_mysql(row,header,dic):
         return match(dic["func_par"]["regex"],row[header.index(dic["func_par"]["value"])])
     elif "variantIdentifier" in dic["function"]:
         return variantIdentifier(row[header.index(dic["func_par"]["column1"])],row[header.index(dic["func_par"]["column2"])],dic["func_par"]["prefix"])
+    elif "condreplace" in dic["function"]:
+        return condreplace(row[header.index(dic["func_par"]["value"])],dic["func_par"]["value1"],dic["func_par"]["value2"],dic["func_par"]["replvalue1"],dic["func_par"]["replvalue2"])
     else:
         print("Invalid function")
         print("Aborting...")

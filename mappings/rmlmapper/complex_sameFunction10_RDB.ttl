@@ -15,7 +15,7 @@
 @prefix ex: <http://www.example.com/> .
 @base <http://MapFun.KG/> .
 
-<#TriplesMap1>
+<#TriplesMap1> a rr:TriplesMap;
     rml:logicalSource [ rml:source <#DB_source>;
                         rr:tableName "data";];
     rr:subjectMap [
@@ -27,7 +27,7 @@
         rr:objectMap <#FunctionMap1> 
     ].       
 
-<#TriplesMap2>
+<#TriplesMap2> a rr:TriplesMap;
     rml:logicalSource [ rml:source <#DB_source>;
                         rr:tableName "data";];
     rr:subjectMap [
@@ -39,7 +39,7 @@
         rr:objectMap <#FunctionMap1> 
     ].
 
-<#TriplesMap3>
+<#TriplesMap3> a rr:TriplesMap;
     rml:logicalSource [ rml:source <#DB_source>;
                         rr:tableName "data";];
     rr:subjectMap [
@@ -51,7 +51,7 @@
         rr:objectMap <#FunctionMap1> 
     ].
 
-<#TriplesMap4>
+<#TriplesMap4> a rr:TriplesMap;
     rml:logicalSource [ rml:source <#DB_source>;
                         rr:tableName "data";];
     rr:subjectMap [
@@ -63,7 +63,7 @@
         rr:objectMap <#FunctionMap1> 
     ].    
 
-<#TriplesMap5>
+<#TriplesMap5> a rr:TriplesMap;
     rml:logicalSource [ rml:source <#DB_source>;
                         rr:tableName "data";];
     rr:subjectMap [
@@ -75,7 +75,7 @@
         rr:objectMap <#FunctionMap1> 
     ]. 
 
-<#TriplesMap6>
+<#TriplesMap6> a rr:TriplesMap;
     rml:logicalSource [ rml:source <#DB_source>;
                         rr:tableName "data";];
     rr:subjectMap [
@@ -86,7 +86,7 @@
         rr:objectMap <#FunctionMap1> 
     ].    
 
-<#TriplesMap7>
+<#TriplesMap7> a rr:TriplesMap;
     rml:logicalSource [ rml:source <#DB_source>;
                         rr:tableName "data";];
     rr:subjectMap [
@@ -97,7 +97,7 @@
         rr:objectMap <#FunctionMap1> 
     ].
 
-<#TriplesMap8>
+<#TriplesMap8> a rr:TriplesMap;
     rml:logicalSource [ rml:source <#DB_source>;
                         rr:tableName "data";];
     rr:subjectMap [
@@ -108,7 +108,7 @@
         rr:objectMap <#FunctionMap1> 
     ].
 
-<#TriplesMap9>
+<#TriplesMap9> a rr:TriplesMap;
     rml:logicalSource [ rml:source <#DB_source>;
                         rr:tableName "data";];
     rr:subjectMap [
@@ -119,7 +119,7 @@
         rr:objectMap <#FunctionMap1> 
     ].    
 
-<#TriplesMap10>
+<#TriplesMap10> a rr:TriplesMap;
     rml:logicalSource [ rml:source <#DB_source>;
                         rr:tableName "data";];
     rr:subjectMap [
@@ -130,7 +130,7 @@
         rr:objectMap <#FunctionMap1> 
     ].        
 
-<#FunctionMap1>
+<#FunctionMap1> a rr:TriplesMap;
     a fnml:FunctionTermMap;
     rr:termType rr:IRI;
 
@@ -164,7 +164,7 @@
         ].  
 
 <#DB_source> a d2rq:Database;
-  d2rq:jdbcDSN "jdbc:mysql://localhost:3306/funmap";
+  d2rq:jdbcDSN "jdbc:mysql://localhost:3306/funmap?user=root&password=tib&allowPublicKeyRetrieval=true";
   d2rq:jdbcDriver "com.mysql.cj.jdbc.Driver"; # this is ignored
   d2rq:username "root";
   d2rq:password "tib" .

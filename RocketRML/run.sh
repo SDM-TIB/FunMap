@@ -19,7 +19,7 @@ echo "---------Running experiments over RocketRML------------"
 echo "---------Running first FunMap over RocketRML---------"
 
 #### mapping with 4 same simple functions:
-declare -a mappings=("4 6 8 10")
+declare -a mappings=("4" "6" "8" "10")
 ## datasets to be applied in the experiments
 declare -a dataArray=("veracity75.csv" "veracity25.csv")
 
@@ -35,7 +35,7 @@ do
         	for i in 1 2 3 4 5
         	do
         		cp ./data/$data data.csv
-        		cp "./mappings/sameFunction_${mapping}.ttl" "mapping.ttl"
+        		cp ./mappings/sameFunction_${mapping}.ttl mapping.ttl
                         echo "FunMap+RocketRML: iteration $i"
         		start=$(date +%s.%N)
         		python3 ./FunMap/run_translator.py config.ini

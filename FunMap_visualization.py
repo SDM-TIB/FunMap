@@ -30,7 +30,7 @@ def sdmrdfizer(FunMap_sdm,FunMapMinus_sdm,sdm_FnO):
 	plt.ylabel("Time (s)")
 	plt.xlabel("Number of repetition of the same simple function in mapping rules")
 	plt.legend()
-	plt.savefig("/Users/sam/Desktop/Experiments/ISWC2020RMLFnO/visualization/testbeds/veracity75_sdmrdfizer_simple.png", dpi=700)
+	plt.savefig("/path_to_save/veracity75_sdmrdfizer_simple.png", dpi=700)
 
 
 	################## simple functions, veracity25 data
@@ -54,7 +54,7 @@ def sdmrdfizer(FunMap_sdm,FunMapMinus_sdm,sdm_FnO):
 	plt.ylabel("Time (s)")
 	plt.xlabel("Number of repetition of the same simple function in mapping rules")
 	plt.legend()
-	plt.savefig("/Users/sam/Desktop/Experiments/ISWC2020RMLFnO/visualization/testbeds/veracity25_sdmrdfizer_simple.png", dpi=700)
+	plt.savefig("/path_to_save/veracity25_sdmrdfizer_simple.png", dpi=700)
 
 
 	################## complex functions, veracity75 data
@@ -78,7 +78,7 @@ def sdmrdfizer(FunMap_sdm,FunMapMinus_sdm,sdm_FnO):
 	plt.ylabel("Time (s)")
 	plt.xlabel("Number of repetition of the same simple function in mapping rules")
 	plt.legend()
-	plt.savefig("/Users/sam/Desktop/Experiments/ISWC2020RMLFnO/visualization/testbeds/veracity75_sdmrdfizer_complex.png", dpi=700)
+	plt.savefig("/path_to_save/veracity75_sdmrdfizer_complex.png", dpi=700)
 
 
 	################# complex functions, veracity75 data	
@@ -102,7 +102,7 @@ def sdmrdfizer(FunMap_sdm,FunMapMinus_sdm,sdm_FnO):
 	plt.ylabel("Time (s)")
 	plt.xlabel("Number of repetition of the same simple function in mapping rules")
 	plt.legend()
-	plt.savefig("/Users/sam/Desktop/Experiments/ISWC2020RMLFnO/visualization/testbeds/veracity25_sdmrdfizer_complex.png", dpi=700)
+	plt.savefig("/path_to_save/veracity25_sdmrdfizer_complex.png", dpi=700)
 
 
 def rmlmapper(FunMap_rmlmapper,FunMapMinus_rmlmapper,rmlmapper_FnO):
@@ -131,7 +131,7 @@ def rmlmapper(FunMap_rmlmapper,FunMapMinus_rmlmapper,rmlmapper_FnO):
 	plt.ylabel("Time (s)")
 	plt.xlabel("Number of repetition of the same simple function in mapping rules")
 	plt.legend()
-	plt.savefig("/Users/sam/Desktop/Experiments/ISWC2020RMLFnO/visualization/testbeds/veracity75_rmlmapper_simple.png", dpi=700)
+	plt.savefig("/path_to_save/veracity75_rmlmapper_simple.png", dpi=700)
 
 
 	################## simple functions, veracity25 data
@@ -155,7 +155,7 @@ def rmlmapper(FunMap_rmlmapper,FunMapMinus_rmlmapper,rmlmapper_FnO):
 	plt.ylabel("Time (s)")
 	plt.xlabel("Number of repetition of the same simple function in mapping rules")
 	plt.legend()
-	plt.savefig("/Users/sam/Desktop/Experiments/ISWC2020RMLFnO/visualization/testbeds/veracity25_rmlmapper_simple.png", dpi=700)
+	plt.savefig("/path_to_save/veracity25_rmlmapper_simple.png", dpi=700)
 
 
 	################## complex functions, veracity75 data
@@ -179,7 +179,7 @@ def rmlmapper(FunMap_rmlmapper,FunMapMinus_rmlmapper,rmlmapper_FnO):
 	plt.ylabel("Time (s)")
 	plt.xlabel("Number of repetition of the same simple function in mapping rules")
 	plt.legend()
-	plt.savefig("/Users/sam/Desktop/Experiments/ISWC2020RMLFnO/visualization/testbeds/veracity75_rmlmapper_complex.png", dpi=700)
+	plt.savefig("/path_to_save/veracity75_rmlmapper_complex.png", dpi=700)
 
 
 	################## complex functions, veracity75 data	
@@ -203,7 +203,7 @@ def rmlmapper(FunMap_rmlmapper,FunMapMinus_rmlmapper,rmlmapper_FnO):
 	plt.ylabel("Time (s)")
 	plt.xlabel("Number of repetition of the same simple function in mapping rules")
 	plt.legend()
-	plt.savefig("/Users/sam/Desktop/Experiments/ISWC2020RMLFnO/visualization/testbeds/veracity25_rmlmapper_complex.png", dpi=700)
+	plt.savefig("/path_to_save/veracity25_rmlmapper_complex.png", dpi=700)
 
 
 
@@ -234,7 +234,7 @@ def rocketrml(FunMap_rocketrml,FunMapMinus_rocketrml,rocketrml_FnO):
 	plt.ylabel("Time (s)")
 	plt.xlabel("Number of repetition of the same simple function in mapping rules")
 	plt.legend()
-	plt.savefig("/Users/sam/Desktop/Experiments/ISWC2020RMLFnO/visualization/testbeds/veracity75_rocketrml_simple.png", dpi=700)
+	plt.savefig("/path_to_save/veracity75_rocketrml_simple.png", dpi=700)
 
 
 	################## simple functions, veracity25 data
@@ -258,7 +258,7 @@ def rocketrml(FunMap_rocketrml,FunMapMinus_rocketrml,rocketrml_FnO):
 	plt.ylabel("Time (s)")
 	plt.xlabel("Number of repetition of the same simple function in mapping rules")
 	plt.legend()
-	plt.savefig("/Users/sam/Desktop/Experiments/ISWC2020RMLFnO/visualization/testbeds/veracity25_rocketrml_simple.png", dpi=700)
+	plt.savefig("/path_to_save/veracity25_rocketrml_simple.png", dpi=700)
 
 
 

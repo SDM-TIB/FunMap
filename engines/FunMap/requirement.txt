@@ -1,3 +1,0 @@
-pandas
-rdflib==4.2.2
-pyparsing==2.2.0

@@ -23,13 +23,11 @@ declare -a mappings=("4" "6" "8" "10")
 ## datasets to be applied in the experiments
 declare -a dataArray=("veracity75.csv" "veracity25.csv")
 
-echo "---------Running FunMap+RocketRML------------"
-
 for mapping in "${mappings[@]}"
 do
         for data in "${dataArray[@]}"
         do
-        	echo "-----Running experiment for $mapping on $data------"
+        	echo "Running experiment for $mapping on $data"
                 total1=0
                 total2=0
         	for i in 1 2 3 4 5

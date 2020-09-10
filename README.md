@@ -54,7 +54,7 @@ Based on our research questions, we set up in overall 198 experiments as the com
 Follow this steps to reproduce the experiments shown in the paper:
 
 1) Go to RDB-Preparation folder and following the instructions in README.md file to prepare the RDBs.
-2) Run experiments over SDM-RDFizer
+2) **Run experiments over SDM-RDFizer**
 ```
 cd SDM-RDFizer
 bash preparation.sh
@@ -68,7 +68,7 @@ Expected outputs:
 4. results-rdb-funmap-sdmrdfizer.csv: FunMap+SDM-RDFizer over RDB
 5. results-rdb-sdmrdfizer.csv: SDM-RDFizer\*\*(RML+FnO) over RDB
 
-3) Run experiments over RMLMapper
+3) **Run experiments over RMLMapper**
 ```
 cd RMLMapper
 bash preparation.sh
@@ -82,7 +82,7 @@ Expected outputs:
 4. results-rdb-funmap-rmlmapper.csv: FunMap+RMLMapper over RDB
 5. results-rdb-rmlmapper.csv: RMLMapper\*\*(RML+FnO) over RDB
 
-4) Run experiments over RocketRML
+4) **Run experiments over RocketRML**
 ```
 cd RocketRML
 bash preparation.sh

@@ -35,7 +35,7 @@ do
         	for i in 1 2 3 4 5
         	do
         		cp ./data/$data data.csv
-        		cp ./mappings/sameFunction_${mapping}.ttl mapping.ttl
+        		cp "./mappings/sameFunction_${mapping}.ttl" "mapping.ttl"
                         echo "FunMap+RocketRML: iteration $i"
         		start=$(date +%s.%N)
         		python3 ./FunMap/run_translator.py config.ini

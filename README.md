@@ -61,7 +61,12 @@ bash preparation.sh
 bash run.sh
 bash run-rdb.sh
 ```
-Expected outputs: results-funmap-sdmrdfizer.csv, results-funmap-basic-sdmrdfizer.csv and results-sdmrdfizer.csv, results-rdb-funmap-sdmrdfizer.csv, results-rdb-sdmrdfizer.csv
+Expected outputs: 
+1. results-funmap-sdmrdfizer.csv: FunMap+SDM-RDFizer
+2. results-funmap-basic-sdmrdfizer.csv: FunMap<sep>-</sep>+SDM-RDFizer
+3. results-sdmrdfizer.csv: SDM-RDFizer\*\*(RML+FnO)
+4. results-rdb-funmap-sdmrdfizer.csv: FunMap+SDM-RDFizer over RDB
+5. results-rdb-sdmrdfizer.csv: SDM-RDFizer\*\*(RML+FnO) over RDB
 
 3) Run experiments over RMLMapper
 ```
@@ -70,7 +75,12 @@ bash preparation.sh
 bash run.sh
 bash run-rdb.sh
 ```
-Expected outputs: results-funmap-rmlmapper.csv, results-funmap-basic-rmlmapper.csv, results-rmlmapper.csv, results-rdb-funmap-rmlmapper.csv, results-rdb-rmlmapper.csv
+Expected outputs:
+1. results-funmap-rmlmapper.csv: FunMap+RMLMapper
+2. results-funmap-basic-rmlmapper.csv: FunMap<sep>-</sep>+RMLMapper
+3. results-rmlmapper.csv: RMLMapper\*\*(RML+FnO)
+4. results-rdb-funmap-rmlmapper.csv: FunMap+RMLMapper over RDB
+5. results-rdb-rmlmapper.csv: RMLMapper\*\*(RML+FnO) over RDB
 
 4) Run experiments over RocketRML
 ```
@@ -78,5 +88,7 @@ cd RocketRML
 bash preparation.sh
 bash run.sh
 ```
-Expected outputs: results-funmap-rocketrml.csv, results-funmap-basic-rocketrml.csv, results-rocketrml.csv
-
+Expected outputs:
+1. results-funmap-rocketrml.csv: FunMap+RocketRML
+2. results-funmap-basic-rocketrml.csv: FunMap<sep>-</sep>+RocketRML
+3. results-rocketrml.csv: RocketRML\*\*(RML+FnO)

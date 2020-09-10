@@ -60,7 +60,7 @@ do
                         #################### Running SDM-RDFizer+Functions experiments #########################
                         ########################################################################################
         		echo "SDM-RDFizer: iteration $i"
-                        start=$(data +%s.%N)
+                        start=$(date +%s.%N)
         		python3 ./SDM-RDFizer-Functions/rdfizer/run_rdfizer.py config-SDM-function.ini
         		dur=$(echo "$(date +%s.%N) - $start" | bc)
                         total3=$(echo "$total3+$dur" | bc)

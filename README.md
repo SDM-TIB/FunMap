@@ -1,16 +1,16 @@
 # Prepation of the environment
 
 ## Libraries
-Java - openjdk v1.8.0_265
-Docker - v19.03.7
-Docker-compose - v1.23.1
-Node - v12.18.3
-Python - v3.7
-Anaconda - (https://repo.anaconda.com/archive/Anaconda3-2020.07-Linux-x86_64.sh)
+- Java - openjdk v1.8.0_265
+- Docker - v19.03.7
+- Docker-compose - v1.23.1
+- Node - v12.18.3
+- Python - v3.7
+- Anaconda - (https://repo.anaconda.com/archive/Anaconda3-2020.07-Linux-x86_64.sh)
 
 ## Bash commands
-bc
-wget
+- bc
+- wget
 
 ## Machine requirements
 Ubuntu 16.04 with Intel(R) Xeon(R) Platinum 8160, CPU 2.10GHz and 700Gb RAM.

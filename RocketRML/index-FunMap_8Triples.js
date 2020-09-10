@@ -18,7 +18,7 @@ const doMapping = async () => {
     console.log('Error:', e.stack);
   }
   let inputFiles = {
-    "data.csv": aux
+    "data.csv": aux,
     "./output/OUTPUT1.csv": aux0,
     "./output/PROJECT1.csv": aux1,
     "./output/PROJECT2.csv": aux2,

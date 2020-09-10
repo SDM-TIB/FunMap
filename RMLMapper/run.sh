@@ -5,9 +5,13 @@ declare -a mappings=("sameFunction_4.ttl" "sameFunction_6.ttl" "sameFunction_8.t
 ## datasets to be applied in the experiments
 declare -a dataArray=("veracity75.csv" "veracity25.csv")
 
-echo "dataset,mapping,time,iteration" > results-funmap-rmlmapper.csv
-echo "dataset,mapping,time,iteration" > results-funmap-basic-rmlmapper.csv
-echo "dataset,mapping,time,iteration" > results-rmlmapper.csv
+echo "dataset,mapping,time,iteration" > complete-results-funmap-rmlmapper.csv
+echo "dataset,mapping,time,iteration" > complete-results-funmap-basic-rmlmapper.csv
+echo "dataset,mapping,time,iteration" > complete-results-rmlmapper.csv
+
+echo "dataset,mapping,time" > results-funmap-rmlmapper.csv
+echo "dataset,mapping,time" > results-funmap-basic-rmlmapper.csv
+echo "dataset,mapping,time" > results-rmlmapper.csv
 ############################################################################################
 ############################### Running FunMap+RMLMapper ###################################
 ############################################################################################
@@ -21,6 +25,8 @@ do
     for data in "${dataArray[@]}"
     do
         echo "Running experiment for $mapping and $data"
+        total1=0
+        total2=0
         for i in 1 2 3 4 5
         do
             cp ./data/$data data.csv
@@ -31,18 +37,25 @@ do
             python3 ./FunMap/run_translator.py config.ini
             java -jar rmlmapper.jar -m ./output/transfered_mapping.ttl -o output.nt
             dur=$(echo "$(date +%s.%N) - $start" | bc)
-            echo "$data,$mapping,$dur,$i"  >> results-funmap-rmlmapper.csv
+            total1=$(echo "$total1+$dur" | bc)
+            echo "$data,$mapping,$dur,$i"  >> complete-results-funmap-rmlmapper.csv
 
             echo "FunMap-Basic+RMLMapper: iteration $i"
             start=$(date +%s.%N)
             python3 ./FunMap/run_translator.py config-basic.ini
             java -jar rmlmapper.jar -m ./output/transfered_mapping.ttl -o output.nt
             dur=$(echo "$(date +%s.%N) - $start" | bc)
-            echo "$data,$mapping,$dur,$i"  >> results-funmap-basic-rmlmapper.csv
+            total2=$(echo "$total2+$dur" | bc)
+            echo "$data,$mapping,$dur,$i"  >> complete-results-funmap-basic-rmlmapper.csv
 
             rm data.csv
             rm mapping.ttl
         done
+        total1=$(echo "$total1/5" | bc -l)
+        total2=$(echo "$total2/5" | bc -l)
+        echo "$data,$mapping,$total1"  >> results-funmap-rmlmapper.csv
+        echo "$data,$mapping,$total2"  >> results-funmap-basic-rmlmapper.csv
+
     done
 done
 
@@ -61,6 +74,7 @@ do
     for data in "${dataArray[@]}"
     do
         echo "Running experiment for $mapping and $data"
+        total=0
         for i in 1 2 3 4 5
         do
             cp ./data/$data data.csv
@@ -69,10 +83,13 @@ do
             start=$(date +%s.%N)
             java -jar rmlmapper.jar -m mapping.ttl -f functions_grel.ttl -o output.nt -d
             dur=$(echo "$(date +%s.%N) - $start" | bc)
-            echo "$data,$mapping,$dur,$i"  >> results-rmlmapper.csv
+            total=$(echo "$total+$dur" | bc)
+            echo "$data,$mapping,$dur,$i"  >> complete-results-rmlmapper.csv
             rm data.csv
             rm mapping.ttl
         done
+        total=$(echo "$total/5" | bc -l)
+        echo "$data,$mapping,$total"  >> results-rmlmapper.csv
 	done
 done
 
@@ -91,6 +108,7 @@ do
     for data in "${dataArray[@]}"
     do
         echo "Running experiment for $mapping and $data"
+        total=0
         for i in 1 2 3 4 5
         do
             cp ./data/$data data.csv
@@ -99,10 +117,13 @@ do
             start=$(date +%s.%N)
 			java -jar rmlmapper.jar -m mapping.ttl -f functions_complex.ttl -o output.nt -d
 			dur=$(echo "$(date +%s.%N) - $start" | bc)
-			echo "$data,$mapping,$dur"  >> results-rmlmapper.csv
+            total=$(echo "$total+$dur" | bc)
+			echo "$data,$mapping,$dur"  >> complete-results-rmlmapper.csv
             rm data.csv  
             rm mapping.ttl
-        done                                                                                                                                                                                                                           rm mapping.ttl                                                                                                                                                                                                                   done
+        done     
+        total=$(echo "$total/5" | bc -l)  
+        echo "$data,$mapping,$total"  >> results-rmlmapper.csv                                                                                                                                                                                                                    rm mapping.ttl                                                                                                                                                                                                                   done
     done
 done
 

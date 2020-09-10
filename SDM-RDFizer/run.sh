@@ -7,12 +7,13 @@ declare -a mappings=("sameFunction_4.ttl" "sameFunction_6.ttl" "sameFunction_8.t
 declare -a dataArray=("veracity75.csv" "veracity25.csv")
 
 ## Running FunMap+SDM-RDFizer
-echo "dataset,mapping,time,iteration" > results-funmap-sdmrdfizer.csv
-## Running FunMap(-)+SDM-RDFizer
-echo "dataset,mapping,time,iteration" > results-funmap-basic-sdmrdfizer.csv
-## Running SDM-RDFizer+Functions experiments
-echo "dataset,mapping,time,iteration" > results-sdmrdfizer.csv
+echo "dataset,mapping,time,iteration" > complete-results-funmap-sdmrdfizer.csv
+echo "dataset,mapping,time,iteration" > complete-results-funmap-basic-sdmrdfizer.csv
+echo "dataset,mapping,time,iteration" > complete-results-sdmrdfizer.csv
 
+echo "dataset,mapping,time" > results-funmap-sdmrdfizer.csv
+echo "dataset,mapping,time" > results-funmap-basic-sdmrdfizer.csv
+echo "dataset,mapping,time" > results-sdmrdfizer.csv
 
 echo "---------Running experiments over SDM-RDFizer------------"
 
@@ -21,6 +22,9 @@ do
         for data in "${dataArray[@]}"
         do
                 echo "Running experiment $mapping and $data"
+                total1=0
+                total2=0
+                total3=0
                 for i in 1 2 3 4 5
                 do
                         cp ./data/$data data.csv
@@ -35,7 +39,8 @@ do
         		## Running SDM-RDFizer over the results:
                         python3 ./SDM-RDFizer/rdfizer/run_rdfizer.py config-SDM.ini
                         dur=$(echo "$(date +%s.%N) - $start" | bc)
-                        echo "$data,$mapping,$dur,$i" >> results-funmap-sdmrdfizer.csv
+                        total1=$(echo "$total1+$dur" | bc)
+                        echo "$data,$mapping,$dur,$i" >> complete-results-funmap-sdmrdfizer.csv
                         
 
                         ########################################################################################
@@ -48,7 +53,8 @@ do
                         ## Running SDM-RDFizer over the results:
                         python3 ./SDM-RDFizer/rdfizer/run_rdfizer.py config-SDM.ini
                         dur=$(echo "$(date +%s.%N) - $start" | bc)
-                        echo "$data,$mapping,$dur,$i" >> results-funmap-basic-sdmrdfizer.csv
+                        total2=$(echo "$total2+$dur" | bc)
+                        echo "$data,$mapping,$dur,$i" >> complete-results-funmap-basic-sdmrdfizer.csv
 
         		########################################################################################
                         #################### Running SDM-RDFizer+Functions experiments #########################
@@ -57,9 +63,16 @@ do
                         start=$(data +%s.%N)
         		python3 ./SDM-RDFizer-Functions/rdfizer/run_rdfizer.py config-SDM-function.ini
         		dur=$(echo "$(date +%s.%N) - $start" | bc)
-        		echo "$data,$mapping,$dur,$i" >> results-sdmrdfizer.csv
+                        total3=$(echo "$total3+$dur" | bc)
+        		echo "$data,$mapping,$dur,$i" >> complete-results-sdmrdfizer.csv
         		
         	done
+                total1=$(echo "$total1/5" | bc -l)
+                total2=$(echo "$total2/5" | bc -l)
+                total3=$(echo "$total2/5" | bc -l)
+                echo "$data,$mapping,$total1"  >> results-funmap-sdmrdfizer.csv
+                echo "$data,$mapping,$total2"  >> results-funmap-basic-sdmrdfizer.csv
+                echo "$data,$mapping,$total3"  >> results-sdmrdfizer.csv
         done
 done
 

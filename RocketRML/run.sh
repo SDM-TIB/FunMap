@@ -7,9 +7,13 @@
 ## mappings to be applied in the experiments
 
 
-echo "dataset,mapping,time,iteration" > results-rocketrml.csv
-echo "dataset,mapping,time,iteration" > results-funmap-rocketrml.csv
-echo "dataset,mapping,time,iteration" > results-funmap-basic-rocketrml.csv
+echo "dataset,mapping,time,iteration" > complete-results-rocketrml.csv
+echo "dataset,mapping,time,iteration" > complete-results-funmap-rocketrml.csv
+echo "dataset,mapping,time,iteration" > complete-results-funmap-basic-rocketrml.csv
+
+echo "dataset,mapping,time" > results-rocketrml.csv
+echo "dataset,mapping,time" > results-funmap-rocketrml.csv
+echo "dataset,mapping,time" > results-funmap-basic-rocketrml.csv
 
 echo "---------Running experiments over RocketRML------------"
 echo "---------Running first FunMap over RocketRML---------"
@@ -17,7 +21,7 @@ echo "---------Running first FunMap over RocketRML---------"
 #### mapping with 4 same simple functions:
 declare -a mappings=("4 6 8 10")
 ## datasets to be applied in the experiments
-declare -a dataArray=("veracity100.csv" "veracity75.csv"  "veracity50.csv" "veracity25.csv")
+declare -a dataArray=("veracity75.csv" "veracity25.csv")
 
 echo "---------Running FunMap+RocketRML------------"
 
@@ -26,6 +30,8 @@ do
         for data in "${dataArray[@]}"
         do
         	echo "-----Running experiment for $mapping on $data------"
+                total1=0
+                total2=0
         	for i in 1 2 3 4 5
         	do
         		cp ./data/$data data.csv
@@ -35,18 +41,24 @@ do
         		python3 ./FunMap/run_translator.py config.ini
         		node --max-old-space-size=32000 index-FunMap_${mapping}Triples.js
         		dur=$(echo "$(date +%s.%N) - $start" | bc)
-        		echo "$data,sameFunction_${mapping}.ttl,$dur,$i" >> results-funmap-rocketrml.csv
+                        total1=$(echo "$total1+$dur" | bc)
+        		echo "$data,sameFunction_${mapping}.ttl,$dur,$i" >> complete-results-funmap-rocketrml.csv
 
                         echo "FunMap-Basic+RocketRML: iteration $i"
                         start=$(date +%s.%N)
                         python3 ./FunMap/run_translator.py config-basic.ini
                         node --max-old-space-size=32000 index-FunMap_${mapping}Triples.js
                         dur=$(echo "$(date +%s.%N) - $start" | bc)
-                        echo "$data,sameFunction_${mapping}.ttl,$dur,$i" >> results-funmap-basic-rocketrml.csv
+                        total2=$(echo "$total2+$dur" | bc)
+                        echo "$data,sameFunction_${mapping}.ttl,$dur,$i" >> complete-results-funmap-basic-rocketrml.csv
                        
         		rm data.csv
         		rm mapping.ttl
         	done
+                total1=$(echo "$total1/5" | bc -l)
+                total2=$(echo "$total2/5" | bc -l)
+                echo "$data,$mapping,$total1"  >> results-funmap-rocketrml.csv
+                echo "$data,$mapping,$total2"  >> results-funmap-basic-rocketrml.csv
         done
 done
 
@@ -59,6 +71,7 @@ do
         for data in "${dataArray[@]}"
         do
                 echo "Running experiment for $mapping on $data"
+                total=0
                 for i in 1 2 3 4 5
                 do
                         cp ./data/$data data.csv
@@ -67,9 +80,12 @@ do
                         start=$(date +%s.%N)
                         node --max-old-space-size=32000  index.js
                         dur=$(echo "$(date +%s.%N) - $start" | bc)
-                        echo "$data,$mapping,$dur,$i"  >> results-rocketrml.csv
+                        total=$(echo "$total+$dur" | bc)
+                        echo "$data,$mapping,$dur,$i"  >> complete-results-rocketrml.csv
                         rm data.csv
                         rm mapping.ttl
                 done
+                total=$(echo "$total/5" | bc -l)
+                echo "$data,$mapping,$total"  >> results-rocketrml.csv
         done
 done

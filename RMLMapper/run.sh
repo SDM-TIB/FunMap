@@ -123,7 +123,7 @@ do
             rm mapping.ttl
         done     
         total=$(echo "$total/5" | bc -l)  
-        echo "$data,$mapping,$total"  >> results-rmlmapper.csv                                                                                                                                                                                                                    rm mapping.ttl                                                                                                                                                                                                                   done
+        echo "$data,$mapping,$total"  >> results-rmlmapper.csv                                                                                                                                                                                                                                                                                                                                                                                                                                
     done
 done
 

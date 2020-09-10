@@ -55,8 +55,8 @@ do
         	done
                 total1=$(echo "$total1/5" | bc -l)
                 total2=$(echo "$total2/5" | bc -l)
-                echo "$data,$mapping,$total1"  >> results-funmap-rocketrml.csv
-                echo "$data,$mapping,$total2"  >> results-funmap-basic-rocketrml.csv
+                echo "$data,sameFunction_${mapping}.ttl,$total1"  >> results-funmap-rocketrml.csv
+                echo "$data,sameFunction_${mapping}.ttl,$total2"  >> results-funmap-basic-rocketrml.csv
         done
 done
 

@@ -77,7 +77,7 @@ do
 done
 
 rm data.csv
-rm maping.ttl
+rm mapping.ttl
 
 
 

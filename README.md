@@ -54,4 +54,41 @@ Based on our research questions, we set up in overall 198 experiments as the com
 Follow this steps to reproduce the experiments shown in the paper:
 
 1) Go to RDB-Preparation folder and following the instructions in README.md file to prepare the RDBs.
-2) Go to the folder of each engine and read the instructions in each README.md file to execute the experiments.
+2) **Run experiments over SDM-RDFizer**
+```
+cd SDM-RDFizer
+bash preparation.sh
+bash run.sh
+bash run-rdb.sh
+```
+Expected outputs: 
+1. results-funmap-sdmrdfizer.csv: FunMap+SDM-RDFizer
+2. results-funmap-basic-sdmrdfizer.csv: FunMap<sep>-</sep>+SDM-RDFizer
+3. results-sdmrdfizer.csv: SDM-RDFizer\*\*(RML+FnO)
+4. results-rdb-funmap-sdmrdfizer.csv: FunMap+SDM-RDFizer over RDB
+5. results-rdb-sdmrdfizer.csv: SDM-RDFizer\*\*(RML+FnO) over RDB
+
+3) **Run experiments over RMLMapper**
+```
+cd RMLMapper
+bash preparation.sh
+bash run.sh
+bash run-rdb.sh
+```
+Expected outputs:
+1. results-funmap-rmlmapper.csv: FunMap+RMLMapper
+2. results-funmap-basic-rmlmapper.csv: FunMap<sep>-</sep>+RMLMapper
+3. results-rmlmapper.csv: RMLMapper\*\*(RML+FnO)
+4. results-rdb-funmap-rmlmapper.csv: FunMap+RMLMapper over RDB
+5. results-rdb-rmlmapper.csv: RMLMapper\*\*(RML+FnO) over RDB
+
+4) **Run experiments over RocketRML**
+```
+cd RocketRML
+bash preparation.sh
+bash run.sh
+```
+Expected outputs:
+1. results-funmap-rocketrml.csv: FunMap+RocketRML
+2. results-funmap-basic-rocketrml.csv: FunMap<sep>-</sep>+RocketRML
+3. results-rocketrml.csv: RocketRML\*\*(RML+FnO)

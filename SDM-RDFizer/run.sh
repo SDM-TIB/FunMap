@@ -69,7 +69,7 @@ do
         	done
                 total1=$(echo "$total1/5" | bc -l)
                 total2=$(echo "$total2/5" | bc -l)
-                total3=$(echo "$total2/5" | bc -l)
+                total3=$(echo "$total3/5" | bc -l)
                 echo "$data,$mapping,$total1"  >> results-funmap-sdmrdfizer.csv
                 echo "$data,$mapping,$total2"  >> results-funmap-basic-sdmrdfizer.csv
                 echo "$data,$mapping,$total3"  >> results-sdmrdfizer.csv

@@ -31,7 +31,7 @@ def rocketrml(FunMap_rocketrml,FunMapMinus_rocketrml,rocketrml_FnO):
 	plt.ylabel("Time (s)")
 	plt.xlabel("Number of repetition of the same simple function in mapping rules")
 	plt.legend()
-	plt.savefig("./veracity75_rocketrml_simple.png", dpi=700)
+	plt.savefig("./Figure7_f.png", dpi=700)
 
 
 	################## simple functions, veracity25 data
@@ -55,7 +55,7 @@ def rocketrml(FunMap_rocketrml,FunMapMinus_rocketrml,rocketrml_FnO):
 	plt.ylabel("Time (s)")
 	plt.xlabel("Number of repetition of the same simple function in mapping rules")
 	plt.legend()
-	plt.savefig("./veracity25_rocketrml_simple.png", dpi=700)
+	plt.savefig("./Figure7_e.png", dpi=700)
 
 def handler():
 

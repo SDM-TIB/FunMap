@@ -61,7 +61,7 @@ bash preparation.sh
 bash run.sh
 bash run-rdb.sh
 ```
-Expected outputs: 
+*Expected outputs:*
 1. results-funmap-sdmrdfizer.csv: FunMap+SDM-RDFizer
 2. results-funmap-basic-sdmrdfizer.csv: FunMap<sep>-</sep>+SDM-RDFizer
 3. results-sdmrdfizer.csv: SDM-RDFizer\*\*(RML+FnO)
@@ -80,7 +80,7 @@ bash preparation.sh
 bash run.sh
 bash run-rdb.sh
 ```
-Expected outputs:
+*Expected outputs:*
 1. results-funmap-rmlmapper.csv: FunMap+RMLMapper
 2. results-funmap-basic-rmlmapper.csv: FunMap<sep>-</sep>+RMLMapper
 3. results-rmlmapper.csv: RMLMapper\*\*(RML+FnO)
@@ -98,7 +98,7 @@ cd RocketRML
 bash preparation.sh
 bash run.sh
 ```
-Expected outputs:
+*Expected outputs:*
 1. results-funmap-rocketrml.csv: FunMap+RocketRML
 2. results-funmap-basic-rocketrml.csv: FunMap<sep>-</sep>+RocketRML
 3. results-rocketrml.csv: RocketRML\*\*(RML+FnO)

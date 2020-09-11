@@ -624,7 +624,7 @@ def join_csv_URI(source, dic, output):
 
                 for row in columns[dic["func_par"]["column1"]+dic["func_par"]["column2"]]:
                     if (row[dic["func_par"]["column1"]]+row[dic["func_par"]["column2"]] not in values) and (row[dic["func_par"]["column1"]]+row[dic["func_par"]["column2"]] is not None):
-                        value = "<" + execute_function(row,dic) + ">"
+                        value = execute_function(row,dic) 
                         line = []
                         for attr in dic["inputs"]:
                             if attr[1] is not "constant":
@@ -643,7 +643,7 @@ def join_csv_URI(source, dic, output):
 
                 for row in reader:                   
                     if (row[dic["func_par"]["column1"]]+row[dic["func_par"]["column2"]] not in values) and (row[dic["func_par"]["column1"]]+row[dic["func_par"]["column2"]] is not None):
-                        value = "<" + execute_function(row,dic) + ">"
+                        value = execute_function(row,dic) 
                         line = []
                         for attr in dic["inputs"]:
                             if attr[1] is not "constant":
@@ -662,7 +662,7 @@ def join_csv_URI(source, dic, output):
 
                 for row in columns[dic["func_par"]["value"]]:
                     if (row[dic["func_par"]["value"]] not in values) and (row[dic["func_par"]["value"]] is not None):
-                        value = "<" + execute_function(row,dic) + ">"
+                        value = execute_function(row,dic) 
                         line = []
                         for attr in dic["inputs"]:
                             if attr[1] is not "constant":
@@ -682,7 +682,7 @@ def join_csv_URI(source, dic, output):
 
                 for row in reader:
                     if (row[dic["func_par"]["value"]] not in values) and (row[dic["func_par"]["value"]] is not None):
-                        value = "<" + execute_function(row,dic) + ">"
+                        value = execute_function(row,dic)
                         line = []
                         for attr in dic["inputs"]:
                             if attr[1] is not "constant":

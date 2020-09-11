@@ -31,7 +31,7 @@ To the best of our knowledge, there are no testbeds to evaluate the performance 
 The baselines of our study are three different open source RML-complaint engines that are able to execute RML+FnO mappings and have been extensively utilized in multiple applications and tested by the community: 
 1. SDM-RDFizer v3.0 (named SDM-RDFizer\*\*(RML+FnO))
 2. RMLMapper v4.7 (named RMLMapper\*\*(RML+FnO))
-3. RocketRML v1.6. (named RocketRML\*\*(RML+FnO). 
+3. RocketRML v1.1 (named RocketRML\*\*(RML+FnO). 
 
 In order to evaluate the impact of transformation rules, we implement FunMap v1.0 on the top of the aforementioned engines with DTR2 optimization as an optional parameter. We refer to the approach which applies FunMap excluding DTR2 as FunMap<sup>-</sup> (in the experiment scripts and results it will appear as FunMap-Basic. The combination of each configurations are:
 1. FunMap+SDM-RDFizer

@@ -53,7 +53,7 @@ Based on our research questions, we set up in overall 198 experiments as the com
 
 Follow this steps to reproduce the experiments shown in the paper:
 
-1) Go to RDB-Preparation folder and following the instructions in README.md file to prepare the RDBs.
+1) Go to the RDB-Preparation folder and follow the instructions in the README.md file to prepare the RDBs.
 2) **Run experiments over SDM-RDFizer**
 ```
 cd SDM-RDFizer
@@ -67,6 +67,11 @@ Expected outputs:
 3. results-sdmrdfizer.csv: SDM-RDFizer\*\*(RML+FnO)
 4. results-rdb-funmap-sdmrdfizer.csv: FunMap+SDM-RDFizer over RDB
 5. results-rdb-sdmrdfizer.csv: SDM-RDFizer\*\*(RML+FnO) over RDB
+6. Figure7_a.png
+7. Figure7_b.png
+8. Figure8_a.png
+9. Figure8_b.png
+
 
 3) **Run experiments over RMLMapper**
 ```
@@ -81,6 +86,11 @@ Expected outputs:
 3. results-rmlmapper.csv: RMLMapper\*\*(RML+FnO)
 4. results-rdb-funmap-rmlmapper.csv: FunMap+RMLMapper over RDB
 5. results-rdb-rmlmapper.csv: RMLMapper\*\*(RML+FnO) over RDB
+6. Figure7_c.png
+7. Figure7_d.png
+8. Figure8_c.png
+9. Figure8_d.png
+
 
 4) **Run experiments over RocketRML**
 ```
@@ -92,3 +102,6 @@ Expected outputs:
 1. results-funmap-rocketrml.csv: FunMap+RocketRML
 2. results-funmap-basic-rocketrml.csv: FunMap<sep>-</sep>+RocketRML
 3. results-rocketrml.csv: RocketRML\*\*(RML+FnO)
+4. Figure7_e.png
+5. Figure7_f.png
+

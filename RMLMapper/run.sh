@@ -127,7 +127,9 @@ do
     done
 done
 
-
+#################### visualization ##################### 
+## generating the Figure7.c,d and Figure8.c,d
+python3 FunMap_rmlmapper_visualization.py
 
 
 

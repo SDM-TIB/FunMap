@@ -58,10 +58,10 @@ do
 		dur=$(echo "$(date +%s.%N) - $start" | bc)
 		echo "$mapping,$dur,$i"  >> complete-results-rdb-sdmrdfizer.csv
 		total=$(echo "$total+$dur" | bc)
-		sed -i 's/db: funmap/db: largeData/g' config-rdb-SDM-function.ini
 	done
 	total=$(echo "$total/5" | bc -l)
 	echo "$mapping,$total"  >> results-rdb-sdmrdfizer.csv
+	sed -i 's/db: funmap/db: largeData/g' config-rdb-SDM-function.ini
 done
 rm mapping.ttl
 sed -i 's/db: largeData/db: funmap/g' config-rdb-SDM-function.ini

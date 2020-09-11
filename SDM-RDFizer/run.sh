@@ -79,5 +79,7 @@ done
 rm data.csv
 rm mapping.ttl
 
-
+#################### visualization ##################### 
+## generating the Figure7.a,b and Figure8.a,b
+python3 FunMap_sdmrdfizer_visualization.py
 

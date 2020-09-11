@@ -22,7 +22,7 @@ do
 	echo "FunMap+RMLMapper over RDB: iteration $i"
 	start=$(date +%s.%N)
 	## Running FunMap:
-	python3 ./FunMap/run_translator.py config_rdb.ini
+	python3 ./FunMap/run_translator.py config-rdb.ini
 	## Running RMLMapper over the results:
 	java -jar rmlmapper.jar -m mappings/transfered_mapping_joinInQuery_rmlmapper.ttl -o output.nt
 	dur=$(echo "$(date +%s.%N) - $start" | bc)

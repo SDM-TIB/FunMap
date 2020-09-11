@@ -400,8 +400,8 @@ def translate(config_path):
 								for triples_map_element in triples_map_list:
 									if triples_map_element.triples_map_id == po.object_map.value:
 										dic = create_dictionary(triples_map_element)
-										current_func = {"output_name": "OUTPUT" + str(i),
-														"output_file": triples_map_element.triples_map_id + "_OUTPUT" + str(i), 
+										current_func = {"output_name": "OUTPUT",
+														"output_file": "OUTPUT", 
 														"inputs":dic["inputs"], 
 														"function":dic["executes"],
 														"func_par":dic,

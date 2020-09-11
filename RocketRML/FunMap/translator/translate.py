@@ -440,7 +440,6 @@ def translate(config_path):
 														index = "CREATE index p" + str(j) + " on PROJECT" + str(j)
 														index += " (`" + current_func["func_par"]["column1"] + "`);"
 													cursor.execute(index)
-													j += 1
 											else:
 												cursor.execute("DROP TABLE IF EXISTS PROJECT" + str(j) + ";")
 												if "DISTINCT" in triples_map.query:

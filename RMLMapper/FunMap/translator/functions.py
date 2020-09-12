@@ -765,7 +765,7 @@ def join_mysql(data, header, dic, db):
                     line.append(value)
                     wr.writerow(line)
                     values[row[header.index(dic["func_par"]["value"])]] = value
-    cursor.execute("LOAD DATA LOCAL INFILE \'/data/output.csv\' INTO TABLE OUTPUT FIELDS TERMINATED BY \',\' OPTIONALLY ENCLOSED BY \'\"\' LINES TERMINATED BY \'\n\' IGNORE 1 ROWS;")
+    os.system("docker exec mysql mysql --local-infile=1 -u root -ptib -e 'source /data/insert-output.sql'")
     index = "CREATE index o on " + dic["output_file"] + " (`" + dic["output_file"] + "`);"
     cursor.execute(index)
 

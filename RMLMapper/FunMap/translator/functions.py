@@ -295,10 +295,10 @@ def update_mapping_rdb(triple_maps, dic, output, original, join, data_source):
 
             mapping += "    a rr:TriplesMap;\n"
             if data_source:
-                mapping += "    rml:logicalSource [ rml:source <DB_source>;\n"
+                mapping += "    rml:logicalSource [ rml:source <#DB_source>;\n"
                 mapping += "                        rr:tableName \"" + data_source[triples_map.triples_map_id] + "\";\n"
             else:
-                mapping += "    rml:logicalSource [ rml:source <DB_source>;\n"
+                mapping += "    rml:logicalSource [ rml:source <#DB_source>;\n"
                 mapping += "                        rr:tableName \"" + triples_map.tablename + "\";\n"
             if triples_map.query != "None": 
                 mapping += "                rml:query \"" + triples_map.query +"\"\n" 

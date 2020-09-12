@@ -746,6 +746,7 @@ def join_mysql(data, header, dic, db):
                     if attr[1] is not "constant":
                         line += "'" + row[header.index(attr[0])] + "', "
                 line += "'" + value + "');"
+                print(line)
                 cursor.execute(line)
                 values[row[header.index(dic["func_par"]["column1"])]+row[header.index(dic["func_par"]["column2"])]] = value
     else:

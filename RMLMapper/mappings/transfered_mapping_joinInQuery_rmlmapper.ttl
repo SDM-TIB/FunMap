@@ -18,8 +18,8 @@
 <#TriplesMap8>
     a rr:TriplesMap;
     rml:logicalSource [ rml:source <#DB_source>;
-                        rr:tableName "PROJECT1","OUTPUT1";
-                        rml:query "SELECT DISTINCT p.`Gene name`, o.`OUTPUT1` FROM PROJECT1 as p, OUTPUT1 as o WHERE p.`Gene name`=o.`Gene name`and p.`Mutation CDS`=o.`Mutation CDS`";
+                        rr:tableName "PROJECT1","OUTPUT";
+                        rml:query "SELECT DISTINCT p.`Gene name`, o.`OUTPUT` FROM PROJECT1 as p, OUTPUT as o WHERE p.`Gene name`=o.`Gene name`and p.`Mutation CDS`=o.`Mutation CDS`";
                         rr:sqlVersion rr:SQL2008;];
     rr:subjectMap [
         rr:template "http://project-iasis.eu/Gene/{Gene name}";
@@ -27,15 +27,15 @@
     rr:predicateObjectMap [
         rr:predicate iasis:isRelatedTo;
         rr:objectMap [
-        rml:reference "OUTPUT1"
+        rml:reference "OUTPUT"
         ]
     ].
 
 <#TriplesMap3>
     a rr:TriplesMap;
     rml:logicalSource [ rml:source <#DB_source>;
-                        rr:tableName "PROJECT6","OUTPUT1";
-                        rml:query "SELECT DISTINCT p.`Gene name`, o.`OUTPUT1` FROM PROJECT6 as p, OUTPUT1 as o WHERE p.`Gene name`=o.`Gene name`and p.`Mutation CDS`=o.`Mutation CDS`";
+                        rr:tableName "PROJECT6","OUTPUT";
+                        rml:query "SELECT DISTINCT p.`Gene name`, o.`OUTPUT` FROM PROJECT6 as p, OUTPUT as o WHERE p.`Gene name`=o.`Gene name`and p.`Mutation CDS`=o.`Mutation CDS`";
                         rr:sqlVersion rr:SQL2008;];
     rr:subjectMap [
         rr:template "http://project-iasis.eu/Gene/{Gene name}";
@@ -44,15 +44,15 @@
     rr:predicateObjectMap [
         rr:predicate iasis:isLocatedIn;
         rr:objectMap [
-        rml:reference "OUTPUT1"
+        rml:reference "OUTPUT"
         ]
     ].
 
 <#TriplesMap4>
     a rr:TriplesMap;
     rml:logicalSource [ rml:source <#DB_source>;
-                        rr:tableName "PROJECT8","OUTPUT1";
-                        rml:query "SELECT DISTINCT p.`Mutation CDS`, o.`OUTPUT1` FROM PROJECT8 as p, OUTPUT1 as o WHERE p.`Gene name`=o.`Gene name`and p.`Mutation CDS`=o.`Mutation CDS`";
+                        rr:tableName "PROJECT8","OUTPUT";
+                        rml:query "SELECT DISTINCT p.`Mutation CDS`, o.`OUTPUT` FROM PROJECT8 as p, OUTPUT as o WHERE p.`Gene name`=o.`Gene name`and p.`Mutation CDS`=o.`Mutation CDS`";
                         rr:sqlVersion rr:SQL2008;];
     rr:subjectMap [
         rr:template "http://project-iasis.eu/Variant/{Mutation CDS}";
@@ -61,15 +61,15 @@
     rr:predicateObjectMap [
         rr:predicate iasis:isObservedIn;
         rr:objectMap [
-        rml:reference "OUTPUT1"
+        rml:reference "OUTPUT"
         ]
     ].
 
 <#TriplesMap1>
     a rr:TriplesMap;
     rml:logicalSource [ rml:source <#DB_source>;
-                        rr:tableName "PROJECT10","OUTPUT1";
-                        rml:query "SELECT DISTINCT p.`GENOMIC_MUTATION_ID`, o.`OUTPUT1` FROM PROJECT10 as p, OUTPUT1 as o WHERE p.`Gene name`=o.`Gene name`and p.`Mutation CDS`=o.`Mutation CDS`";
+                        rr:tableName "PROJECT10","OUTPUT";
+                        rml:query "SELECT DISTINCT p.`GENOMIC_MUTATION_ID`, o.`OUTPUT` FROM PROJECT10 as p, OUTPUT as o WHERE p.`Gene name`=o.`Gene name`and p.`Mutation CDS`=o.`Mutation CDS`";
                         rr:sqlVersion rr:SQL2008;];
     rr:subjectMap [
         rr:template "http://project-iasis.eu/Mutation/{GENOMIC_MUTATION_ID}";
@@ -78,15 +78,15 @@
     rr:predicateObjectMap [
         rr:predicate iasis:isLocatedIn;
         rr:objectMap [
-        rml:reference "OUTPUT1"
+        rml:reference "OUTPUT"
         ]
     ].
 
 <#TriplesMap2>
     a rr:TriplesMap;
     rml:logicalSource [ rml:source <#DB_source>;
-                        rr:tableName "PROJECT2","OUTPUT1";
-                        rml:query "SELECT DISTINCT p.`cFormat`, o.`OUTPUT1` FROM PROJECT2 as p, OUTPUT1 as o WHERE p.`Gene name`=o.`Gene name`and p.`Mutation CDS`=o.`Mutation CDS`";
+                        rr:tableName "PROJECT2","OUTPUT";
+                        rml:query "SELECT DISTINCT p.`cFormat`, o.`OUTPUT` FROM PROJECT2 as p, OUTPUT as o WHERE p.`Gene name`=o.`Gene name`and p.`Mutation CDS`=o.`Mutation CDS`";
                         rr:sqlVersion rr:SQL2008;];
     rr:subjectMap [
         rr:template "http://project-iasis.eu/GenomicPosition/{cFormat}";
@@ -95,15 +95,15 @@
     rr:predicateObjectMap [
         rr:predicate iasis:isOn;
         rr:objectMap [
-        rml:reference "OUTPUT1"
+        rml:reference "OUTPUT"
         ]
     ].
 
 <#TriplesMap6>
     a rr:TriplesMap;
     rml:logicalSource [ rml:source <#DB_source>;
-                        rr:tableName "PROJECT4","OUTPUT1";
-                        rml:query "SELECT DISTINCT p.`GENOMIC_MUTATION_ID`, o.`OUTPUT1` FROM PROJECT4 as p, OUTPUT1 as o WHERE p.`Gene name`=o.`Gene name`and p.`Mutation CDS`=o.`Mutation CDS`";
+                        rr:tableName "PROJECT4","OUTPUT";
+                        rml:query "SELECT DISTINCT p.`GENOMIC_MUTATION_ID`, o.`OUTPUT` FROM PROJECT4 as p, OUTPUT as o WHERE p.`Gene name`=o.`Gene name`and p.`Mutation CDS`=o.`Mutation CDS`";
                         rr:sqlVersion rr:SQL2008;];
     rr:subjectMap [
         rr:template "http://project-iasis.eu/Mutation/{GENOMIC_MUTATION_ID}";
@@ -111,15 +111,15 @@
     rr:predicateObjectMap [
         rr:predicate iasis:hasPosition;
         rr:objectMap [
-        rml:reference "OUTPUT1"
+        rml:reference "OUTPUT"
         ]
     ].
 
 <#TriplesMap7>
     a rr:TriplesMap;
     rml:logicalSource [ rml:source <#DB_source>;
-                        rr:tableName "PROJECT9","OUTPUT1";
-                        rml:query "SELECT DISTINCT p.`cFormat`, o.`OUTPUT1` FROM PROJECT9 as p, OUTPUT1 as o WHERE p.`Gene name`=o.`Gene name`and p.`Mutation CDS`=o.`Mutation CDS`";
+                        rr:tableName "PROJECT9","OUTPUT";
+                        rml:query "SELECT DISTINCT p.`cFormat`, o.`OUTPUT` FROM PROJECT9 as p, OUTPUT as o WHERE p.`Gene name`=o.`Gene name`and p.`Mutation CDS`=o.`Mutation CDS`";
                         rr:sqlVersion rr:SQL2008;];
     rr:subjectMap [
         rr:template "http://project-iasis.eu/GenomicPosition/{cFormat}";
@@ -127,15 +127,15 @@
     rr:predicateObjectMap [
         rr:predicate iasis:isLocatedIn;
         rr:objectMap [
-        rml:reference "OUTPUT1"
+        rml:reference "OUTPUT"
         ]
     ].
 
 <#TriplesMap9>
     a rr:TriplesMap;
     rml:logicalSource [ rml:source <#DB_source>;
-                        rr:tableName "PROJECT3","OUTPUT1";
-                        rml:query "SELECT DISTINCT p.`Mutation CDS`, o.`OUTPUT1` FROM PROJECT3 as p, OUTPUT1 as o WHERE p.`Gene name`=o.`Gene name`and p.`Mutation CDS`=o.`Mutation CDS`";
+                        rr:tableName "PROJECT3","OUTPUT";
+                        rml:query "SELECT DISTINCT p.`Mutation CDS`, o.`OUTPUT` FROM PROJECT3 as p, OUTPUT as o WHERE p.`Gene name`=o.`Gene name`and p.`Mutation CDS`=o.`Mutation CDS`";
                         rr:sqlVersion rr:SQL2008;];
     rr:subjectMap [
         rr:template "http://project-iasis.eu/Variant/{Mutation CDS}";
@@ -143,15 +143,15 @@
     rr:predicateObjectMap [
         rr:predicate iasis:isOn;
         rr:objectMap [
-        rml:reference "OUTPUT1"
+        rml:reference "OUTPUT"
         ]
     ].
 
 <#TriplesMap5>
     a rr:TriplesMap;
     rml:logicalSource [ rml:source <#DB_source>;
-                        rr:tableName "PROJECT5","OUTPUT1";
-                        rml:query "SELECT DISTINCT p.`Primary site`, o.`OUTPUT1` FROM PROJECT5 as p, OUTPUT1 as o WHERE p.`Gene name`=o.`Gene name`and p.`Mutation CDS`=o.`Mutation CDS`";
+                        rr:tableName "PROJECT5","OUTPUT";
+                        rml:query "SELECT DISTINCT p.`Primary site`, o.`OUTPUT` FROM PROJECT5 as p, OUTPUT as o WHERE p.`Gene name`=o.`Gene name`and p.`Mutation CDS`=o.`Mutation CDS`";
                         rr:sqlVersion rr:SQL2008;];
     rr:subjectMap [
         rr:template "http://project-iasis.eu/TumorTissue/{Primary site}";
@@ -160,15 +160,15 @@
     rr:predicateObjectMap [
         rr:predicate iasis:isRelatedTo;
         rr:objectMap [
-        rml:reference "OUTPUT1"
+        rml:reference "OUTPUT"
         ]
     ].
 
 <#TriplesMap10>
     a rr:TriplesMap;
     rml:logicalSource [ rml:source <#DB_source>;
-                        rr:tableName "PROJECT7","OUTPUT1";
-                        rml:query "SELECT DISTINCT p.`Primary site`, o.`OUTPUT1` FROM PROJECT7 as p, OUTPUT1 as o WHERE p.`Gene name`=o.`Gene name`and p.`Mutation CDS`=o.`Mutation CDS`";
+                        rr:tableName "PROJECT7","OUTPUT";
+                        rml:query "SELECT DISTINCT p.`Primary site`, o.`OUTPUT` FROM PROJECT7 as p, OUTPUT as o WHERE p.`Gene name`=o.`Gene name`and p.`Mutation CDS`=o.`Mutation CDS`";
                         rr:sqlVersion rr:SQL2008;];
     rr:subjectMap [
         rr:template "http://project-iasis.eu/TumorTissue/{Primary site}";
@@ -176,7 +176,7 @@
     rr:predicateObjectMap [
         rr:predicate iasis:hasPosition;
         rr:objectMap [
-        rml:reference "OUTPUT1"
+        rml:reference "OUTPUT"
         ]
     ].
 

@@ -740,8 +740,8 @@ def join_mysql(data, header, dic, db):
         for row in data:
             if (row[header.index(dic["func_par"]["column1"])]+row[header.index(dic["func_par"]["column2"])] not in values) and (row[header.index(dic["func_par"]["column1"])]+row[header.index(dic["func_par"]["column2"])] is not None):
                 value = execute_function_mysql(row,header,dic)
-                line = "INSERT INTO " + dic["output_file"] + "\n"  
-                line += "VALUES ("
+                line = "INSERT INTO " + dic["output_file"] 
+                line += " VALUES ("
                 for attr in dic["inputs"]:
                     if attr[1] is not "constant":
                         line += "'" + row[header.index(attr[0])] + "', "

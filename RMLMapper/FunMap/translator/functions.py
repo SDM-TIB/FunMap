@@ -301,7 +301,8 @@ def update_mapping_rdb(triple_maps, dic, output, original, join, data_source):
                 mapping += "    rml:logicalSource [ rml:source <#DB_source>;\n"
                 mapping += "                        rr:tableName \"" + triples_map.tablename + "\";\n"
             if triples_map.query != "None": 
-                mapping += "                rml:query \"" + triples_map.query +"\"\n" 
+                mapping += "                rml:query \"" + triples_map.query +"\"\n"
+            mapping += "                        rr:sqlVersion rr:SQL2008;\n" 
             mapping += "                ];\n"
 
             

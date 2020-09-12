@@ -176,8 +176,8 @@
 <#TriplesMap10>
     a rr:TriplesMap;
     rml:logicalSource [ rml:source <#DB_source>;
-                        rr:tableName "PROJECT9","OUTPUT";
-                        rml:query "SELECT DISTINCT p.`Primary site`, o.`OUTPUT` FROM PROJECT9 as p, OUTPUT as o WHERE p.`Gene name`=o.`Gene name`and p.`Mutation CDS`=o.`Mutation CDS`";
+                        rr:tableName "PROJECT10","OUTPUT";
+                        rml:query "SELECT DISTINCT p.`Primary site`, o.`OUTPUT` FROM PROJECT10 as p, OUTPUT as o WHERE p.`Gene name`=o.`Gene name`and p.`Mutation CDS`=o.`Mutation CDS`";
                         rr:sqlVersion rr:SQL2008;
                 ];
     rr:subjectMap [

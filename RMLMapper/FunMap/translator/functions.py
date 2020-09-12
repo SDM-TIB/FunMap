@@ -767,6 +767,7 @@ def join_mysql(data, header, dic, db):
                     values[row[header.index(dic["func_par"]["value"])]] = value
     cursor.execute("LOAD DATA LOCAL INFILE \'/data/output.csv\' INTO TABLE OUTPUT FIELDS TERMINATED BY \',\' OPTIONALLY ENCLOSED BY \'\"\' LINES TERMINATED BY \'\n\' IGNORE 1 ROWS;")
     index = "CREATE index o on OUTPUT (`OUTPUT`);"
+    cursor.execute(index)
 
 
 def translate_sql(triples_map):

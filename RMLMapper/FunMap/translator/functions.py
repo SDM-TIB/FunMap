@@ -741,7 +741,7 @@ def join_mysql(data, header, dic, db):
     cursor.execute(create)
     if "variantIdentifier" in dic["function"]:
         with open("../RDB-Preparation/data/output.csv","w") as output_file:
-            wr = csv.writer(output_file, quoting=csv.QUOTE_ALL)
+            wr = csv.writer(output_file, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
             if "variantIdentifier" in dic["function"]:
                 wr.writerow([dic["func_par"]["column1"],dic["func_par"]["column2"],dic["output_name"]])
             else:
@@ -752,7 +752,11 @@ def join_mysql(data, header, dic, db):
                     line = []
                     for attr in dic["inputs"]:
                         if attr[1] is not "constant":
-                            line.append(row[header.index(attr[0])]) 
+                            if ".-" in row[header.index(attr[0])]:
+                                line.append("\"" + row[header.index(attr[0])] + "\"")
+                            else:
+                                line.append(row[header.index(attr[0])])
+
                     line.append(value)
                     wr.writerow(line)
                     values[row[header.index(dic["func_par"]["column1"])]+row[header.index(dic["func_par"]["column2"])]] = value

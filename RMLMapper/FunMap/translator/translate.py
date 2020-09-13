@@ -399,6 +399,22 @@ def translate(config_path):
 							if po.object_map.mapping_type == "reference function":
 								for triples_map_element in triples_map_list:
 									if triples_map_element.triples_map_id == po.object_map.value:
+										table_list = {"#TriplesMap1":"1",
+										              "#TriplesMap2":"2",
+										              "#TriplesMap3":"4",
+										              "#TriplesMap4":"4",
+										              "#TriplesMap5":"5",
+										              "#TriplesMap6":"6",
+										              "#TriplesMap7":"7",
+										              "#TriplesMap8":"8",
+										              "#TriplesMap9":"9",
+										              "#TriplesMap10":"10"}
+										mapping = ""
+										if "#" in triples_map.triples_map_id:
+											mapping = "#" + triples_map.triples_map_id.split("#")[1]
+										else: 
+											mapping = "#" + triples_map.triples_map_id
+										t = table_list[mapping]
 										dic = create_dictionary(triples_map_element)
 										current_func = {"output_name": "OUTPUT",
 														"output_file": "OUTPUT", 
@@ -420,34 +436,34 @@ def translate(config_path):
 													else:
 														query = query.replace("`" + po.object_map.value + "`","`" + current_func["func_par"]["value"] + "`")
 
-													create_table = "CREATE TABLE PROJECT" + str(j) + " ("
-													insert = "INSERT INTO PROJECT" + str(j) + " SELECT DISTINCT "
+													create_table = "CREATE TABLE PROJECT" + t + " ("
+													insert = "INSERT INTO PROJECT" + t + " SELECT DISTINCT "
 													fields = query.split("SELECT DISTINCT")[1].split("FROM")[0].split(",")
 													for f in fields:
 														create_table += f + " varchar(300),\n"
 														insert += f + ", "
 													create_table = create_table[:-2] + ");"
 													insert = insert[:-2] + "FROM " + query.split("FROM")[1]
-													cursor.execute("DROP TABLE IF EXISTS PROJECT" + str(j) + ";")
+													cursor.execute("DROP TABLE IF EXISTS PROJECT" + t + ";")
 													cursor.execute(create_table)
 													cursor.execute(insert)
-													file_projection[triples_map.triples_map_id] = "PROJECT" + str(j)
+													file_projection[triples_map.triples_map_id] = "PROJECT" + t
 													if "variantIdentifier" in current_func["function"]:
-														index = "CREATE index p" + str(j) + " on PROJECT" + str(j)
+														index = "CREATE index p" + t + " on PROJECT" + t
 														index += " (`" + current_func["func_par"]["column1"] + "` , `"
 														index += current_func["func_par"]["column2"] + "`);" 
 													else:
-														index = "CREATE index p" + str(j) + " on PROJECT" + str(j)
+														index = "CREATE index p" + t + " on PROJECT" + t
 														index += " (`" + current_func["func_par"]["column1"] + "`);"
 													cursor.execute(index)
 											else:
-												cursor.execute("DROP TABLE IF EXISTS PROJECT" + str(j) + ";")
+												cursor.execute("DROP TABLE IF EXISTS PROJECT" + t + ";")
 												if "DISTINCT" in triples_map.query:
 													fields = triples_map.query.split("SELECT DISTINCT")[1].split("FROM")[0].split(",")
 												else:
 													fields = triples_map.query.split("SELECT")[1].split("FROM")[0].split(",")
-												create_table = "CREATE TABLE PROJECT" + str(j) + " ( "
-												insert = "INSERT INTO PROJECT" + str(j) + " SELECT DISTINCT "
+												create_table = "CREATE TABLE PROJECT" + t + " ( "
+												insert = "INSERT INTO PROJECT" + t + " SELECT DISTINCT "
 												for f in fields:
 													create_table += f + " varchar(300),\n"
 													insert += f + ", "
@@ -455,13 +471,13 @@ def translate(config_path):
 												insert = insert[:-2] + "FROM " + triples_map.query.split("FROM")[1]
 												cursor.execute(create_table)
 												cursor.execute(insert)
-												file_projection[triples_map.triples_map_id] = "PROJECT" + str(j)
+												file_projection[triples_map.triples_map_id] = "PROJECT" + t
 												if "variantIdentifier" in current_func["function"]:
-													index = "CREATE index p" + str(j) + " on PROJECT" + str(j)
+													index = "CREATE index p" + t + " on PROJECT" + t
 													index += " (`" + current_func["func_par"]["column1"] + "` , `"
 													index += current_func["func_par"]["column2"] + "`);" 
 												else:
-													index = "CREATE index p" + str(j) + " on PROJECT" + str(j)
+													index = "CREATE index p" + t + " on PROJECT" + t
 													index += " (`" + current_func["func_par"]["column1"] + "`);"
 												cursor.execute(index)
 											j += 1

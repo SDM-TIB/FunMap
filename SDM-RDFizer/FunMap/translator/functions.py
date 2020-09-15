@@ -414,7 +414,9 @@ def update_mapping_rdb(triple_maps, dic, output, original, join, data_source):
         for function in dic.keys():
             mapping += "<#" + dic[function]["output_name"] + ">\n"
             mapping += "    a rr:TriplesMap;\n"
-            mapping += "    rml:logicalSource [ rml:source \"" + dic[function]["output_file"] +"\";\n"
+            mapping += "    rml:logicalSource [ rml:source <#DB_source>;\n"
+            mapping += "                        rr:tablename \"" + dic[function]["output_file"] +"\";\n"
+            mapping += "                        rr:sqlVersion rr:SQL2008;\n"
             if "csv" in dic[function]["output_file"]:
                 mapping += "                rml:referenceFormulation ql:CSV\n" 
             mapping += "            ];\n"
@@ -738,37 +740,31 @@ def join_mysql(data, header, dic, db):
     create += "`" + dic["output_name"] + "` varchar(300));"
     cursor.execute(create)
     if "variantIdentifier" in dic["function"]:
-        with open("../RDB-Preparation/data/output.csv","w") as output_file:
-            wr = csv.writer(output_file, quoting=csv.QUOTE_ALL)
-            if "variantIdentifier" in dic["function"]:
-                wr.writerow([dic["func_par"]["column1"],dic["func_par"]["column2"],dic["output_name"]])
-            else:
-                wr.writerow([dic["func_par"]["value"],dic["output_name"]])
-            for row in data:
-                if (row[header.index(dic["func_par"]["column1"])]+row[header.index(dic["func_par"]["column2"])] not in values) and (row[header.index(dic["func_par"]["column1"])]+row[header.index(dic["func_par"]["column2"])] is not None):
-                    value = execute_function_mysql(row,header,dic)
-                    line = []
-                    for attr in dic["inputs"]:
-                        if attr[1] is not "constant":
-                            line.append(row[header.index(attr[0])]) 
-                    line.append(value)
-                    wr.writerow(line)
-                    values[row[header.index(dic["func_par"]["column1"])]+row[header.index(dic["func_par"]["column2"])]] = value
+        for row in data:
+            if (row[header.index(dic["func_par"]["column1"])]+row[header.index(dic["func_par"]["column2"])] not in values) and (row[header.index(dic["func_par"]["column1"])]+row[header.index(dic["func_par"]["column2"])] is not None):
+                value = execute_function_mysql(row,header,dic)
+                line = "INSERT INTO " + dic["output_file"] + "\n"  
+                line += "VALUES ("
+                for attr in dic["inputs"]:
+                    if attr[1] is not "constant":
+                        line += "'" + row[header.index(attr[0])] + "', "
+                line += "'" + value + "');"
+                cursor.execute(line)
+                db.commit()
+                values[row[header.index(dic["func_par"]["column1"])]+row[header.index(dic["func_par"]["column2"])]] = value
     else:
-        with open("../RDB-Preparation/output.csv","w") as output_file:
-            for row in data:
-                if (row[header.index(dic["func_par"]["value"])] not in values) and (row[header.index(dic["func_par"]["value"])] is not None):
-                    value = execute_function_mysql(row,header,dic)
-                    line = []
-                    for attr in dic["inputs"]:
-                        if attr[1] is not "constant":
-                            line.append(row[header.index(attr[0])]) 
-                    line.append(value)
-                    wr.writerow(line)
-                    values[row[header.index(dic["func_par"]["value"])]] = value
-    os.system("docker exec mysql mysql --local-infile=1 -u root -ptib -e 'source /data/insert-output.sql'")
-    index = "CREATE index o on " + dic["output_file"] + " (`" + dic["output_file"] + "`);"
-    cursor.execute(index)
+        for row in data:
+            if (row[header.index(dic["func_par"]["value"])] not in values) and (row[header.index(dic["func_par"]["value"])] is not None):
+                value = execute_function_mysql(row,header,dic)
+                line = "INSERT INTO " + dic["output_file"] + "\n"  
+                line += "VALUES ("
+                for attr in dic["inputs"]:
+                    if attr[1] is not "constant":
+                        line += "'" + row[header.index(attr[0])] + "', "
+                line += "'" + value + "');"
+                cursor.execute(line)
+                db.commit()
+                values[row[header.index(dic["func_par"]["value"])]] = value
 
 
 def translate_sql(triples_map):

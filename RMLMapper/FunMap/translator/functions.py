@@ -415,7 +415,7 @@ def update_mapping_rdb(triple_maps, dic, output, original, join, data_source):
             mapping += "<#" + dic[function]["output_name"] + ">\n"
             mapping += "    a rr:TriplesMap;\n"
             mapping += "    rml:logicalSource [ rml:source <#DB_source>;\n"
-            mapping += "                        rr:tablename \"" + dic[function]["output_file"] +"\";\n"
+            mapping += "                        rr:tableName \"" + dic[function]["output_file"] +"\";\n"
             mapping += "                        rr:sqlVersion rr:SQL2008;\n"
             if "csv" in dic[function]["output_file"]:
                 mapping += "                rml:referenceFormulation ql:CSV\n" 
@@ -452,7 +452,7 @@ def update_mapping_rdb(triple_maps, dic, output, original, join, data_source):
     prefix_string += mapping
 
     prefix_string += db_source 
-    
+    print(output)
     mapping_file = open(output + "/transfered_mapping.ttl","w")
     mapping_file.write(prefix_string)
     mapping_file.close()

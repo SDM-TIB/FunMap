@@ -740,31 +740,34 @@ def join_mysql(data, header, dic, db):
     create += "`" + dic["output_name"] + "` varchar(300));"
     cursor.execute(create)
     if "variantIdentifier" in dic["function"]:
+        val = []
+        sql = "INSERT INTO " + dic["output_file"] + " VALUES (%s, %s, %s)"
         for row in data:
             if (row[header.index(dic["func_par"]["column1"])]+row[header.index(dic["func_par"]["column2"])] not in values) and (row[header.index(dic["func_par"]["column1"])]+row[header.index(dic["func_par"]["column2"])] is not None):
                 value = execute_function_mysql(row,header,dic)
-                line = "INSERT INTO " + dic["output_file"] + "\n"  
-                line += "VALUES ("
+                line = ""
                 for attr in dic["inputs"]:
                     if attr[1] is not "constant":
                         line += "'" + row[header.index(attr[0])] + "', "
-                line += "'" + value + "');"
-                cursor.execute(line)
-                db.commit()
+                line += "'" + value + "'"
                 values[row[header.index(dic["func_par"]["column1"])]+row[header.index(dic["func_par"]["column2"])]] = value
+        cursor.executemany(sql,val)
+        db.commit()
     else:
+        val = [] 
+        sql = "INSERT INTO " + dic["output_file"] + " VALUES (%s, %s)"
         for row in data:
             if (row[header.index(dic["func_par"]["value"])] not in values) and (row[header.index(dic["func_par"]["value"])] is not None):
                 value = execute_function_mysql(row,header,dic)
-                line = "INSERT INTO " + dic["output_file"] + "\n"  
-                line += "VALUES ("
+                line = ""  
                 for attr in dic["inputs"]:
                     if attr[1] is not "constant":
                         line += "'" + row[header.index(attr[0])] + "', "
-                line += "'" + value + "');"
-                cursor.execute(line)
-                db.commit()
+                line += "'" + value + "'"
+                values.append(line)
                 values[row[header.index(dic["func_par"]["value"])]] = value
+        cursor.executemany(sql,val)
+        db.commit()
 
 
 def translate_sql(triples_map):

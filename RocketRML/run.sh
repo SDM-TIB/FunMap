@@ -59,9 +59,6 @@ do
                 echo "$data,sameFunction_${mapping}.ttl,$total2"  >> results-funmap-basic-rocketrml.csv
         done
 done
-#################### visualization ##################### 
-## generating the figure7.c,d
-python3 FunMap_rocketrml_visualization.py
 
 
 declare -a mappings=("sameFunction_4_rocketrml.ttl" "sameFunction_6_rocketrml.ttl" "sameFunction_8_rocketrml.ttl" "sameFunction_10_rocketrml.ttl")
@@ -91,3 +88,8 @@ do
                 echo "$data,$mapping,$total"  >> results-rocketrml.csv
         done
 done
+
+
+#################### visualization ##################### 
+## generating the figure7.c,d
+python3 FunMap_rocketrml_visualization.py

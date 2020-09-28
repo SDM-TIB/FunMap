@@ -64,5 +64,5 @@ def handler():
 	rocketrml_FnO = pd.read_csv("./results-funmap-basic-rocketrml.csv")
 	rocketrml(FunMap_rocketrml,FunMapMinus_rocketrml,rocketrml_FnO)
 
-if __name__ == "__main__":results-rocketrml.csv
+if __name__ == "__main__":
 	handler()

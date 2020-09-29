@@ -173,9 +173,9 @@ def sdmrdfizer_8a(FunMap_sdm,FunMapMinus_sdm,sdm_FnO):
 
 def handler():
 
-	FunMap_sdm = pd.read_csv("./results/results-funmap-sdmrdfizer.csv")
-	FunMapMinus_sdm = pd.read_csv("./results/results-funmap-basic-sdmrdfizer.csv")
-	sdm_FnO = pd.read_csv("./results/results-sdmrdfizer.csv")
+	FunMap_sdm = pd.read_csv("./results-funmap-sdmrdfizer.csv")
+	FunMapMinus_sdm = pd.read_csv("./results-funmap-basic-sdmrdfizer.csv")
+	sdm_FnO = pd.read_csv("./results-sdmrdfizer.csv")
 	sdmrdfizer_7b(FunMap_sdm,FunMapMinus_sdm,sdm_FnO)
 	sdmrdfizer_7a(FunMap_sdm,FunMapMinus_sdm,sdm_FnO)
 	sdmrdfizer_8b(FunMap_sdm,FunMapMinus_sdm,sdm_FnO)

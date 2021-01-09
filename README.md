@@ -5,6 +5,11 @@ We present FunMap, an interpreter of [RML](https://rml.io/docs/rml/introduction/
 ![FunMap-workflow](images/architecture.png?raw=true "FunMap-workflow")
 
 
+## Research papers:
+
+Samaneh Jozashoori, David Chaves-Fraga, Enrique Iglesias, Oscar Corcho, and Maria-Esther Vidal. 2020. FunMap: Efficient Execution of Functional Mappings for Knowledge Graph Creation. The 19th International Semantic Web Conference - Research Track (ISWC 2020). *[Fully Reproduced Paper](https://github.com/SDM-TIB/FunMap/tree/eval-iswc2020)* [Online](https://www.researchgate.net/publication/346220361_FunMap_Efficient_Execution_of_Functional_Mappings_for_Knowledge_Graph_Creation)
+
+
 ## How to run FunMap?
 
 ### Configuration file
